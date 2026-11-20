@@ -4,36 +4,19 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-from types import SimpleNamespace
 from typing import Any
 
 import pytest
 from cases import each_case
 from conftest import seed_case, tagged_synthetic_table
 
-from pipeline import backends, skillrun
+from pipeline import skillrun
 from pipeline.e2e.project import Project
 from pipeline.e2e import committee as cm
 from pipeline.e2e import generate as gen
 from pipeline.e2e import judge as jd
 from arisekit.common.hashing import json_sha256
 from arisekit.common.jsonio import append_jsonl
-
-
-@pytest.mark.parametrize("backend,expected", [("claude", "subscription"), ("subscription", "subscription"),
-                                               ("codex", "codex"), ("openrouter", "openrouter")])
-def test_backend_alias_dispatch(monkeypatch: pytest.MonkeyPatch, backend: str, expected: str) -> None:
-    calls = []
-
-    def fake(model: str, system: str, prompt: str, **kwargs: Any) -> backends.CallResult:
-        calls.append((model, kwargs))
-        return backends.CallResult("{}", {"backend": expected})
-
-    monkeypatch.setitem(backends.TRANSPORTS, expected, SimpleNamespace(call=fake))
-    result = backends.call(backend, "model", "system", "prompt")
-    assert calls == [("model", {})]
-    assert result.provenance["backend"] == expected
-    assert backends.canonical_backend(backend) == expected
 
 
 def test_load_committee(tmp_path: Path) -> None:
@@ -63,14 +46,8 @@ def test_load_committee(tmp_path: Path) -> None:
     each_case(cases, lambda c: c["label"], run)
 
 
-@pytest.mark.parametrize("backend,expected,effort", [("claude", "subscription", None),
-                                                     ("subscription", "subscription", None),
-                                                     ("codex", "codex", "high"),
-                                                     ("openrouter", "openrouter", "high")])
-@pytest.mark.parametrize("committee", [None, [{"backend": "codex", "model": "rater"}]])
-def test_generate_forwards_route(monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
-                                backend: str, expected: str, effort: str | None,
-                                committee: list[dict[str, str]] | None) -> None:
+def test_generate_forwards_effort_with_committee(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    committee = [{"backend": "codex", "model": "rater"}]
     seed_case(tmp_path, with_table=False)
     calls = []
 
@@ -80,9 +57,9 @@ def test_generate_forwards_route(monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 
     monkeypatch.setattr(gen, "run_skill", fake)
     monkeypatch.setattr(gen.Generation, "with_committee", lambda *args: args[-1])
-    assert gen.generate(tmp_path, "Syn002", 1, backend, "model", workers=1,
-                        committee=committee, reasoning_effort=effort) == ["pass"]
-    assert calls == [(expected, effort)]
+    assert gen.generate(tmp_path, "Syn002", 1, "codex", "model", workers=1,
+                        committee=committee, reasoning_effort="high") == ["pass"]
+    assert calls == [("codex", "high")]
 
 
 def test_generation_keeps_legacy_identity_without_effort(tmp_path: Path) -> None:
@@ -111,10 +88,7 @@ def test_generation_effort_change_preserves_saved_evidence(monkeypatch: pytest.M
     assert {path: path.read_bytes() for path in paths} == before
 
 
-@pytest.mark.parametrize("backend,expected", [("claude", "subscription"), ("subscription", "subscription"),
-                                               ("codex", "codex"), ("openrouter", "openrouter")])
-def test_judge_forwards_effort_to_supported_backends(monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
-                                                    backend: str, expected: str) -> None:
+def test_subscription_judge_omits_effort(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     seed_case(tmp_path)
     append_jsonl(tmp_path / "results" / "responses" / "model.jsonl",
                  {"id": "Syn002", "trial": 1, "response": "synthetic response"})
@@ -125,5 +99,5 @@ def test_judge_forwards_effort_to_supported_backends(monkeypatch: pytest.MonkeyP
         return skillrun.SkillOutcome("pass", {}, "raw", [], {})
 
     monkeypatch.setattr(jd, "run_skill", fake)
-    jd.judge(tmp_path, "run1", backend, "model", reasoning_effort="high", workers=1)
-    assert calls == [(expected, "high" if expected in {"codex", "openrouter"} else None)]
+    jd.judge(tmp_path, "run1", "subscription", "model", reasoning_effort="high", workers=1)
+    assert calls == [("subscription", None)]

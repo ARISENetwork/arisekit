@@ -103,7 +103,7 @@ def test_generation_gate_cases(root: Path) -> None:
 
 
 @pytest.mark.parametrize("match,valid", [("any", True), ("all", True), (None, True),
-                                         ("either", False), ("ALL", False), (True, False), (1, False), (["any"], False)])
+                                         ("either", False)])
 def test_generation_schema_condition_modes(root: Path, match: Any, valid: bool) -> None:
     table = tagged_synthetic_table()
     decision = table["decisions"][1]

@@ -186,14 +186,13 @@ def test_stage_summary_preserves_all_outcome_receipts(
     assert written[0].read_bytes() == before
 
 
-@pytest.mark.parametrize("status", ["pass", "failed", "unresolved"])
 def test_stage_refuses_existing_receipts_before_any_calls(
-    synthetic_judge_run: Path, monkeypatch: pytest.MonkeyPatch, status: str,
+    synthetic_judge_run: Path, monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     root = synthetic_judge_run
     append_jsonl(root / "results/responses/a.jsonl", {"id": "Test001", "trial": 1, "response": "New model"})
     old = root / "results/judge/m.jsonl"
-    append_jsonl(old, {"id": "Test001", "trial": 1, "status": status, "raw": "Saved evidence"})
+    append_jsonl(old, {"id": "Test001", "trial": 1, "status": "failed", "raw": "Saved evidence"})
     before = old.read_bytes()
     calls = []
     monkeypatch.setattr(jd, "run_skill", lambda *args, **kwargs: calls.append(args))

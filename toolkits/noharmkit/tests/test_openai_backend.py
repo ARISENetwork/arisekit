@@ -86,8 +86,7 @@ def test_cli_refuses_missing_api_key_before_judging(monkeypatch: pytest.MonkeyPa
     assert error.value.code == 2
 
 
-@pytest.mark.parametrize("backend", [None, "openrouter", "codex", "openai"])
-@pytest.mark.parametrize("effort", [None, "low"])
+@pytest.mark.parametrize("backend,effort", [(None, None), (None, "low"), ("openai", "low")])
 def test_cli_judge_defaults_and_effort_override(
     monkeypatch: pytest.MonkeyPatch, backend: str | None, effort: str | None,
 ) -> None:

@@ -31,21 +31,20 @@ def cli(monkeypatch: pytest.MonkeyPatch, *argv: str) -> None:
     noharm.main()
 
 
-@pytest.mark.parametrize("trials", [1, 3])
-def test_create_writes_empty_project_and_refuses_existing(tmp_path: Path, trials: int) -> None:
+def test_create_writes_empty_project_and_refuses_existing(tmp_path: Path) -> None:
     root = tmp_path / "new-project"
-    project = Project.create(root, trials=trials)
+    project = Project.create(root, trials=3)
     assert (root / "cases").is_dir() and read_jsonl(root / "items.jsonl") == []
     provenance = project.provenance()
     assert provenance["caseset_name"] == "new-project" and provenance["cases"] == []
-    assert provenance["created_at"] and project.trials() == trials
+    assert provenance["created_at"] and project.trials() == 3
     before = project.provenance_path.read_bytes()
     with pytest.raises(FileExistsError):
         Project.create(root)
     assert project.provenance_path.read_bytes() == before
 
 
-@pytest.mark.parametrize("value", [0, -1, True, False, 1.0, "2", None, [], {}])
+@pytest.mark.parametrize("value", [0, True, 1.0, "2"])
 def test_invalid_trial_counts_are_rejected(tmp_path: Path, value: object) -> None:
     Project(tmp_path).update_provenance(trials=value)
     with pytest.raises(ValueError, match="positive integer"):

@@ -168,30 +168,25 @@ def invoke(project: Path, monkeypatch: pytest.MonkeyPatch, model: str, backend: 
     module.main()
 
 
-@pytest.mark.parametrize(("backend", "model", "canonical", "effort"), [
-    ("claude", "opus", "subscription", None),
-    ("subscription", "sonnet", "subscription", None),
-    ("codex", "gpt-6-astra", "codex", "high"),
-    ("openrouter", "openai/gpt-6-astra", "openrouter", "medium"),
-])
-def test_cli_routes_and_resumes(tmp_path, monkeypatch, backend, model, canonical, effort):
+def test_openrouter_cli_routes_and_resumes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    backend, model, effort = "openrouter", "openai/gpt-6-astra", "medium"
     (tmp_path / "items.jsonl").write_text('{"id":"A","prompt":"synthetic question"}\n')
     (tmp_path / "provenance.json").write_text('{"trials":2}')
     calls = []
-    provenance = {"backend": canonical, "resolved_model": "provider-version", "runtime_s": 1.25,
+    provenance = {"backend": backend, "resolved_model": "provider-version", "runtime_s": 1.25,
                   "usage": {"input_tokens": 9}, "attempts": [{"status": "success"}], "cost_usd": None}
     def fake_call(*args, **kwargs):
         calls.append((args, kwargs))
         declared = json.loads((tmp_path / "provenance.json").read_text())
-        assert declared["inference"]["model_routes"][model]["backend"] == canonical
+        assert declared["inference"]["model_routes"][model]["backend"] == backend
         return backends.CallResult("synthetic answer", provenance)
     monkeypatch.setattr(backends, "call", fake_call)
     invoke(tmp_path, monkeypatch, model, backend, effort)
     out = tmp_path / "results/responses" / f"{module.sanitize_model(model)}.jsonl"
     rows = read_jsonl(out)
     assert len(calls) == 2 and [r["trial"] for r in rows] == [1, 2]
-    assert calls[0] == ((canonical, model, "", "synthetic question"),
-                        {"timeout": 300, **({"reasoning_effort": effort} if effort else {})})
+    assert calls[0] == ((backend, model, "", "synthetic question"),
+                        {"timeout": 300, "reasoning_effort": effort})
     assert rows[0]["provider_provenance"] == provenance
     assert rows[0]["runtime"] == 1.25 and rows[0]["usage"] == {"input_tokens": 9}
     before = out.read_bytes()

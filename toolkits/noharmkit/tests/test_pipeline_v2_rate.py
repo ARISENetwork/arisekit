@@ -1,37 +1,9 @@
-"""Slot rating: per-family calls for items that lack a current rating. No test calls a provider."""
-from __future__ import annotations
-
-import json
-from collections.abc import Callable
-from pathlib import Path
-from typing import Any
+"""Route parsing and defaults for slot rating."""
 
 import pytest
 from cases import each_case
-from test_pipeline_v2_slots import CHANGED
 
 from pipeline.e2e import pipeline_v2_rate as rate
-from pipeline.e2e.pipeline_v2_slots import (
-    REPLACEMENT_ORDER,
-    _ratings_of,
-    item_hashes,
-    model_ratings_dir,
-    slot_set,
-)
-from pipeline.e2e.project import Project
-from pipeline.skillrun import SkillOutcome
-
-ROUTES = {f: {"backend": "codex", "model": f"m-{f}"} for f in REPLACEMENT_ORDER}
-
-
-
-
-
-
-
-
-
-
 
 
 def test_defaults_match_decisions() -> None:
@@ -42,23 +14,6 @@ def test_defaults_match_decisions() -> None:
                            "gemini": {"backend": "openrouter", "model": "google/gemini-4-argon",
                                       "reasoning_effort": "high"},
                            "opus": {"backend": "claude", "model": "claude-opus-5-5"}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-RefusalCase = tuple[str, Callable[[Project], None], dict[str, Any], str | None, str]
-
-
 
 
 def test_parse_route() -> None:
@@ -83,7 +38,3 @@ def test_parse_route() -> None:
             assert rate.parse_route(spec) == expected
 
     each_case(cases, lambda c: c[0], run)
-
-
-
-

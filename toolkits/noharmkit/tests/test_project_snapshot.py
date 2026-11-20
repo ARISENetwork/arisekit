@@ -28,13 +28,6 @@ def project(tmp_path: Path) -> Path:
     return _source(tmp_path)
 
 
-def test_snapshot_preserves_all_bytes_and_empty_directories(project: Path, tmp_path: Path) -> None:
-    destination = tmp_path / "backup"
-    before = snapshot._manifest(project)
-    assert snapshot.snapshot(project, destination) == destination
-    assert snapshot._manifest(project) == snapshot._manifest(destination) == before
-
-
 @pytest.mark.parametrize("existing", ["directory", "file", "link", "dangling link"])
 def test_existing_destination_is_never_replaced(project: Path, tmp_path: Path, existing: str) -> None:
     destination = tmp_path / "backup"
@@ -128,8 +121,9 @@ def test_source_change_does_not_claim_a_complete_snapshot(
 
 def test_cli_snapshot_uses_no_provider_route(project: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     destination = tmp_path / "backup"
+    before = snapshot._manifest(project)
     monkeypatch.setattr(noharm, "load_env", lambda: None)
     monkeypatch.setattr(noharm, "route", lambda *_: pytest.fail("snapshot must not resolve a model"))
     monkeypatch.setattr(sys, "argv", ["noharm", "snapshot", str(project), str(destination)])
     noharm.main()
-    assert snapshot._manifest(destination) == snapshot._manifest(project)
+    assert snapshot._manifest(destination) == snapshot._manifest(project) == before
