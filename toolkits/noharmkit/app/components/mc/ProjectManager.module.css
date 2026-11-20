@@ -1,0 +1,49 @@
+.page { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.header h1 { margin: 0; color: var(--mc-ink); font-size: 28px; font-weight: 600; letter-spacing: -0.035em; }
+.header p { margin: 6px 0 0; color: var(--mc-muted); font-size: 14px; line-height: 1.6; }
+.search { display: flex; flex-direction: column; gap: 6px; width: min(100%, 18rem); }
+.search label { color: var(--mc-muted); font-size: 12px; }
+.search input, .noteInput { width: 100%; padding: 8px 10px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font-size: 13px; caret-color: var(--mc-accent); }
+.search input:focus-visible, .noteInput:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 1px; }
+.status { min-height: 1.6em; margin: 0; color: var(--mc-muted); font-size: 13px; line-height: 1.6; }
+.status[data-error] { color: var(--mc-bad); }
+.tableWrap { overflow-x: auto; border: 1px solid var(--mc-line); border-radius: 10px; background: var(--mc-surface); }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table thead th { padding: 10px 14px; border-bottom: 1px solid var(--mc-line); color: var(--mc-muted); font-size: 12px; font-weight: 500; text-align: left; white-space: nowrap; }
+.table td, .table tbody th { padding: 10px 14px; border-top: 1px solid var(--mc-line); text-align: left; vertical-align: middle; }
+.table tbody tr:first-child > * { border-top: 0; }
+.nameCell { min-width: 14rem; }
+.name { color: var(--mc-ink); font-weight: 600; overflow-wrap: anywhere; }
+.folder { display: block; margin-top: 2px; color: var(--mc-muted); font-size: 12px; font-weight: 400; overflow-wrap: anywhere; }
+.nameInput { width: 100%; padding: 6px 8px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font-size: 13px; font-weight: 600; caret-color: var(--mc-accent); }
+.nameInput:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 1px; }
+.current { margin-left: 8px; padding: 1px 8px; border-radius: 999px; background: var(--mc-accent-bg); color: var(--mc-accent); font-size: 11px; font-weight: 500; }
+.mode { padding: 1px 8px; border: 1px solid var(--mc-line-strong); border-radius: 999px; color: var(--mc-muted); font-size: 11px; }
+.date { color: var(--mc-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.noteCell { width: 40%; min-width: 14rem; }
+.note { display: block; width: 100%; padding: 6px 8px; margin: -6px -8px; border-radius: 6px; color: var(--mc-ink); font-size: 13px; line-height: 1.5; text-align: left; cursor: text; transition: background-color 160ms; }
+.note:hover { background: var(--mc-surface-2); }
+.note[data-empty] { color: var(--mc-muted); }
+.note:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 1px; }
+.actions { white-space: nowrap; text-align: right; }
+.actions form { display: inline; }
+.open, .rename, .delete, .dialogActions button { display: inline-flex; align-items: center; justify-content: center; padding: 6px 12px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font-size: 12px; font-weight: 500; cursor: pointer; transition: background-color 160ms, border-color 160ms, color 160ms; }
+.open { border-color: var(--mc-accent); color: var(--mc-accent); }
+.open:hover { background: var(--mc-accent-bg); }
+.rename, .delete { margin-left: 8px; }
+.rename:hover:not(:disabled) { background: var(--mc-surface-2); }
+.delete { color: var(--mc-bad); }
+.delete:hover:not(:disabled) { border-color: var(--mc-bad); background: var(--mc-bad-bg); }
+.rename:disabled, .delete:disabled, .dialogActions button:disabled { cursor: not-allowed; opacity: .45; }
+.empty { color: var(--mc-muted); text-align: center; }
+.dialog { width: min(28rem, calc(100vw - 3rem)); margin: auto; padding: 22px; border: 1px solid var(--mc-line); border-radius: 12px; background: var(--mc-surface); color: var(--mc-ink); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open] { opacity: 1; transform: none; }
+.dialog::backdrop { background: rgb(0 0 0 / .28); opacity: 0; transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open]::backdrop { opacity: 1; }
+@starting-style { .dialog[open] { opacity: 0; transform: translateY(8px); } .dialog[open]::backdrop { opacity: 0; } }
+.dialog h2 { margin: 0 0 10px; font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
+.dialog p { margin: 0 0 10px; color: var(--mc-muted); font-size: 13px; line-height: 1.6; }
+.dialogActions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+.confirmDelete { border-color: var(--mc-bad) !important; background: var(--mc-bad) !important; color: var(--mc-surface) !important; }
+@media (prefers-reduced-motion: reduce) { .note, .open, .rename, .delete, .dialog, .dialog::backdrop { transition: none; } }

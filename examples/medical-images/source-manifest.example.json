@@ -1,0 +1,13 @@
+{
+  "schema_version": "arisekit.image-source.v1",
+  "source": {"name": "Replace with authorized collection", "revision": "Replace with source revision", "license": "Replace with applicable rights basis"},
+  "authorization": {"authorized": false, "provider_permission": false, "data_class": "public", "scope": "Replace with the actual approved source and provider scope"},
+  "records": [
+    {"id": "case-001", "group_id": "patient-001", "group_basis": "patient", "field": "your field", "modality": "your modality", "images": ["case-001.png"], "tags": [],
+     "targets": [{"id": "source-class", "profile": "classification", "question": "Replace with the source classification question", "choices": ["source class A", "source class B"], "answer": "source class A", "evidence": "Replace with the actual source annotation", "provenance": {"kind": "dataset-annotation", "source": "Replace with annotation locator"}},
+                 {"id": "source-question", "profile": "closed-vqa", "question": "Replace with an independently grounded source question", "choices": ["yes", "no"], "answer": "yes", "evidence": "Replace with the actual question-specific reference evidence", "provenance": {"kind": "dataset-annotation", "source": "Replace with annotation locator"}}]},
+    {"id": "case-002", "group_id": "patient-002", "group_basis": "patient", "field": "your field", "modality": "your modality", "images": ["case-002.png"], "tags": [],
+     "targets": [{"id": "source-class", "profile": "classification", "question": "Replace with the source classification question", "choices": ["source class A", "source class B"], "answer": "source class B", "evidence": "Replace with the actual source annotation", "provenance": {"kind": "dataset-annotation", "source": "Replace with annotation locator"}},
+                 {"id": "source-question", "profile": "closed-vqa", "question": "Replace with an independently grounded source question", "choices": ["yes", "no"], "answer": "no", "evidence": "Replace with the actual question-specific reference evidence", "provenance": {"kind": "dataset-annotation", "source": "Replace with annotation locator"}}]}
+  ]
+}

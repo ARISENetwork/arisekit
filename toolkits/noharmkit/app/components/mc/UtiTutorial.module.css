@@ -1,0 +1,48 @@
+.root { position: relative; }
+.root :global(dialog[data-tutorial-guidance]) { transform: none; transition-property: opacity, display, overlay; }
+.page { display: flex; flex: 1; flex-direction: column; min-height: 100%; }
+.walkthroughTrigger { margin-right: auto; }
+.veil { position: fixed; inset: 0; z-index: 39; background: rgb(0 0 0 / .28); opacity: 0; visibility: hidden; transition: opacity .2s,visibility .2s; }
+.veil[data-open=true] { opacity: 1; visibility: visible; }
+.veil[data-interactive=true] { pointer-events: none; }
+.veil[data-spotlight=true] { background: transparent; }
+.spotlight { position: fixed; z-index: 40; pointer-events: none; border: 2px solid var(--mc-accent); border-radius: 10px; box-shadow: 0 0 0 100vmax rgb(0 0 0 / .28); opacity: 0; visibility: hidden; transition: left .2s,top .2s,width .2s,height .2s,opacity .2s,visibility .2s; }
+.spotlight[data-open=true] { opacity: 1; visibility: visible; }
+.coach { position: fixed; z-index: 50; max-width: calc(100vw - 2rem); border: 1px solid var(--mc-accent); border-radius: 1rem; background: var(--mc-surface); color: var(--mc-ink); box-shadow: 0 .7rem 2rem color-mix(in srgb, var(--mc-ink) 15%, transparent); opacity: 0; visibility: hidden; transform: translateY(.4rem); transition: left .35s ease,top .35s ease,width .35s ease,height .35s ease,opacity .2s,transform .2s,visibility .2s; }
+.coachContent { max-height: calc(100dvh - 34px); overflow-y: auto; padding: 1.4rem; }
+.pointer { position: absolute; width: 18px; height: 10px; fill: var(--mc-surface); stroke: var(--mc-accent); stroke-width: 1px; }
+.pointer[data-side=none] { display: none; }
+.pointer[data-side=top] { top: -9px; left: calc(var(--pointer-offset) - 9px); }
+.pointer[data-side=bottom] { bottom: -9px; left: calc(var(--pointer-offset) - 9px); rotate: 180deg; }
+.pointer[data-side=left] { left: -14px; top: calc(var(--pointer-offset) - 5px); rotate: -90deg; }
+.pointer[data-side=right] { right: -14px; top: calc(var(--pointer-offset) - 5px); rotate: 90deg; }
+.coach[data-open=true] { opacity: 1; visibility: visible; transform: none; }
+.coach h2 { font-size: 1.2rem; font-weight: 650; margin: 0 0 .85rem; }
+.coach p { line-height: 1.65; margin: .75rem 0; }
+.coachTop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: var(--mc-muted); font-size: .85rem; }
+.coachTop button, .help { border: 1px solid var(--mc-line); border-radius: .5rem; background: var(--mc-surface); color: var(--mc-ink); padding: .55rem .8rem; cursor: pointer; }
+.help { margin-right: 1rem; }
+.coachActions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 20px; }
+.coachActions button { display: inline-flex; align-items: center; justify-content: center; align-self: auto; min-height: 42px; margin: 0; padding: 10px 16px; font-size: 14px; line-height: 20px; }
+.coach button:disabled { opacity: .55; cursor: default; }
+@media (max-height:800px) {
+  .coachContent { padding: 1rem; }
+  .coach p { font-size: .875rem; }
+  .coachTop { margin-bottom: .75rem; }
+  .coachActions { margin-top: 16px; }
+}
+.root button:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .root *, .root *::before, .root *::after { transition: none; } }
+
+.editorDialog { width: calc(100vw - 3rem); height: calc(100dvh - 3rem); max-width: none; max-height: none; margin: auto; padding: 0; border: 1px solid var(--mc-line); border-radius: 1rem; background: var(--mc-surface); color: var(--mc-ink); overflow: hidden; opacity: 0; transform: translateY(.75rem) scale(.98); transition: opacity .25s, transform .25s, display .25s allow-discrete, overlay .25s allow-discrete; }
+.editorDialog[open] { display: flex; flex-direction: column; opacity: 1; transform: none; }
+.editorDialog::backdrop { background: rgb(0 0 0 / .28); opacity: 0; transition: opacity .25s, display .25s allow-discrete, overlay .25s allow-discrete; }
+.editorDialog[open]::backdrop { opacity: 1; }
+.editorHeader { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .75rem 1rem; border-bottom: 1px solid var(--mc-line); }
+.editorHeader h2 { margin: 0; font-size: 1rem; font-weight: 650; }
+.editorHeader button { margin: 0; border-color: color-mix(in srgb, var(--mc-accent) 45%, var(--mc-line)); background: color-mix(in srgb, var(--mc-accent) 7%, var(--mc-surface)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--mc-accent) 9%, transparent); transition: background .2s, box-shadow .2s; }
+.editorHeader button:hover { background: color-mix(in srgb, var(--mc-accent) 12%, var(--mc-surface)); }
+.editorBody { flex: 1; min-height: 0; overflow: auto; }
+@starting-style { .editorDialog[open] { opacity: 0; transform: translateY(.75rem) scale(.98); } .editorDialog[open]::backdrop { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) { .editorDialog, .editorDialog::backdrop, .editorHeader button { transition: none; } }

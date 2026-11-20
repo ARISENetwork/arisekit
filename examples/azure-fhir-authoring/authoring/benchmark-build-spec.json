@@ -1,0 +1,137 @@
+{
+  "agentic": {
+    "allowed_tools": [
+      "get_patient"
+    ],
+    "environment": {
+      "fhir_version": "R4",
+      "isolation": "per-item-trial",
+      "kind": "fhir-r4-in-memory",
+      "primitive": "arisekit.env.fhir.FHIREnvironment"
+    },
+    "max_turns": 3,
+    "tool_catalog": "arisekit.fhir-tools.v1"
+  },
+  "artifacts": [
+    {
+      "path": "need-statement.md",
+      "role": "need-statement",
+      "sha256": "390b2551cff0da059833c38accea713e646cdb6d0e56234373d0c66e2fa320e5"
+    },
+    {
+      "path": "existing-coverage.md",
+      "role": "existing-coverage",
+      "sha256": "c0281ca5203d13b5457031a835468d7e3049b4c961afc78ebe9225adc72aa6fd"
+    },
+    {
+      "path": "compliance-scope.md",
+      "role": "compliance-scope",
+      "sha256": "5725f44f9a64fca12b90ce0679cdb5713cd9ed8ccfac2a6039cc98d4b9b03a02"
+    },
+    {
+      "path": "data-profile.md",
+      "role": "data-profile",
+      "sha256": "0e48d15d8e623cb91c53bcf1267dc8c6b3df2da4dd5dc7a4f3230f822ea38232"
+    },
+    {
+      "path": "rubric.md",
+      "role": "rubric",
+      "sha256": "623fb3d62a13894a585d8abfa28dfabc4f55d9690e5d1589b16b946228783af4"
+    },
+    {
+      "path": "study-plan.md",
+      "role": "study-plan",
+      "sha256": "73c060dfcda39e0b761b234618b9437f22bea88c11fd5df615ae6ec119e06410"
+    },
+    {
+      "path": "implementation-plan.md",
+      "role": "implementation-plan",
+      "sha256": "d261fed2a6b304d9cc94085a829983729dbdd7bf7533181683f2e27ea956b58c"
+    }
+  ],
+  "benchmark": {
+    "description": "Synthetic plan-to-package-to-Azure integration test.",
+    "mast_category": "agentic",
+    "mast_compatible": true,
+    "modality": "agentic-fhir",
+    "name": "Azure FHIR authoring",
+    "slug": "azure-fhir-authoring",
+    "version": "0.1.0"
+  },
+  "data_governance": {
+    "classification": "synthetic",
+    "materialization_authorization": {
+      "actor": "User in ARISEKit development session",
+      "authorized": true,
+      "confirmed_at": "2026-09-07T17:47:03.710765+00:00",
+      "text": "testing the complete authoring flow\u2014from a benchmark plan through package generation and a real Azure evaluation"
+    },
+    "release_posture": "public"
+  },
+  "first_sweep": [
+    {
+      "model": "azure/gpt-5-mini",
+      "provider": "azure",
+      "trials": 1
+    }
+  ],
+  "readiness": {
+    "allowed_model_routes": [
+      "azure/gpt-5-mini"
+    ],
+    "data_profile": "materialized",
+    "library_gaps": [],
+    "open_questions": [],
+    "status": "ready",
+    "user_confirmation": {
+      "actor": "User in ARISEKit development session",
+      "confirmed_at": "2026-09-07T17:47:03.710765+00:00",
+      "text": "testing the complete authoring flow\u2014from a benchmark plan through package generation and a real Azure evaluation"
+    }
+  },
+  "runner": {
+    "max_calls": 6,
+    "max_cost": 0.02,
+    "max_cost_per_call": null,
+    "max_retries": 1,
+    "max_tokens": 1024,
+    "require_known_cost": true,
+    "retry_backoff": 0.0,
+    "temperature": null,
+    "threads": 1,
+    "trials": 1
+  },
+  "schema_version": "arisekit.benchmark-build-spec.v2",
+  "scorer": {
+    "kind": "pass-at-one",
+    "options": {
+      "condition_schema": "arisekit.agentic-pass-condition.v1",
+      "name": "pass_at_1"
+    },
+    "primitive": "arisekit.agentic.PassAtOneScorer"
+  },
+  "smoke_test": {
+    "limit": 2,
+    "model": "azure/gpt-5-mini",
+    "trials": 1
+  },
+  "source": {
+    "field_map": {
+      "attachments": null,
+      "fhir_bundle": "fhir_bundle",
+      "ground_truth": "pass_condition",
+      "id": "case_id",
+      "metadata": {
+        "specialty": "service"
+      },
+      "prompt": "prompt"
+    },
+    "kind": "jsonl",
+    "path": "cases.synthetic.jsonl",
+    "sha256": "f7ed9fdb68b131c7a22223bfbad62c62b0a986230d53a40798f7dd3d94aa51fe",
+    "system_prompt": {
+      "sha256": "18207a2c438e05bbfc80a3c75a2d828774cacf3ada3557b9843bf7ed8622b908",
+      "text": "Use only the allowed FHIR tools before answering."
+    }
+  }
+}

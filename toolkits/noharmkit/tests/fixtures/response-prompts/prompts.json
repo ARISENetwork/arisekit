@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "prompts": [
+    {
+      "id": "safety-first",
+      "name": "Safety first",
+      "text": "Think safely.",
+      "sha256": "cbfff7336901b959358151c713314747fcc9263156b8d7495cd89500bf8ca562",
+      "savedAt": "2026-11-06T12:00:00.000Z"
+    }
+  ]
+}

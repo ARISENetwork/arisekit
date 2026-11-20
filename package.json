@@ -1,0 +1,14 @@
+{
+  "name": "arisekit",
+  "version": "0.13.19",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "npm ci --prefix toolkits/noharmkit/app",
+    "dev": "npm run dev --prefix toolkits/noharmkit/app",
+    "build": "npm run build:workspace && npm run build --prefix toolkits/noharmkit/app",
+    "start": "npm run start --prefix toolkits/noharmkit/app",
+    "test": "npm test --prefix toolkits/noharmkit/app",
+    "build:workspace": "node apps/workspace/build.mjs"
+  }
+}

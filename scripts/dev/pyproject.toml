@@ -1,0 +1,11 @@
+[project]
+name = "arisekit-development"
+version = "0.0.0"
+requires-python = ">=3.10"
+dependencies = ["arisekit[dev,autonomous]"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+arisekit = { path = "../..", editable = true }

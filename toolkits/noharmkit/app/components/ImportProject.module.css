@@ -1,0 +1,8 @@
+.import { padding: 16px 0; }
+.import summary { cursor: pointer; font-weight: 600; }
+.import label { display: grid; gap: 8px; margin: 16px 0; font-size: 14px; }
+.import p { max-width: 66ch; margin: 12px 0; color: var(--mc-muted); font-size: 13px; }
+.import button { padding: 7px 12px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font: inherit; font-size: 13px; cursor: pointer; }
+.import button:disabled { opacity: .5; cursor: default; }
+.error { color: var(--mc-bad); margin-top: 12px; }
+.import :focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }

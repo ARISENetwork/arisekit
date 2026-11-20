@@ -1,0 +1,85 @@
+{
+  "repository": "https://github.com/davidwumdphd/noharm-science",
+  "branch": "main",
+  "commit": "6d803fee097fef0040a58e017053b2e88238ef60",
+  "imported_at": "2026-10-25",
+  "sha256": {
+    "tools/score_rubric.py": "94154f652f808978f04b05a32fa3323c8b031e2541e6f2134bdf1af4ae7c469e",
+    "tools/score_text_rubric.py": "c61d2eb3faae9d1a5c79fea9e51c4daf83993ac1264c4b5622ef5a27c7475488",
+    "tools/score_text_rubric_v2.py": "6f3cbf008e400c7cb89bb46b0ad79fc8a95e9cff5b717ad104befb86dd08642c",
+    "experiments/profiles/text-rubric-v2/judge/schema.json": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d",
+    "experiments/profiles/text-rubric-v2/judge/rules.md": "6cc6d12e9556bb82147d5980e7317b073e4e5a1b5586267866c2ee4c2ac33fa4",
+    "harmreview/lib/rubric-text-v2.ts": "2da84795930f06f8de3b911b61c8d3f2f9625c4adbe7cab37966b389dedf99ee",
+    "harmreview/components/RubricEditor.tsx": "2c15520067a1cd0eae35720c3916a06c006ca43bc1ce20a513be21f597a901c8",
+    "harmreview/components/RubricEditor.module.css": "4967b2dc97fb1b0e27aa59d2d376f1cd464106c4fa91cc1940d60e9126d5ac4b",
+    "harmreview/tests/fixtures/rubric-text-v2-parity.json": "4686742bca2a8362b85d67455bc36c602cef71838516ca1ade223b3b30277496",
+    "docs/contracts/rubric-text-v2.md": "41aefb780effc092bfd571390f9d8ce9925d8175f7f8a63d305daef77681541a",
+    "docs/contracts/rubric-authoring-rules.md": "cf8cc1c5f6ccd644893d25b61209edf0020931dc5646408b09334d619031eaf9"
+  },
+  "files": {
+    "tools/noharm_science/score_rubric.py": {
+      "source": "tools/score_rubric.py",
+      "sha256": "94154f652f808978f04b05a32fa3323c8b031e2541e6f2134bdf1af4ae7c469e"
+    },
+    "tools/noharm_science/score_text_rubric.py": {
+      "source": "tools/score_text_rubric.py",
+      "sha256": "b3f8047ae74b70cedf03503fe8476da52aa4ee9c50f20b33d5dfea6139d9d5cb"
+    },
+    "tools/noharm_science/score_text_rubric_v2.py": {
+      "source": "tools/score_text_rubric_v2.py",
+      "sha256": "1d742dd64c101ba1950d9328abcb53c7605f40ad2fb0949cae2c462016d4265f"
+    },
+    "tools/noharm_science/profiles/text-rubric-v2/judge/schema.json": {
+      "source": "experiments/profiles/text-rubric-v2/judge/schema.json",
+      "sha256": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d"
+    },
+    "tools/noharm_science/profiles/text-rubric-v2/judge/rules.md": {
+      "source": "experiments/profiles/text-rubric-v2/judge/rules.md",
+      "sha256": "6cc6d12e9556bb82147d5980e7317b073e4e5a1b5586267866c2ee4c2ac33fa4"
+    },
+    "app/lib/rubric-text-v2.ts": {
+      "source": "harmreview/lib/rubric-text-v2.ts",
+      "sha256": "cc70b9c4f843720ecdcdc7294e9592c0449c12708899881b75b2f86021f9059d"
+    },
+    "app/components/TextV2RubricEditor.module.css": {
+      "source": "harmreview/components/RubricEditor.module.css",
+      "sha256": "f29277c882a8b64014a2dcb4732ea4f11f0693681675e4c087dc0c1163e6ada5"
+    },
+    "tests/fixtures/text-v2/rubric-text-v2-parity.json": {
+      "source": "harmreview/tests/fixtures/rubric-text-v2-parity.json",
+      "sha256": "4686742bca2a8362b85d67455bc36c602cef71838516ca1ade223b3b30277496"
+    },
+    "docs/contracts/rubric-text-v2.md": {
+      "source": "docs/contracts/rubric-text-v2.md",
+      "sha256": "41aefb780effc092bfd571390f9d8ce9925d8175f7f8a63d305daef77681541a"
+    },
+    "docs/contracts/rubric-authoring-rules.md": {
+      "source": "docs/contracts/rubric-authoring-rules.md",
+      "sha256": "cf8cc1c5f6ccd644893d25b61209edf0020931dc5646408b09334d619031eaf9"
+    },
+    "skills/generate-text-v2/contract-v2.md": {
+      "source": "docs/contracts/rubric-text-v2.md",
+      "sha256": "41aefb780effc092bfd571390f9d8ce9925d8175f7f8a63d305daef77681541a"
+    },
+    "skills/generate-text-v2/authoring-rules.md": {
+      "source": "docs/contracts/rubric-authoring-rules.md",
+      "sha256": "cf8cc1c5f6ccd644893d25b61209edf0020931dc5646408b09334d619031eaf9"
+    }
+  },
+  "references": {
+    "harmreview/components/RubricPanel.module.css": "2d9792cf70e405161078d51c8a4477382e0e676054c042acaf84b23b3c42b289",
+    "DECISIONS.md": "ef1c11cb8e6c26242069ac5ca0e450de0f7e4c34f591a49e5dacdd0f880756d2"
+  },
+  "adaptations": [
+    "Namespaced Python imports and local profile paths.",
+    "TypeScript rating types imported from answer-table.",
+    "Extracted v2 controls and Main approach/Add-ons editor; toolkit load/save host retains source-hash conflicts, timing, history, and review provenance.",
+    "Editor stylesheet includes layout from pinned RubricPanel.module.css before its overlay rules; compact layouts retain role headings and current rating labels.",
+    "Toolkit host passes project-pinned validation to the editor and its inline findings; standalone editor validation retains the original legacy contract. The science source and canonical validators remain unchanged.",
+    "Optional NOHARMKit host context exposes editor dirty/saving/save-availability/error state and an explicit asynchronous save result; standalone unload guards and canonical rubric behavior are preserved.",
+    "The existing text-v2 editor accepts a storage adapter for offline HTML review; toolkit wrappers retain server storage, project-pinned validation, save revision guards, and navigation safeguards. Clinical controls and canonical validation are unchanged.",
+    "app/components/TextV2RubricEditor.tsx is now the host for the editor synced from noharm-science (app/upstream/noharm-science.json) and is no longer hash-pinned here."
+  ],
+  "patch": "app/upstream/text-v2.patch",
+  "patch_sha256": "4969ea742f194720228b9b78fb552f2e104600f125f2841803bdf30c2ec65de0"
+}

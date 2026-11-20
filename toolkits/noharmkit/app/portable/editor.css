@@ -1,0 +1,43 @@
+.portable-start {
+  margin: 6rem auto 3rem;
+  max-width: 38rem;
+  padding: 1.5rem;
+}
+
+.portable-start p { margin: 1rem 0; }
+.portable-start h1 { font-size: 1.75rem; font-weight: 600; }
+.portable-start form { margin: 2rem 0 1.25rem; }
+.portable-start label { display: block; margin: 1rem 0 0.5rem; font-weight: 600; }
+.portable-start input:not([type="file"]) { width: 100%; padding: 0.5rem; border: 1px solid hsl(var(--border)); border-radius: 0.5rem; background: hsl(var(--card)); }
+.portable-start button { padding: 0.5rem 1rem; border-radius: 0.5rem; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); cursor: pointer; transition: opacity 150ms ease; }
+.portable-start button:hover { opacity: 0.85; }
+.portable-start [role="alert"] { color: hsl(var(--destructive)); }
+@media (prefers-reduced-motion: reduce) { .portable-start button { transition: none; } }
+
+.portable-project {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+}
+.portable-project-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.portable-project-row + .portable-project-row { margin-top: 1rem; }
+.portable-project button, .portable-project select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font: inherit;
+  transition: background-color 150ms ease;
+}
+.portable-project button:not(:disabled):hover { background: hsl(var(--muted)); }
+.portable-project button:disabled, .portable-project select:disabled { opacity: 0.5; cursor: not-allowed; }
+.portable-project :focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+.portable-project p { margin: 0.75rem 0 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); }
+@media (prefers-reduced-motion: reduce) { .portable-project button, .portable-project select { transition: none; } }
+
+.portable-version { position: fixed; bottom: 0.25rem; right: 0.5rem; color: hsl(var(--muted-foreground)); font-size: 0.75rem; pointer-events: none; }
+
+.portable-start .portable-assignment { margin-top: 0.5rem; color: hsl(var(--muted-foreground)); }
+.portable-start button[type="submit"] { width: 100%; margin-top: 1.25rem; padding: 0.75rem 1rem; font-weight: 600; }
+.portable-start :focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 3px; }

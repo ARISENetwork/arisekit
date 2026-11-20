@@ -1,0 +1,26 @@
+.status { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 20px; padding: 14px 16px; border: 1px solid var(--mc-line); border-radius: 8px; background: var(--mc-surface); font-size: 13px; line-height: 1.6; }
+.summary { flex: 1; min-width: 0; }
+.summary strong { color: var(--mc-ink); font-weight: 600; }
+.summary p { margin: 4px 0 0; overflow-wrap: anywhere; color: var(--mc-muted); }
+.summary .error { color: var(--mc-bad); }
+.metadata { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 10px 0 0; }
+.metadata div { display: flex; gap: 6px; }
+.metadata dt { color: var(--mc-muted); }
+.metadata dd { margin: 0; color: var(--mc-ink); font-variant-numeric: tabular-nums; }
+.runPrompt { margin-top: 10px; }
+.runPrompt p { margin: 4px 0 0; overflow-wrap: anywhere; color: var(--mc-muted); }
+.runPrompt .runPromptText { padding: 8px 10px; border: 1px solid var(--mc-line); border-radius: 6px; background: var(--mc-surface-2); white-space: pre-wrap; }
+.runPrompt .runPromptError { color: var(--mc-bad); }
+.tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.button, .setup { display: inline-flex; align-items: center; justify-content: center; padding: 7px 12px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: background-color 180ms, border-color 180ms; }
+.button:hover:not(:disabled), .setup:hover { background: var(--mc-surface-2); border-color: var(--mc-ink); }
+.button:disabled { cursor: not-allowed; opacity: 0.5; }
+.button:focus-visible, .setup:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+.action { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; padding: 12px; border: 1px solid var(--mc-line); border-radius: 8px; background: var(--mc-surface-2); }
+.action p { margin: 0; color: var(--mc-muted); font-size: 13px; line-height: 1.6; }
+.action .button, .setup { border-color: var(--mc-accent); color: var(--mc-accent); }
+.recovery { flex-basis: 100%; min-width: 0; }
+.runName { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; color: var(--mc-ink); }
+.runName input { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--mc-line-strong); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font: inherit; }
+.runName input:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .button, .setup { transition: none; } }

@@ -1,0 +1,29 @@
+# Local environments and credentials
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.DS_Store
+app/node_modules/
+app/.next/
+app/*.tsbuildinfo
+# User projects are private by default; keep the bundled synthetic demo.
+projects/*
+!projects/demo/
+/casesets/
+# Local run logs
+*.log
+# App chat relay files
+.arisekit/
+# Internal agent planning and review records.
+.superpowers/
+# Local development checkouts; keep coding-agent skills public.
+.claude/worktrees/
+# Local design-check state; keep the shared configuration.
+.impeccable/hook.cache.json
+.impeccable/hook.pending.json
+.impeccable/config.local.json

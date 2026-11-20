@@ -1,0 +1,27 @@
+.popover {
+  position: absolute;
+  top: 4.5rem;
+  right: 1rem;
+  z-index: 60;
+  width: min(26rem, calc(100% - 2rem));
+  padding: 1.25rem;
+  border: 1px solid var(--mc-accent);
+  border-radius: 1rem;
+  background: var(--mc-surface);
+  color: var(--mc-ink);
+  box-shadow: 0 .7rem 2rem color-mix(in srgb, var(--mc-ink) 15%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(.4rem);
+  transition: opacity .2s, transform .2s, visibility .2s;
+}
+.popover[data-open=true] { opacity: 1; visibility: visible; transform: none; }
+.pointer { position: absolute; top: -9px; right: 3rem; width: 18px; height: 10px; fill: var(--mc-surface); stroke: var(--mc-accent); stroke-width: 1px; }
+.popover p { margin: 0 0 1rem; font-size: 1rem; line-height: 1.65; }
+.actions { display: flex; justify-content: flex-end; gap: .75rem; }
+.actions button { padding: .625rem .875rem; border: 1px solid var(--mc-line); border-radius: .5rem; background: var(--mc-surface); color: var(--mc-ink); font-size: .875rem; line-height: 1.25rem; cursor: pointer; transition: background-color .15s; }
+.actions button:hover { background: var(--mc-surface-2); }
+.actions .primary { border-color: var(--mc-accent); background: var(--mc-accent-bg); color: var(--mc-accent); font-weight: 600; }
+.actions .primary:hover { background: color-mix(in srgb, var(--mc-accent-bg) 85%, var(--mc-accent)); }
+.actions button:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .popover { transform: none; transition: opacity .15s, visibility .15s; } }

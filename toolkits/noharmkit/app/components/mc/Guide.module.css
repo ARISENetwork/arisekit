@@ -1,0 +1,15 @@
+.guide div:has(> button[aria-controls][aria-expanded]) {
+  border-color: var(--mc-line);
+}
+
+.guide button[aria-controls][aria-expanded] {
+  color: var(--mc-ink);
+}
+
+.guide button[aria-controls][aria-expanded]:hover {
+  background: var(--mc-surface-2);
+}
+
+.guide button[aria-controls][aria-expanded]:focus-visible {
+  outline-color: var(--mc-accent);
+}

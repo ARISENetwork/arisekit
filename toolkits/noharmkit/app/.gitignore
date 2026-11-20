@@ -1,0 +1,7 @@
+node_modules/
+.next/
+*.log
+*.tsbuildinfo
+data/workflow-runs/
+data/clinician-reviews/
+portable/editor-shell.json

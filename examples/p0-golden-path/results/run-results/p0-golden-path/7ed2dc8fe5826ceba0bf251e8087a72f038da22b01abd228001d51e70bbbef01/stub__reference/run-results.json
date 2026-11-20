@@ -1,0 +1,37 @@
+{
+  "benchmark": "p0-golden-path",
+  "claim_boundary": "These results describe this benchmark snapshot and run only; they do not establish clinical performance in general.",
+  "metrics": [
+    {
+      "category": "overall",
+      "ci": 0.0,
+      "n": 2,
+      "name": "accuracy",
+      "value": 1.0
+    }
+  ],
+  "model": "stub/reference",
+  "raw_checkpoint": {
+    "path": "raw/p0-golden-path/7ed2dc8fe5826ceba0bf251e8087a72f038da22b01abd228001d51e70bbbef01/stub__reference.jsonl",
+    "sha256": "c0f1ff84edd69248cd1d5dddaa283d5763ef2074ac24693384e0fab0284204f1",
+    "size": 992
+  },
+  "run_manifest_digest": "7ed2dc8fe5826ceba0bf251e8087a72f038da22b01abd228001d51e70bbbef01",
+  "schema_version": "arisekit.run-results.v1",
+  "scores": {
+    "path": "scores/p0-golden-path/7ed2dc8fe5826ceba0bf251e8087a72f038da22b01abd228001d51e70bbbef01/stub__reference.csv",
+    "sha256": "b91e0a8b8bce3235396ff489e2c845a4bec9577e754d3067c8a78886ff6be4dc",
+    "size": 112
+  },
+  "summary": {
+    "budget_exhausted": false,
+    "call_budget_exhausted": false,
+    "calls_total": 2,
+    "completed": 2,
+    "cost_bound_exceeded": false,
+    "cost_total": 0.0,
+    "cost_unknown": false,
+    "errored": 0,
+    "skipped": 0
+  }
+}

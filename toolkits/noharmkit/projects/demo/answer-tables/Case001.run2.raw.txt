@@ -1,0 +1,194 @@
+{
+  "caseId": "Case001",
+  "harmOverrides": true,
+  "usualCare": {
+    "harm": "severe"
+  },
+  "decisions": [
+    {
+      "id": "D1",
+      "kind": "followUp",
+      "question": "What follow-up or triage is appropriate?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D1.O1",
+          "text": "Manage the patient in an outpatient setting.",
+          "score": 9,
+          "tags": ["followUp"],
+          "timing": "none"
+        },
+        {
+          "id": "D1.O2",
+          "text": "Send the patient to the emergency department now.",
+          "score": 3,
+          "tags": ["followUp"]
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "question": "What testing is needed to evaluate suspected uncomplicated cystitis?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "mild",
+      "recommendations": [
+        {
+          "id": "D2.O1",
+          "text": "Obtain urinalysis.",
+          "score": 9,
+          "tags": ["diagnostic"]
+        },
+        {
+          "id": "D2.O2",
+          "text": "Order CT imaging of the abdomen and pelvis to evaluate the urinary symptoms.",
+          "score": 3,
+          "tags": ["diagnostic"]
+        },
+        {
+          "id": "D2.O3",
+          "text": "Do not obtain urinalysis.",
+          "score": 3,
+          "tags": ["diagnostic"]
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "question": "What testing is needed to establish pregnancy status?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "moderate",
+      "recommendations": [
+        {
+          "id": "D3.O1",
+          "text": "Obtain a pregnancy test.",
+          "score": 9,
+          "tags": ["diagnostic"]
+        },
+        {
+          "id": "D3.O2",
+          "text": "Proceed without pregnancy testing.",
+          "score": 2,
+          "tags": ["diagnostic"]
+        }
+      ]
+    },
+    {
+      "id": "D4",
+      "question": "What antibiotic treatment should be started for uncomplicated cystitis?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "moderate",
+      "recommendations": [
+        {
+          "id": "D4.O1",
+          "text": "Start nitrofurantoin for five days.",
+          "score": 9,
+          "tags": ["medication"]
+        },
+        {
+          "id": "D4.O2",
+          "text": "Start trimethoprim-sulfamethoxazole only if local resistance permits its use.",
+          "score": 8,
+          "tags": ["medication"],
+          "relativeHarmOverride": "none",
+          "parts": [
+            "Start trimethoprim-sulfamethoxazole.",
+            "Limit its use to settings where local resistance permits."
+          ]
+        },
+        {
+          "id": "D4.O3",
+          "text": "Start trimethoprim-sulfamethoxazole without accounting for local resistance.",
+          "score": 2,
+          "tags": ["medication"],
+          "incompleteVersionOf": "D4.O2"
+        },
+        {
+          "id": "D4.O4",
+          "text": "Use trimethoprim-sulfamethoxazole despite local resistance making it unsuitable.",
+          "score": 2,
+          "tags": ["medication"]
+        },
+        {
+          "id": "D4.O5",
+          "text": "Do not prescribe an antibiotic for this episode.",
+          "score": 2,
+          "tags": ["medication"]
+        }
+      ]
+    },
+    {
+      "id": "D5",
+      "question": "What specific return precautions are needed, if any?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D5.O1",
+          "text": "Advise urgent care for fever, flank pain, nausea, or worsening symptoms.",
+          "score": 9,
+          "tags": ["counseling"],
+          "parts": [
+            "Seek urgent care if fever develops.",
+            "Seek urgent care if flank pain develops.",
+            "Seek urgent care if nausea develops.",
+            "Seek urgent care if symptoms worsen."
+          ]
+        },
+        {
+          "id": "D5.O2",
+          "text": "Advise that fever, flank pain, or nausea can be managed at home without urgent assessment.",
+          "score": 1,
+          "tags": ["counseling"]
+        }
+      ]
+    },
+    {
+      "id": "D6",
+      "question": "What additional testing is needed?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D6.O1",
+          "text": "No additional testing is needed.",
+          "score": 9,
+          "tags": ["diagnostic", "none"]
+        }
+      ]
+    },
+    {
+      "id": "D7",
+      "question": "What additional treatment is needed now?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D7.O1",
+          "text": "No additional treatment is needed now.",
+          "score": 9,
+          "tags": ["medication", "none"]
+        },
+        {
+          "id": "D7.O2",
+          "text": "Prescribe opioids for urinary pain.",
+          "score": 2,
+          "tags": ["medication"]
+        }
+      ]
+    }
+  ]
+}

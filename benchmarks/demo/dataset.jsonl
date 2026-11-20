@@ -1,0 +1,5 @@
+{"id": "demo-1", "prompt": "What is the capital of France? Respond with only the city name.", "ground_truth": "Paris"}
+{"id": "demo-2", "prompt": "What is 2 + 2? Respond with only the number.", "ground_truth": "4"}
+{"id": "demo-3", "prompt": "What organ pumps blood through the body? Respond with one word.", "ground_truth": "heart"}
+{"id": "demo-4", "prompt": "Which letter comes after B in the English alphabet? Respond with one letter.", "ground_truth": "C"}
+{"id": "demo-5", "prompt": "Name the largest planet in our solar system. Respond with one word.", "ground_truth": "Jupiter"}

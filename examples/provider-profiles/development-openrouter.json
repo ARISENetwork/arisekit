@@ -1,0 +1,22 @@
+{
+  "name": "development-openrouter",
+  "provider": "openrouter",
+  "model": "openrouter/openai/gpt-4o-mini",
+  "parameters": {
+    "temperature": 0,
+    "max_tokens": 256
+  },
+  "supported_parameters": [
+    "max_tokens",
+    "temperature",
+    "tools",
+    "tool_choice"
+  ],
+  "api_key_env": "OPENROUTER_API_KEY",
+  "api_base_env": null,
+  "api_version_env": null,
+  "token_env": null,
+  "timeout": 45.0,
+  "development_only": true,
+  "schema_version": "arisekit.provider-profile.v1"
+}

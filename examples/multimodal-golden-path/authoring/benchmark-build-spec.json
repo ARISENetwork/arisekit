@@ -1,0 +1,135 @@
+{
+  "artifacts": [
+    {
+      "path": "need-statement.md",
+      "role": "need-statement",
+      "sha256": "dda21f38fb03a98cd28c78b9c2e2002171afb764fc859dfed71f229d78925485"
+    },
+    {
+      "path": "existing-coverage.md",
+      "role": "existing-coverage",
+      "sha256": "32d6eda01fd4322d7af187e7e4aad1572026849512231ecfe10232e2c8d9a860"
+    },
+    {
+      "path": "compliance-scope.md",
+      "role": "compliance-scope",
+      "sha256": "20599bca98e9830b64d00faae09060f33adb64fb73d243f09197f4b645559f70"
+    },
+    {
+      "path": "data-profile.md",
+      "role": "data-profile",
+      "sha256": "b0427b93f90adfb398bf8a5d201007a4aa50ed7e980993f68324c66c6e69c55a"
+    },
+    {
+      "path": "rubric.md",
+      "role": "rubric",
+      "sha256": "eb025adc7e4d2e278f18f70b6c879d475f860a16a174cd3ce286e320f34c3d06"
+    },
+    {
+      "path": "study-plan.md",
+      "role": "study-plan",
+      "sha256": "be1123518ddbe12b64af75284b0447ec175ce5a31a76b05ca3ee5a5acecfef60"
+    },
+    {
+      "path": "implementation-plan.md",
+      "role": "implementation-plan",
+      "sha256": "6073cf45ccefbfcffcb696a70a9fb91b287c3dc142f26bbe33bb68fee72587ae"
+    }
+  ],
+  "benchmark": {
+    "description": "A portable synthetic multimodal image-attachment fixture.",
+    "mast_category": "multimodal",
+    "mast_compatible": true,
+    "modality": "multimodal",
+    "name": "Multimodal attachment golden path",
+    "slug": "multimodal-golden-path",
+    "version": "0.1.0"
+  },
+  "data_governance": {
+    "classification": "synthetic",
+    "materialization_authorization": {
+      "actor": "ARISEKit fixture steward",
+      "authorized": true,
+      "confirmed_at": "2026-09-02T14:01:00Z",
+      "text": "I authorize the synthetic source rows and exact image attachment bytes to be copied into a public benchmark package."
+    },
+    "release_posture": "public"
+  },
+  "first_sweep": [
+    {
+      "model": "stub/reference",
+      "provider": "stub",
+      "trials": 1
+    }
+  ],
+  "multimodal": {
+    "assets": [
+      {
+        "media_type": "image/png",
+        "path": "attachments/synthetic-frontal.png",
+        "sha256": "34eaaac89ef7448f748012e5682f1effa65823142803f7515cddac8e9f57c06b",
+        "size_bytes": 1748256
+      }
+    ],
+    "schema_version": "arisekit.image-attachments.v1"
+  },
+  "readiness": {
+    "allowed_model_routes": [
+      "stub/reference"
+    ],
+    "data_profile": "materialized",
+    "library_gaps": [],
+    "open_questions": [],
+    "status": "ready",
+    "user_confirmation": {
+      "actor": "ARISEKit fixture author",
+      "confirmed_at": "2026-09-02T14:00:00Z",
+      "text": "This is the intended synthetic multimodal attachment benchmark."
+    }
+  },
+  "runner": {
+    "max_calls": null,
+    "max_cost": null,
+    "max_cost_per_call": null,
+    "max_retries": 1,
+    "max_tokens": 128,
+    "require_known_cost": true,
+    "retry_backoff": 0.0,
+    "temperature": 0.0,
+    "threads": 1,
+    "trials": 1
+  },
+  "schema_version": "arisekit.benchmark-build-spec.v3",
+  "scorer": {
+    "kind": "exact-match",
+    "options": {
+      "case_sensitive": true,
+      "name": "attachment_transport_exact_match",
+      "strip": true
+    },
+    "primitive": "arisekit.scorer.exact_match"
+  },
+  "smoke_test": {
+    "limit": 1,
+    "model": "stub/reference",
+    "trials": 1
+  },
+  "source": {
+    "field_map": {
+      "attachments": "attachments",
+      "ground_truth": "reference_response",
+      "id": "case_id",
+      "metadata": {
+        "specialty": "specialty"
+      },
+      "prompt": "prompt"
+    },
+    "kind": "jsonl",
+    "path": "cases.synthetic.jsonl",
+    "sha256": "32b2341af295f320c591a90a4e7185b70033ea96c279a63d20dd9f12560c522c",
+    "system_prompt": {
+      "sha256": "e91775679e756c4d87d970548831e267e723dd8d08f5cc87dcad92c7c64b124a",
+      "text": "Inspect every attached image before answering."
+    }
+  }
+}

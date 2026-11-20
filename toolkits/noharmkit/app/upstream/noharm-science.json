@@ -1,0 +1,96 @@
+{
+  "sourceRepository": "https://github.com/davidwumdphd/noharm-science",
+  "sourceCommit": "fa69dbc0033bcf5be3ac6705735917e6378a4620",
+  "integrationPatch": "app/upstream/noharm-science.patch",
+  "integrationPatchSha256": "66d5e43ffc9f9f8fb0e3ece4db0217187c2c91de85314c25d23b76531aa60e7d",
+  "files": {
+    "harmreview/components/CaseSourcePanel.tsx": {
+      "upstreamSha256": "e537b4b34b8d4ff29fbd75404ccc586ec08dabb34e659349940469281162a1cf",
+      "toolkitSha256": "9e4560ac4962d7e70050621da3aa850b98623a9b9a66cc86de566b430686b8e6"
+    },
+    "harmreview/components/Dropdown.module.css": {
+      "upstreamSha256": "26153d42dd28e20edcbb7f338cd0b6e7e3ff4f1f2f0a73dfcd79a9d1cca2ca5a",
+      "toolkitSha256": "26153d42dd28e20edcbb7f338cd0b6e7e3ff4f1f2f0a73dfcd79a9d1cca2ca5a"
+    },
+    "harmreview/components/Dropdown.tsx": {
+      "upstreamSha256": "7d0cfe3708b98bb8731e97fd3d878c7daa93c5803726f06c0d0dfc7c8c90f7fc",
+      "toolkitSha256": "b9a87f645ef571710c2a3ed9914778c683a5e8bfa87e0d76c8c4847c2beb87e2"
+    },
+    "harmreview/components/RemovalDialog.module.css": {
+      "upstreamSha256": "f57a769f809ef955fd5ce0552fbb7d19dd40c48f9a61b4d49043dbf3e55e4a5b",
+      "toolkitSha256": "f57a769f809ef955fd5ce0552fbb7d19dd40c48f9a61b4d49043dbf3e55e4a5b"
+    },
+    "harmreview/components/RemovalDialog.tsx": {
+      "upstreamSha256": "35b1c0e534dd4467521b37752addbd96acab9a0a0f84c20aff96304a36bf60d6",
+      "toolkitSha256": "35b1c0e534dd4467521b37752addbd96acab9a0a0f84c20aff96304a36bf60d6"
+    },
+    "harmreview/components/RubricEditor.module.css": {
+      "upstreamSha256": "f7b13201b1c2066a5c492ce2994561112b6899146c4fa32fe3829a3dd64c28b1",
+      "toolkitSha256": "f7b13201b1c2066a5c492ce2994561112b6899146c4fa32fe3829a3dd64c28b1"
+    },
+    "harmreview/components/RubricEditor.tsx": {
+      "upstreamSha256": "c0d6a9ad2a3e77ec609ec77a9f34917d2792dbf7df6cffb274ef34255289dc1f",
+      "toolkitSha256": "a9cf266e6536bd4b4eb9dd4a7b9bc540841471432c9e5a28bc117bf17e2b075d"
+    },
+    "harmreview/components/RubricGuide.tsx": {
+      "upstreamSha256": "a87ae9f1c5815eca69f5f80a78bdda6fe4f61a6e2617ef5756f3a7772fcb2ea7",
+      "toolkitSha256": "aff61c93abb53c8791a7b93a9a7097013c95afcd715e818f4c3f9e994bf12431"
+    },
+    "harmreview/components/RubricPanel.module.css": {
+      "upstreamSha256": "dd1a52a4031a7e1dda037e493c7274159b6c909e9f264b920fffcc5c50bede22",
+      "toolkitSha256": "dd1a52a4031a7e1dda037e493c7274159b6c909e9f264b920fffcc5c50bede22"
+    },
+    "harmreview/components/RubricPanel.tsx": {
+      "upstreamSha256": "66a367fe98c53e147107a1e3cf7e7c01dc85add38f08a355effb9f8a080f4be6",
+      "toolkitSha256": "1cc0c965ee0437154c2ce06782528a89b8fa586c603087964c8fb0922ae7a1fc"
+    },
+    "harmreview/components/RubricTutorial.module.css": {
+      "upstreamSha256": "d07856cd53daf61b28381210617e4246ab475241f1b030e53298512593ce9d91",
+      "toolkitSha256": "d07856cd53daf61b28381210617e4246ab475241f1b030e53298512593ce9d91"
+    },
+    "harmreview/components/RubricTutorial.tsx": {
+      "upstreamSha256": "bc044acb276ec5e80228c673e284e0a02bc7d9bc14d695f4b7e9557453e7cb9b",
+      "toolkitSha256": "95491d24348072f657eb967854a41f9fa37d4517fc2b46b15f2c6b7e643f52c2"
+    },
+    "harmreview/data/tutorial/copy.json": {
+      "upstreamSha256": "84421579cf987cac9b3447b65848d4290b2f0adf9f02ff108f912a291e560447",
+      "toolkitSha256": "4f0dadfec921e2faa5de36c20e8fc89e23a1bd2c5927219d7b62e050d63ce153"
+    },
+    "harmreview/data/tutorial/uti.json": {
+      "upstreamSha256": "687b24b4c91ba95499cb5d08de23ab192f381e3528949ee3e7bf5569a3e3051d",
+      "toolkitSha256": "687b24b4c91ba95499cb5d08de23ab192f381e3528949ee3e7bf5569a3e3051d"
+    },
+    "harmreview/lib/clinician-review.ts": {
+      "upstreamSha256": "47596c5c8a4168a108135c6657f362504af5d0dfc2d6ff4fd3e0d39722e73e65",
+      "toolkitSha256": "47596c5c8a4168a108135c6657f362504af5d0dfc2d6ff4fd3e0d39722e73e65"
+    },
+    "harmreview/lib/dropdown.ts": {
+      "upstreamSha256": "761325bf9c3a208776a25568180fb65139320ca0a73fc4453ec2a09293406344",
+      "toolkitSha256": "761325bf9c3a208776a25568180fb65139320ca0a73fc4453ec2a09293406344"
+    },
+    "harmreview/lib/reviewer-id.ts": {
+      "upstreamSha256": "f0a4862d1402ab6eec024aa8585014747cf40f2c364483103e759595aafde490",
+      "toolkitSha256": "df54f98c4dac98907ceb7aa2013293898062edb56cdd79a5df09cd9ae98e30f7"
+    },
+    "harmreview/lib/rubric-text-v2.ts": {
+      "upstreamSha256": "319458830a032cbca3019667fa4c6e7489180c0bd489d8e06a642c49443cf2c6",
+      "toolkitSha256": "319458830a032cbca3019667fa4c6e7489180c0bd489d8e06a642c49443cf2c6"
+    },
+    "harmreview/lib/rubric-tutorial.ts": {
+      "upstreamSha256": "57d1174e85b14261b907b4bcf3555da9192b5b561cb2579ee3daa183d6a96fbc",
+      "toolkitSha256": "14384ae9d011a9380de817a29e704f550f0b7449c786c807e58cc49d8b91ee3e"
+    },
+    "harmreview/lib/rubric.ts": {
+      "upstreamSha256": "18a2628f36fc56b3370fb35478d8a49adecb1cb0d7f46f9aac460ea598bccca3",
+      "toolkitSha256": "18a2628f36fc56b3370fb35478d8a49adecb1cb0d7f46f9aac460ea598bccca3"
+    },
+    "harmreview/lib/tutorial-placement.ts": {
+      "upstreamSha256": "434bc3f280d5d7a8277215ac862299210beefad0f9315c737641f24d8859f78b",
+      "toolkitSha256": "434bc3f280d5d7a8277215ac862299210beefad0f9315c737641f24d8859f78b"
+    },
+    "harmreview/lib/types.ts": {
+      "upstreamSha256": "e56661e2c13e0ce745901d47cf40abb3a836c0298a15b8fa9ba6a8f69e62ad1b",
+      "toolkitSha256": "e56661e2c13e0ce745901d47cf40abb3a836c0298a15b8fa9ba6a8f69e62ad1b"
+    }
+  }
+}

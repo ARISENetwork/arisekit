@@ -1,0 +1,10 @@
+{
+  "scale": [0, 1],
+  "criteria": [
+    {
+      "id": "exact_answer",
+      "description": "Response exactly matches the ground-truth answer.",
+      "weight": 1.0
+    }
+  ]
+}

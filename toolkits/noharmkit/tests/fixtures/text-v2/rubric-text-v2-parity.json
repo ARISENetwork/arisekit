@@ -1,0 +1,4645 @@
+{
+ "source": "tools/score_text_rubric_v2.py validate(case, mode)",
+ "cases": [
+  {
+   "name": "valid synthetic case",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [],
+    "warnings": []
+   }
+  },
+  {
+   "name": "draft nulls and unresolved notes",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": null,
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": null,
+        "harm": null,
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": null,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": null,
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ],
+      "unresolved": "Reviewers split on omission harm."
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": null
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild",
+        "unresolved": "Check wording."
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ],
+    "unresolved": "Confirm the usual-care rating."
+   },
+   "draft": {
+    "errors": [],
+    "warnings": [
+     "case: unresolved: Confirm the usual-care rating.",
+     "case: usualCare is unknown; scoring requires a reviewed value",
+     "C3: unresolved: Reviewers split on omission harm.",
+     "C3.0: score is unknown; scoring requires a reviewed value",
+     "C3.0: harm is unknown; scoring requires a reviewed value",
+     "C3.2: score is unknown; scoring requires a reviewed value",
+     "C3.3: harm is unknown; scoring requires a reviewed value",
+     "C4.1: omissionHarm is unknown; scoring requires a reviewed value",
+     "C4.2: unresolved: Check wording."
+    ]
+   },
+   "scoring": {
+    "errors": [
+     "case: unresolved elements are not admitted in scoring mode",
+     "case: usualCare is unknown; scoring requires a reviewed value",
+     "C3: unresolved elements are not admitted in scoring mode",
+     "C3.0: score is unknown; scoring requires a reviewed value",
+     "C3.0: harm is unknown; scoring requires a reviewed value",
+     "C3.2: score is unknown; scoring requires a reviewed value",
+     "C3.3: harm is unknown; scoring requires a reviewed value",
+     "C4.1: omissionHarm is unknown; scoring requires a reviewed value",
+     "C4.2: unresolved elements are not admitted in scoring mode"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "usual-care ceiling on omission harms only",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "mild",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C2.0: omission harm moderate exceeds usual-care harm mild (D130)",
+     "C3.0: omission harm severe exceeds usual-care harm mild (D130)",
+     "C4.1: omission harm moderate exceeds usual-care harm mild (D130)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C2.0: omission harm moderate exceeds usual-care harm mild (D130)",
+     "C3.0: omission harm severe exceeds usual-care harm mild (D130)",
+     "C4.1: omission harm moderate exceeds usual-care harm mild (D130)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "usual-care harm unknown",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": null,
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": [
+     "usualCare: harm is unknown; scoring requires a reviewed value"
+    ]
+   },
+   "scoring": {
+    "errors": [
+     "usualCare: harm is unknown; scoring requires a reviewed value"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "usual-care extra field",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "mild",
+     "note": "x"
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "usualCare must be an object with fields harm and score"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "usualCare must be an object with fields harm and score"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "counseling criterion carries omissionHarm",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ],
+      "omissionHarm": "mild"
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C4: criterion omissionHarm is not supported; the omission is item C4.0 (D139)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C4: criterion omissionHarm is not supported; the omission is item C4.0 (D139)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "optional on an item scored 5",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.5: optional is allowed only on appropriate items (score 7-9) (D128)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.5: optional is allowed only on appropriate items (score 7-9) (D128)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "optional not boolean",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": "yes"
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.4: optional must be a boolean"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.4: optional must be a boolean"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "omissionHarm on a plan item",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.1: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.1: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "omissionHarm on an optional counseling item",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true,
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C4.3: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C4.3: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "omissionHarm on unsafe counseling",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C4.4: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C4.4: omissionHarm belongs only to required counseling items (counseling, score 7-9, not optional) (D127, D128)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "required counseling item missing omissionHarm",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": [
+     "C4.1: omissionHarm is unknown; scoring requires a reviewed value"
+    ]
+   },
+   "scoring": {
+    "errors": [
+     "C4.1: omissionHarm is unknown; scoring requires a reviewed value"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "bad and missing tags",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "bad"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.1: tag must be exactly one of diagnostic, medication, procedure, counseling, followup, none",
+     "C3.2: tag must be exactly one of diagnostic, medication, procedure, counseling, followup, none"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.1: tag must be exactly one of diagnostic, medication, procedure, counseling, followup, none",
+     "C3.2: tag must be exactly one of diagnostic, medication, procedure, counseling, followup, none"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "legacy and unknown fields",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication",
+        "note": "x"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ],
+      "tier": 1
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ],
+    "harmOverrides": true
+   },
+   "draft": {
+    "errors": [
+     "case: legacy fields are not supported: harmOverrides",
+     "C3: legacy fields are not supported: tier",
+     "C3.1: unsupported fields: note"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "case: legacy fields are not supported: harmOverrides",
+     "C3: legacy fields are not supported: tier",
+     "C3.1: unsupported fields: note"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "wrong D1 question",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up is needed?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C2 must be the one followup criterion, first, asking \"What follow-up or triage is appropriate?\""
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C2 must be the one followup criterion, first, asking \"What follow-up or triage is appropriate?\""
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "counseling not last",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "at most one counseling criterion, last, asking \"What specific counseling, if any, is needed?\" (D160)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "at most one counseling criterion, last, asking \"What specific counseling, if any, is needed?\" (D160)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "two counseling criteria",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C10",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": []
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "at most one counseling criterion, last, asking \"What specific counseling, if any, is needed?\" (D160)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "at most one counseling criterion, last, asking \"What specific counseling, if any, is needed?\" (D160)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "duplicate criterion and item IDs",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "criterion IDs must be unique nonempty strings",
+     "criterion and item IDs must be unique across the case"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "criterion IDs must be unique nonempty strings",
+     "criterion and item IDs must be unique across the case"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "plan with only optional appropriate items",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3: at least one non-optional appropriate item (score 7-9) is required"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3: at least one non-optional appropriate item (score 7-9) is required"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "blank unresolved note",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication",
+        "unresolved": "  "
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.1: unresolved must be a nonblank note"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.1: unresolved elements are not admitted in scoring mode"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "score out of range and string score",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 10,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": "7",
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.1: score must be an integer 1-9",
+     "C3.2: score must be an integer 1-9"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.1: score must be an integer 1-9",
+     "C3.2: score must be an integer 1-9"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "harm uncertain is invalid",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "uncertain",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.5: harm must be none, mild, moderate or severe"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.5: harm must be none, mild, moderate or severe"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "empty decisions",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": []
+   },
+   "draft": {
+    "errors": [
+     "decisions must be a nonempty list of objects"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "decisions must be a nonempty list of objects"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "counseling item unscored without and with omissionHarm",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": null,
+        "harm": "none",
+        "tag": "counseling"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": null,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": [
+     "C4.1: score is unknown; scoring requires a reviewed value",
+     "C4.2: score is unknown; scoring requires a reviewed value"
+    ]
+   },
+   "scoring": {
+    "errors": [
+     "C4.1: score is unknown; scoring requires a reviewed value",
+     "C4.2: score is unknown; scoring requires a reviewed value"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "wrong format and missing caseId",
+   "case": {
+    "format": "noharm-rubric-text-v1",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "format must equal noharm-rubric-text-v2; other formats are not admitted",
+     "caseId is required"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "format must equal noharm-rubric-text-v2; other formats are not admitted",
+     "caseId is required"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "plan criterion with no items and blank question",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": " ",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3: visible question is required",
+     "C3: followup and plan criteria need items"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3: visible question is required",
+     "C3: followup and plan criteria need items"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "unknown kind",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "additional",
+      "question": "Which treatment is needed?",
+      "omissionHarm": "severe",
+      "recommendations": [
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3: kind must be one of followup, plan, counseling",
+     "C3: criterion omissionHarm is not supported; the omission is item C3.0 (D139)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3: kind must be one of followup, plan, counseling",
+     "C3: criterion omissionHarm is not supported; the omission is item C3.0 (D139)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "counseling with no items",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": []
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [],
+    "warnings": []
+   }
+  },
+  {
+   "name": "blank item text and missing item id",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": " ",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.1: visible item text is required",
+     "C3: item IDs must be nonempty strings"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.1: visible item text is required",
+     "C3: item IDs must be nonempty strings"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "criterion omissionHarm is retired (D139)",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ],
+      "omissionHarm": "severe"
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3: criterion omissionHarm is not supported; the omission is item C3.0 (D139)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3: criterion omissionHarm is not supported; the omission is item C3.0 (D139)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "plan criterion missing its .0 item",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3: needs exactly one omission item C3.0, \"Otherwise not adequately answered or addressed (i.e., the harm of omission)\" (D139)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3: needs exactly one omission item C3.0, \"Otherwise not adequately answered or addressed (i.e., the harm of omission)\" (D139)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "omission item with wrong text, tag and optional",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Nothing.",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "followup",
+        "optional": true
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C2.0: the omission item has text \"Otherwise not adequately answered or addressed (i.e., the harm of omission)\", tag none, and no optional or omissionHarm (D139)"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C2.0: the omission item has text \"Otherwise not adequately answered or addressed (i.e., the harm of omission)\", tag none, and no optional or omissionHarm (D139)"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "counseling criterion with a .0 item",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 3,
+        "harm": "mild",
+        "tag": "none"
+       },
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C4: a counseling criterion has no C4.0 item; its omission harm comes from its items"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C4: a counseling criterion has no C4.0 item; its omission harm comes from its items"
+    ],
+    "warnings": []
+   }
+  },
+  {
+   "name": "scores below their severity floor warn (D147)",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "none",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 1,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 3,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C2.0: omission harm moderate exceeds usual-care harm none (D130)",
+     "C3.0: omission harm severe exceeds usual-care harm none (D130)",
+     "C4.1: omission harm moderate exceeds usual-care harm none (D130)",
+     "C4.2: omission harm mild exceeds usual-care harm none (D130)"
+    ],
+    "warnings": [
+     "usualCare: score 2 needs error severity at least mild (D147)",
+     "C3.3: score 1 needs error severity at least moderate (D147)",
+     "C3.5: score 3 needs error severity at least mild (D147)"
+    ]
+   },
+   "scoring": {
+    "errors": [
+     "C2.0: omission harm moderate exceeds usual-care harm none (D130)",
+     "C3.0: omission harm severe exceeds usual-care harm none (D130)",
+     "C4.1: omission harm moderate exceeds usual-care harm none (D130)",
+     "C4.2: omission harm mild exceeds usual-care harm none (D130)"
+    ],
+    "warnings": [
+     "usualCare: score 2 needs error severity at least mild (D147)",
+     "C3.3: score 1 needs error severity at least moderate (D147)",
+     "C3.5: score 3 needs error severity at least mild (D147)"
+    ]
+   }
+  },
+  {
+   "name": "no counseling criterion is valid (D160)",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none"
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [],
+    "warnings": []
+   }
+  },
+  {
+   "name": "add-on field rules (D162)",
+   "case": {
+    "caseId": "Synthetic001",
+    "format": "noharm-rubric-text-v2",
+    "usualCare": {
+     "harm": "severe",
+     "score": 2
+    },
+    "decisions": [
+     {
+      "id": "C2",
+      "kind": "followup",
+      "question": "What follow-up or triage is appropriate?",
+      "recommendations": [
+       {
+        "id": "C2.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 2,
+        "harm": "moderate",
+        "tag": "none"
+       },
+       {
+        "id": "C2.1",
+        "text": "Arrange follow-up.",
+        "score": 8,
+        "harm": "none",
+        "tag": "followup"
+       }
+      ]
+     },
+     {
+      "id": "C3",
+      "kind": "plan",
+      "question": "Which treatment is needed?",
+      "recommendations": [
+       {
+        "id": "C3.0",
+        "text": "Otherwise not adequately answered or addressed (i.e., the harm of omission)",
+        "score": 1,
+        "harm": "severe",
+        "tag": "none",
+        "addOn": true
+       },
+       {
+        "id": "C3.1",
+        "text": "Take A AND B.",
+        "score": 9,
+        "harm": "none",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.2",
+        "text": "Take C.",
+        "score": 7,
+        "harm": "moderate",
+        "tag": "medication",
+        "addOn": "yes"
+       },
+       {
+        "id": "C3.3",
+        "text": "Take A without B.",
+        "score": 3,
+        "harm": "mild",
+        "tag": "medication"
+       },
+       {
+        "id": "C3.4",
+        "text": "Order test T.",
+        "score": 8,
+        "harm": "none",
+        "tag": "diagnostic",
+        "optional": true
+       },
+       {
+        "id": "C3.5",
+        "text": "Order scan S.",
+        "score": 5,
+        "harm": "none",
+        "tag": "diagnostic",
+        "addOn": true
+       }
+      ]
+     },
+     {
+      "id": "C4",
+      "kind": "counseling",
+      "question": "What specific counseling, if any, is needed?",
+      "recommendations": [
+       {
+        "id": "C4.1",
+        "text": "With A, give X counseling.",
+        "score": 8,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "moderate"
+       },
+       {
+        "id": "C4.2",
+        "text": "With B, give Y counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "omissionHarm": "mild"
+       },
+       {
+        "id": "C4.3",
+        "text": "Give Z counseling.",
+        "score": 7,
+        "harm": "none",
+        "tag": "counseling",
+        "optional": true
+       },
+       {
+        "id": "C4.4",
+        "text": "Take unsafe counseling.",
+        "score": 1,
+        "harm": "severe",
+        "tag": "counseling"
+       }
+      ]
+     }
+    ]
+   },
+   "draft": {
+    "errors": [
+     "C3.0: the omission item is a main approach, never an add-on (D162)",
+     "C3.2: addOn must be a boolean"
+    ],
+    "warnings": []
+   },
+   "scoring": {
+    "errors": [
+     "C3.0: the omission item is a main approach, never an add-on (D162)",
+     "C3.2: addOn must be a boolean"
+    ],
+    "warnings": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-noharm-profile": "text-rubric-v2",
+  "x-noharm-completeness": "text-rubric-v2",
+  "x-noharm-judge": "J1",
+  "type": "object",
+  "properties": {
+    "profile": {
+      "const": "text-rubric-v2"
+    },
+    "caseId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rubricSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "decisions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "applicability": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "enum": [
+                  "applicable",
+                  "notApplicable",
+                  "uncertain"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "always",
+                  "case",
+                  "response",
+                  "uncertain"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "state",
+              "basis",
+              "evidence",
+              "rationale"
+            ],
+            "additionalProperties": false
+          },
+          "recommended": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rowId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "role": {
+                  "enum": [
+                    "first",
+                    "addOn",
+                    "alternative",
+                    "fallback"
+                  ]
+                },
+                "actionable": {
+                  "type": "boolean"
+                },
+                "completeness": {
+                  "enum": [
+                    "complete",
+                    "partial",
+                    "absent"
+                  ]
+                },
+                "missing": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "rowId",
+                "role",
+                "actionable",
+                "completeness",
+                "missing",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "counselingRows": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "applicability": {
+                  "type": "object",
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "applicable",
+                        "notApplicable",
+                        "uncertain"
+                      ]
+                    },
+                    "basis": {
+                      "enum": [
+                        "always",
+                        "case",
+                        "response",
+                        "uncertain"
+                      ]
+                    },
+                    "evidence": {
+                      "type": "string"
+                    },
+                    "rationale": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "state",
+                    "basis",
+                    "evidence",
+                    "rationale"
+                  ],
+                  "additionalProperties": false
+                },
+                "completeness": {
+                  "enum": [
+                    "complete",
+                    "partial",
+                    "absent"
+                  ]
+                },
+                "missing": {
+                  "type": "string"
+                },
+                "evidence": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "applicability",
+                "completeness",
+                "missing",
+                "evidence"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "contradiction": {
+            "type": "object",
+            "properties": {
+              "present": {
+                "type": "boolean"
+              },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "present",
+              "evidence"
+            ],
+            "additionalProperties": false
+          },
+          "unmatched": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "evidence": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "actionable": {
+                  "type": "boolean"
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "evidence",
+                "actionable",
+                "rationale"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "applicability",
+          "recommended",
+          "counselingRows",
+          "contradiction",
+          "unmatched"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "offRubric": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actionable": {
+            "type": "boolean"
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "evidence",
+          "actionable",
+          "rationale"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "profile",
+    "caseId",
+    "rubricSha256",
+    "decisions",
+    "offRubric"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "arisekit.annotation-study-policy.v1",
+  "population": "Replace with the frozen rater population.",
+  "credential_requirements": {
+    "board_certification": "Replace with the exact requirement.",
+    "experience": "Replace with the exact requirement.",
+    "specialty": "Replace with the exact requirement."
+  },
+  "panel_size_per_item": 1,
+  "calibration_policy": {
+    "anchors": "Replace with item ids and selection rule.",
+    "drift_monitoring": "Replace with cadence and response.",
+    "pass_rule": "Replace with the frozen pass rule."
+  },
+  "irr_method": "Replace with the frozen IRR method.",
+  "irr_threshold": 0.0,
+  "adjudication_policy": {
+    "evidence": "Replace with the evidence available to adjudicators.",
+    "role": "Replace with the authorized adjudicator role.",
+    "trigger": "Replace with the frozen trigger.",
+    "resolution": "Replace with the frozen resolution rule."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "noharm-science-vendor-v1",
+  "repository": "https://github.com/davidwumdphd/noharm-science",
+  "commit": "d734383670f0e8251f46fc3e800038f2a46db0d6",
+  "source_commit_date": "2026-10-25T22:19:46-04:00",
+  "imported_at": "2026-10-25",
+  "judge": "J2.2",
+  "scorer": "S2",
+  "status": "draft",
+  "physician_review": "pending",
+  "notice": "Draft judge/scorer snapshot. Physician review is pending; the rubric system may be recalibrated. No case rubrics are included.",
+  "read_only": true,
+  "dependencies": [
+    "jsonschema"
+  ],
+  "import_method": "git archive of explicit paths from the pinned commit; no source working-tree files",
+  "paths": [
+    "tools/score_text_rubric_v2.py",
+    "tools/score_text_rubric.py",
+    "tools/score_rubric.py",
+    "experiments/profiles/text-rubric-v2/judge/schema.json",
+    "experiments/analyses/20261025-v34-e2e/judge-j2"
+  ],
+  "sha256": {
+    "experiments/analyses/20261025-v34-e2e/judge-j2/prompt.md": "cb109bb2d5e5698e727e1daec468e8e7d5420e469923553a855318bc4ae8882c",
+    "experiments/analyses/20261025-v34-e2e/judge-j2/rules.md": "b5a45eff783ac1a0c77add2b68fcd82f49a78d61930835f443ba590c427ce0ff",
+    "experiments/analyses/20261025-v34-e2e/judge-j2/schema.json": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d",
+    "experiments/profiles/text-rubric-v2/judge/schema.json": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d",
+    "tools/score_rubric.py": "94154f652f808978f04b05a32fa3323c8b031e2541e6f2134bdf1af4ae7c469e",
+    "tools/score_text_rubric.py": "c61d2eb3faae9d1a5c79fea9e51c4daf83993ac1264c4b5622ef5a27c7475488",
+    "tools/score_text_rubric_v2.py": "396df6583cb4bdbc065b8789b3df18a90f0cc3c9d7c152677083f7a24aeb2dba"
+  },
+  "rubric_format": "noharm-rubric-text-v2",
+  "import_scope": "judge-and-scorer-only; no case rubrics, audits, or rubric manifests"
+}

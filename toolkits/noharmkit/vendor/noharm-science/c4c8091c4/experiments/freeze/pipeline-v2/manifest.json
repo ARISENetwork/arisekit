@@ -1,0 +1,10 @@
+{
+ "extends": "pipeline-v1",
+ "freeze": "pipeline-v2",
+ "sha256": {
+  "experiments/freeze/pipeline-v1/manifest.json": "e7f1c0f08c4b21dad831eef327b879ac67a2834d6e218e5d8342c797a151fa56",
+  "tools/noharm_pipeline_v2.py": "71a6a4d04e94b4f5aceb4d2214ef3e8db56eb3dc4da3d2b15669250630810e31",
+  "tools/score_text_rubric_f1.py": "6593471ea9c38d9eda077044ed03c7f7e103e45f40fe70a244fb9caa1a31ea64"
+ },
+ "written": "2026-11-04"
+}

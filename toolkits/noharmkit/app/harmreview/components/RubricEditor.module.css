@@ -1,0 +1,182 @@
+.root {
+  --rubric-columns: 72px minmax(240px, 1fr) 230px 204px 44px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .root :global(.group-content-wrapper) {
+    transition: grid-template-rows 320ms cubic-bezier(.25, .8, .25, 1), opacity 240ms ease-out;
+  }
+
+  .root :global(.transition-transform) {
+    transition-duration: 320ms;
+    transition-timing-function: cubic-bezier(.25, .8, .25, 1);
+  }
+}
+
+/* The picture under the pointer while a row is dragged: one row, lifted onto a card. */
+.dragGhost {
+  position: fixed;
+  z-index: 60;
+  container: rubric-card / inline-size;
+  pointer-events: none;
+  border: 1px solid hsl(var(--border));
+  border-radius: .5rem;
+  background: hsl(var(--card));
+}
+
+.root [data-decision-body] {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.root [data-row-grid] {
+  grid-template-columns: var(--rubric-columns);
+  min-width: 0;
+}
+
+.root [data-rubric-card] {
+  container: rubric-card / inline-size;
+  min-width: 0;
+}
+
+.root [data-row-grid] > * {
+  min-width: 0;
+}
+
+.root [data-row-grid] > :nth-child(2) {
+  padding-right: .75rem;
+}
+
+.root [data-v2-cell-label] { display: none; }
+
+@container rubric-card (max-width: 51rem) {
+  .root [data-row-header] { display: none; }
+  .root [data-v2-cell-label] { display: block; }
+  .root [data-row-grid][data-v2-row] > :nth-child(4)::before { display: none; }
+
+  .root [data-row-grid]:not([data-row-header]) {
+    grid-template-columns: 72px minmax(226px, 1fr) minmax(172px, 1fr);
+    gap: .5rem .75rem;
+    padding: .75rem;
+  }
+
+  .root [data-row-grid] > :nth-child(1) { grid-column: 1; grid-row: 1 / 3; padding-left: 0; }
+  .root [data-row-grid] > :nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
+  .root [data-row-grid] > :nth-child(3) { grid-column: 2; grid-row: 2; padding-left: 0; }
+  .root [data-row-grid] > :nth-child(4) { grid-column: 3; grid-row: 2; }
+  .root [data-row-grid] > :nth-child(5) { grid-column: 2 / 4; grid-row: 3; justify-self: end; }
+
+  .root [data-row-grid]:not([data-special-row]) > :nth-child(3)::before {
+    display: block;
+    margin-bottom: .375rem;
+    color: hsl(var(--muted-foreground));
+    font-size: .75rem;
+    content: "Appropriateness";
+  }
+
+  .root [data-row-grid] > :nth-child(4)::before {
+    display: block;
+    margin-bottom: .375rem;
+    color: hsl(var(--muted-foreground));
+    font-size: .75rem;
+    content: "Harm";
+  }
+
+  .root [data-row-grid] [data-rating-bar] { padding-left: 0; }
+}
+
+@container rubric-card (max-width: 36rem) {
+  .root [data-row-grid]:not([data-row-header]) {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .root [data-row-grid] > :nth-child(n+2) { grid-column: 2; }
+  .root [data-row-grid] > :nth-child(4) { grid-row: 3; }
+  .root [data-row-grid] > :nth-child(5) { grid-row: 4; }
+}
+
+.root [data-rating-bar] > button {
+  width: 22px;
+  height: 28px;
+  flex-shrink: 0;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.root [data-rating-bar] > button[aria-pressed="false"] {
+  color: hsl(var(--foreground));
+  font-weight: 500;
+}
+
+.root [data-rating-bar] > button[aria-pressed="true"] {
+  font-weight: 700;
+}
+
+.root [data-rating-bar] > button:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.root [data-row-action] {
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.root [data-row-action]:not(:hover) {
+  color: hsl(var(--foreground));
+}
+
+.root [data-row-action]:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.rubricToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .25rem 0;
+}
+
+.root .disclosureButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .375rem;
+  min-height: 28px;
+  min-width: 6.5rem;
+  padding: .25rem .5rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: .375rem;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  font-size: .75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  cursor: pointer;
+  transition: background 150ms ease-out, border-color 150ms ease-out;
+}
+
+.disclosureButton:hover {
+  background: hsl(var(--muted));
+  border-color: hsl(var(--primary) / .35);
+}
+
+.disclosureButton:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+.disclosureButton svg {
+  flex-shrink: 0;
+  color: hsl(var(--primary));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosureButton { transition: none; }
+}

@@ -1,0 +1,644 @@
+{
+  "validate_config": {
+    "version": 2,
+    "teams": {
+      "generation": {
+        "models": [
+          "test/generator"
+        ],
+        "integrator": ""
+      },
+      "rating": {
+        "models": [],
+        "integrator": ""
+      },
+      "responses": {
+        "models": [
+          "test/response-a",
+          "test/response-b"
+        ],
+        "integrator": "",
+        "modelReasoning": {
+          "test/response-a": "low"
+        }
+      },
+      "judge": {
+        "models": [
+          "test/judge"
+        ],
+        "integrator": ""
+      }
+    }
+  },
+  "v2": {
+    "spec": {
+      "stage": "responses",
+      "version": 2,
+      "method": "web-model-teams-v2/independent-responses-v1",
+      "team": {
+        "models": [
+          "test/response-a",
+          "test/response-b"
+        ],
+        "integrator": "",
+        "modelReasoning": {
+          "test/response-a": "low"
+        }
+      },
+      "trials": 2,
+      "inputs": {
+        "test/response-a": {
+          "Syn002": "e05da00ef22a3b04564630d6c56f61509f18e6f8d40463e52505c2bd9fb08012"
+        },
+        "test/response-b": {
+          "Syn002": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a"
+        }
+      }
+    },
+    "identity": "3c5d59cd88985ada25b56c1f28c1e75839263a1285582662ab24590e64605103",
+    "result": {
+      "type": "result",
+      "status": "completed",
+      "stage": "responses",
+      "errors": [],
+      "operation": "3c5d59cd88985ada25b56c1f28c1e75839263a1285582662ab24590e64605103",
+      "responseModels": [
+        "test/response-a",
+        "test/response-b"
+      ],
+      "responses": 4
+    },
+    "receipts": {
+      "test-response-a": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "e05da00ef22a3b04564630d6c56f61509f18e6f8d40463e52505c2bd9fb08012",
+          "model": "test/response-a",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        },
+        {
+          "id": "Syn002",
+          "trial": 2,
+          "input_sha256": "e05da00ef22a3b04564630d6c56f61509f18e6f8d40463e52505c2bd9fb08012",
+          "model": "test/response-a",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ],
+      "test-response-b": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a",
+          "model": "test/response-b",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {}
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        },
+        {
+          "id": "Syn002",
+          "trial": 2,
+          "input_sha256": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a",
+          "model": "test/response-b",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {}
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "caseset_name": "project",
+      "cases": [
+        "Syn002"
+      ],
+      "trials": 2,
+      "created_at": "<volatile>",
+      "judge_scoring_source_commit": "d734383670f0e8251f46fc3e800038f2a46db0d6",
+      "updated_at": "<volatile>",
+      "case_source": "tests/fixtures/synthetic",
+      "models": [
+        "test/response-a",
+        "test/response-b"
+      ],
+      "inference": {
+        "binding_version": 2,
+        "model_routes": {
+          "test/response-a": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "test/response-b": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {}
+          }
+        },
+        "timeout_seconds": 300,
+        "template_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "operations": {
+      "responses-3c5d59cd88985ada25b56c1f28c1e75839263a1285582662ab24590e64605103.json": {
+        "version": 1,
+        "identity": "3c5d59cd88985ada25b56c1f28c1e75839263a1285582662ab24590e64605103",
+        "spec": {
+          "stage": "responses",
+          "version": 2,
+          "method": "web-model-teams-v2/independent-responses-v1",
+          "team": {
+            "models": [
+              "test/response-a",
+              "test/response-b"
+            ],
+            "integrator": "",
+            "modelReasoning": {
+              "test/response-a": "low"
+            }
+          },
+          "trials": 2,
+          "inputs": {
+            "test/response-a": {
+              "Syn002": "e05da00ef22a3b04564630d6c56f61509f18e6f8d40463e52505c2bd9fb08012"
+            },
+            "test/response-b": {
+              "Syn002": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a"
+            }
+          }
+        },
+        "status": "completed",
+        "errors": []
+      }
+    }
+  },
+  "v1": {
+    "result": {
+      "type": "result",
+      "status": "completed",
+      "stage": "responses",
+      "errors": [],
+      "operation": "2b923e99a6723aced044904eb20b6a337bb8fd84c9ec4fc2edc2048a08338659",
+      "responses": 2
+    },
+    "receipts": {
+      "test-response-a": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "5e4ebeb63c6f55ab59b812ff9b880c2f292cd4e6b815671169ca0a05ba5c7ee8",
+          "model": "test/response-a",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {}
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ],
+      "test-response-b": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a",
+          "model": "test/response-b",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {}
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "caseset_name": "project",
+      "cases": [
+        "Syn002"
+      ],
+      "trials": 1,
+      "created_at": "<volatile>",
+      "judge_scoring_source_commit": "d734383670f0e8251f46fc3e800038f2a46db0d6",
+      "updated_at": "<volatile>",
+      "case_source": "tests/fixtures/synthetic",
+      "models": [
+        "test/response-a",
+        "test/response-b"
+      ],
+      "inference": {
+        "binding_version": 2,
+        "model_routes": {
+          "test/response-a": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {}
+          },
+          "test/response-b": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {}
+          }
+        },
+        "timeout_seconds": 300,
+        "template_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "operations": {
+      "responses-2b923e99a6723aced044904eb20b6a337bb8fd84c9ec4fc2edc2048a08338659.json": {
+        "version": 1,
+        "identity": "2b923e99a6723aced044904eb20b6a337bb8fd84c9ec4fc2edc2048a08338659",
+        "spec": {
+          "stage": "responses",
+          "trials": 1,
+          "inputs": {
+            "test/response-a": {
+              "Syn002": "5e4ebeb63c6f55ab59b812ff9b880c2f292cd4e6b815671169ca0a05ba5c7ee8"
+            },
+            "test/response-b": {
+              "Syn002": "35e563358af5e3ef2a35db0cca1530ec9b5fb1a77d5ac84e0825e921faff077a"
+            }
+          }
+        },
+        "status": "completed",
+        "errors": []
+      }
+    }
+  },
+  "cli": {
+    "receipts": {
+      "test-response-a": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "e05da00ef22a3b04564630d6c56f61509f18e6f8d40463e52505c2bd9fb08012",
+          "model": "test/response-a",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ],
+      "test-response-b": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "e2cbc895f657f4d4774855fe906fec1687d01269f06419c5f1331c43a6811d81",
+          "model": "test/response-b",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "prompt_sha256": "04b06dc2078e2ed1d0fe972e00626e12cf4f3f0472252943839ca52ac1aba97a",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "caseset_name": "project",
+      "cases": [
+        "Syn002"
+      ],
+      "trials": 1,
+      "created_at": "<volatile>",
+      "judge_scoring_source_commit": "d734383670f0e8251f46fc3e800038f2a46db0d6",
+      "updated_at": "<volatile>",
+      "case_source": "tests/fixtures/synthetic",
+      "models": [
+        "test/response-a",
+        "test/response-b"
+      ],
+      "inference": {
+        "binding_version": 2,
+        "model_routes": {
+          "test/response-a": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "test/response-b": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          }
+        },
+        "timeout_seconds": 300,
+        "template_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "operations": {}
+  },
+  "cli_prompt_file": {
+    "receipts": {
+      "test-response-a": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "729f04e75b28426382f9337c9f789465ba14cff989ff1409dc9e6694d61352a0",
+          "model": "test/response-a",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "prompt_sha256": "c59abe04657468e9993030a9a698d586cfed54a3ea904872b553864c9a1410c2",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ],
+      "test-response-b": [
+        {
+          "id": "Syn002",
+          "trial": 1,
+          "input_sha256": "450b4b77fa1272d8f0a56bf281de5b43b4f20c0609a5c045a45e4dad0a434e5c",
+          "model": "test/response-b",
+          "route": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "provider_provenance": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "prompt_sha256": "c59abe04657468e9993030a9a698d586cfed54a3ea904872b553864c9a1410c2",
+            "started_at": "<volatile>",
+            "runtime_s": "<volatile>",
+            "usage": {
+              "prompt_tokens": 2,
+              "completion_tokens": 3,
+              "cost": 0.001
+            },
+            "cost_usd": 0.001,
+            "attempts": 1,
+            "retried_errors": []
+          },
+          "response": "A synthetic model response.",
+          "runtime": "<volatile>",
+          "usage": {
+            "prompt_tokens": 2,
+            "completion_tokens": 3,
+            "cost": 0.001
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "caseset_name": "project",
+      "cases": [
+        "Syn002"
+      ],
+      "trials": 1,
+      "created_at": "<volatile>",
+      "judge_scoring_source_commit": "d734383670f0e8251f46fc3e800038f2a46db0d6",
+      "updated_at": "<volatile>",
+      "case_source": "tests/fixtures/synthetic",
+      "models": [
+        "test/response-a",
+        "test/response-b"
+      ],
+      "inference": {
+        "binding_version": 2,
+        "model_routes": {
+          "test/response-a": {
+            "backend": "openrouter",
+            "model": "test/response-a",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          },
+          "test/response-b": {
+            "backend": "openrouter",
+            "model": "test/response-b",
+            "kwargs": {
+              "reasoning_effort": "low"
+            }
+          }
+        },
+        "timeout_seconds": 300,
+        "template_sha256": "8f0272578cf3475f1f665f02e521217e041156775a7cc1ad6536bdbf6f666f75"
+      }
+    },
+    "operations": {}
+  }
+}

@@ -1,0 +1,403 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Ported from donoharm/harmreview/app/globals.css. Only the default theme and
+   motion used by the rubric editor are retained. */
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+:root,
+[data-theme="berry"] {
+  --background: 280 15% 98%;
+  --foreground: 280 30% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 280 30% 15%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 280 30% 15%;
+  --primary: 285 55% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 280 10% 94%;
+  --secondary-foreground: 280 30% 15%;
+  --muted: 280 10% 94%;
+  --muted-foreground: 280 15% 43%;
+  --accent: 285 55% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 280 10% 88%;
+  --input: 280 10% 90%;
+  --ring: 285 55% 45%;
+  --radius: 0.75rem;
+  --card-shadow: 0 4px 20px -4px rgba(150, 100, 150, 0.1);
+  --button-gradient: linear-gradient(135deg, hsl(285 55% 45%) 0%, hsl(265 50% 55%) 100%);
+  --success: 142 60% 28%;
+  --warning: 32 90% 30%;
+  --warning-bg: 40 90% 94%;
+  --danger-bg: 0 85% 96%;
+  --mark-1: 50 95% 80%;
+  --mark-2: 200 85% 85%;
+  --mark-3: 140 55% 82%;
+  --mark-4: 330 75% 88%;
+  --mark-5: 270 70% 88%;
+  --mark-6: 25 90% 84%;
+  --tip: 280 30% 15%;
+  --tip-foreground: 0 0% 100%;
+  --scrim: 280 30% 15%;
+}
+
+/* Dark palette for run viewer pages and the noharm-science rubric editor, which follows the system dark mode
+   (D196). The legacy editor and review pages hard-code white surfaces. */
+@media (prefers-color-scheme: dark) {
+  :root:has([data-kit-view]),
+  :root:has([data-rubric]) {
+    color-scheme: dark;
+    --background: 280 12% 9%;
+    --foreground: 280 10% 92%;
+    --card: 280 10% 13%;
+    --card-foreground: 280 10% 92%;
+    --popover: 280 10% 13%;
+    --popover-foreground: 280 10% 92%;
+    --secondary: 280 8% 18%;
+    --secondary-foreground: 280 10% 92%;
+    --accent: 285 60% 72%;
+    --accent-foreground: 280 30% 10%;
+    --card-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.4);
+    --primary: 285 60% 72%;
+    --primary-foreground: 280 30% 10%;
+    --muted: 280 8% 18%;
+    --muted-foreground: 280 8% 66%;
+    --border: 280 8% 26%;
+    --input: 280 8% 22%;
+    --ring: 285 60% 72%;
+    --destructive: 0 75% 68%;
+    --success: 142 45% 62%;
+    --warning: 40 85% 66%;
+    --warning-bg: 35 45% 17%;
+    --danger-bg: 0 40% 18%;
+    --mark-1: 50 60% 30%;
+    --mark-2: 200 55% 30%;
+    --mark-3: 140 40% 26%;
+    --mark-4: 330 45% 30%;
+    --mark-5: 270 40% 32%;
+    --mark-6: 25 60% 30%;
+    --tip: 280 10% 24%;
+    --tip-foreground: 280 10% 95%;
+    --scrim: 280 30% 3%;
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  margin: 0;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+::selection {
+  background: hsl(285 55% 45% / 0.18);
+  color: hsl(var(--foreground));
+}
+
+input,
+textarea {
+  caret-color: hsl(var(--primary));
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Both rubric editors size their controls with Tailwind utilities, which sit
+   in a cascade layer and would otherwise lose to the unlayered rule above. */
+:is([data-answer-table], [data-rubric]) :is(button, input, select, textarea) {
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  line-height: revert-layer;
+}
+
+button,
+a,
+select,
+summary {
+  touch-action: manipulation;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground));
+  border-radius: 4px;
+}
+
+:root {
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --default-transition-timing-function: var(--motion-ease);
+  --default-transition-duration: 180ms;
+}
+
+/* Same-origin document changes include project selection and guarded editor exits. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 220ms;
+  animation-timing-function: var(--motion-ease);
+}
+
+::view-transition-old(root) {
+  animation-duration: 140ms;
+}
+
+::view-transition-new(root) {
+  animation-duration: 220ms;
+}
+
+.group-content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 220ms var(--motion-ease), opacity 180ms ease-out;
+}
+
+.group-content-wrapper.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.group-content-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  details::details-content {
+    opacity: 0;
+    transition: opacity 180ms ease-out, content-visibility 220ms allow-discrete;
+  }
+
+  details[open]::details-content {
+    opacity: 1;
+  }
+
+  @supports (interpolate-size: allow-keywords) {
+    /* Native disclosures interpolate their intrinsic height. Floating menus only fade. */
+    details:not(.relative)::details-content {
+      interpolate-size: allow-keywords;
+      height: 0;
+      overflow: clip;
+      transition: height 220ms var(--motion-ease), opacity 180ms ease-out, content-visibility 220ms allow-discrete;
+    }
+
+    details[open]:not(.relative)::details-content {
+      height: auto;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .page-transition,
+  .group-content-wrapper,
+  [class*="transition-"],
+  [data-mc] :is(button, a, select) {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* Mission control: ARISE deep blue ink and bright blue accent on the Mist surface; dark mode uses the ARISE navy.
+   The mc- prefix keeps these apart from the berry palette, which already defines --muted and --accent on :root. */
+:root {
+  --mc-bg: #F3F5F8;
+  --mc-side: #EAEEF3;
+  --mc-surface: #FFFFFF;
+  --mc-surface-2: #F4F4F5;
+  --mc-ink: #080C39;
+  --mc-muted: #52525B;
+  --mc-faint: #8F8F96;
+  --mc-line: #E2E6EC;
+  --mc-line-strong: #D4D4D8;
+  --mc-accent: #033DDC;
+  --mc-accent-bg: #EBF0FC;
+  --mc-llm: #A34B00;
+  --mc-llm-bg: #FFF1DE;
+  --mc-human: #0F7B40;
+  --mc-human-bg: #E4F5EA;
+  --mc-bad: #CC2A22;
+  --mc-bad-bg: #FDEBEA;
+  --mc-score: #7C3AED;
+  --mc-dot-draft: #F5A524;
+  --mc-dot-reviewed: #17A34A;
+  --mc-dot-model: #0070F3;
+  --mc-dot-bad: #E5484D;
+  --mc-dot-none: #A1A1AA;
+  --mc-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --mc-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) {
+    --mc-bg: #080C39;
+    --mc-side: #0B1043;
+    --mc-surface: #0F1447;
+    --mc-surface-2: #141A52;
+    --mc-ink: #FFFFFF;
+    --mc-muted: #A1A1AA;
+    --mc-faint: #71717A;
+    --mc-line: #262951;
+    --mc-line-strong: #34385D;
+    --mc-accent: #407BFF;
+    --mc-accent-bg: rgba(64, 123, 255, 0.16);
+    --mc-llm: #FFB84D;
+    --mc-llm-bg: rgba(255, 184, 77, 0.13);
+    --mc-human: #3DD68C;
+    --mc-human-bg: rgba(61, 214, 140, 0.12);
+    --mc-bad: #FF6166;
+    --mc-bad-bg: rgba(255, 97, 102, 0.13);
+    --mc-score: #A78BFA;
+    --mc-dot-reviewed: #3DD68C;
+    --mc-dot-model: #52A8FF;
+    --mc-dot-bad: #FF6166;
+    --mc-dot-none: #5A5A5A;
+    --mc-shadow: none;
+    --mc-scheme: dark;
+  }
+}
+
+:root[data-mode="dark"] {
+  --mc-bg: #080C39;
+  --mc-side: #0B1043;
+  --mc-surface: #0F1447;
+  --mc-surface-2: #141A52;
+  --mc-ink: #FFFFFF;
+  --mc-muted: #A1A1AA;
+  --mc-faint: #71717A;
+  --mc-line: #262951;
+  --mc-line-strong: #34385D;
+  --mc-accent: #407BFF;
+  --mc-accent-bg: rgba(64, 123, 255, 0.16);
+  --mc-llm: #FFB84D;
+  --mc-llm-bg: rgba(255, 184, 77, 0.13);
+  --mc-human: #3DD68C;
+  --mc-human-bg: rgba(61, 214, 140, 0.12);
+  --mc-bad: #FF6166;
+  --mc-bad-bg: rgba(255, 97, 102, 0.13);
+  --mc-score: #A78BFA;
+  --mc-dot-reviewed: #3DD68C;
+  --mc-dot-model: #52A8FF;
+  --mc-dot-bad: #FF6166;
+  --mc-dot-none: #5A5A5A;
+  --mc-shadow: none;
+  --mc-scheme: dark;
+}
+
+@theme inline {
+  --color-mc-bg: var(--mc-bg);
+  --color-mc-side: var(--mc-side);
+  --color-mc-surface: var(--mc-surface);
+  --color-mc-surface-2: var(--mc-surface-2);
+  --color-mc-ink: var(--mc-ink);
+  --color-mc-muted: var(--mc-muted);
+  --color-mc-faint: var(--mc-faint);
+  --color-mc-line: var(--mc-line);
+  --color-mc-line-strong: var(--mc-line-strong);
+  --color-mc-accent: var(--mc-accent);
+  --color-mc-accent-bg: var(--mc-accent-bg);
+  --color-mc-llm: var(--mc-llm);
+  --color-mc-llm-bg: var(--mc-llm-bg);
+  --color-mc-human: var(--mc-human);
+  --color-mc-human-bg: var(--mc-human-bg);
+  --color-mc-bad: var(--mc-bad);
+  --color-mc-bad-bg: var(--mc-bad-bg);
+  --color-mc-score: var(--mc-score);
+  --color-mc-dot-draft: var(--mc-dot-draft);
+  --color-mc-dot-reviewed: var(--mc-dot-reviewed);
+  --color-mc-dot-model: var(--mc-dot-model);
+  --color-mc-dot-bad: var(--mc-dot-bad);
+  --color-mc-dot-none: var(--mc-dot-none);
+  --font-mc-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --shadow-mc: var(--mc-shadow);
+}
+
+[data-mc] {
+  color-scheme: var(--mc-scheme);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 14px;
+}
+
+body:has([data-mc]) {
+  background-color: var(--mc-bg);
+}
+
+/* Mission control has no footer bar; the legacy screens keep theirs. */
+body:has([data-mc]) .site-footer {
+  display: none;
+}
+
+/* Controls acknowledge state changes; no transition-all on layout-heavy panels. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-mc] :is(button, a, select) {
+    transition-duration: 180ms;
+    transition-timing-function: var(--motion-ease);
+  }
+
+  [data-mc] :is(button, a, select):not([class*="transition-"]) {
+    transition-property: background-color, border-color, color, opacity;
+  }
+}

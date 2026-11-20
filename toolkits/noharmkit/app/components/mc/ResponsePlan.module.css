@@ -1,0 +1,6 @@
+.dialog { width: min(40rem, calc(100vw - 3rem)); max-height: calc(100dvh - 3rem); overflow: auto; margin: auto; padding: 20px; border: 1px solid var(--mc-line); border-radius: 12px; background: var(--mc-surface); color: var(--mc-ink); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open] { opacity: 1; transform: none; }
+.dialog::backdrop { background: rgb(0 0 0 / .28); opacity: 0; transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open]::backdrop { opacity: 1; }
+@starting-style { .dialog[open] { opacity: 0; transform: translateY(8px); } .dialog[open]::backdrop { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .dialog, .dialog::backdrop { transition: none; } }

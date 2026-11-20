@@ -1,0 +1,55 @@
+.dialog {
+  width: min(30rem, calc(100vw - 3rem));
+  max-height: calc(100dvh - 3rem);
+  margin: auto;
+  padding: 1.5rem;
+  overflow: auto;
+  border: 0;
+  border-radius: .75rem;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  box-shadow: 0 8px 36px hsl(var(--foreground) / .18);
+  opacity: 0;
+  transform: translateY(.5rem) scale(.98);
+  transition: opacity 200ms ease-out, transform 200ms ease-out, display 200ms allow-discrete, overlay 200ms allow-discrete;
+}
+
+.dialog[open] {
+  opacity: 1;
+  transform: none;
+}
+
+.dialog::backdrop {
+  background: hsl(var(--foreground) / .35);
+  opacity: 0;
+  transition: opacity 200ms ease-out, display 200ms allow-discrete, overlay 200ms allow-discrete;
+}
+
+.dialog[open]::backdrop { opacity: 1; }
+
+@starting-style {
+  .dialog[open] { opacity: 0; transform: translateY(.5rem) scale(.98); }
+  .dialog[open]::backdrop { opacity: 0; }
+}
+
+.dialog h2 { margin: 0; font-size: 1.125rem; font-weight: 700; }
+.item { margin-top: 1rem; overflow-wrap: anywhere; font-size: .9375rem; line-height: 1.5; }
+.detail { margin-top: .75rem; color: hsl(var(--muted-foreground)); font-size: .8125rem; line-height: 1.5; }
+.actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: 1.5rem; }
+.actions button {
+  padding: .5rem .875rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: .375rem;
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease-out;
+}
+.actions button:hover { background: hsl(var(--muted)); }
+.actions .remove { border-color: transparent; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.actions .remove:hover { background: hsl(var(--primary) / .9); }
+.actions button:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog, .dialog::backdrop, .actions button { transition: none; }
+}

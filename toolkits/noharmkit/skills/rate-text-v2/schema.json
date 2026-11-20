@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["usualCare", "decisions"],
+  "additionalProperties": false,
+  "properties": {
+    "usualCare": {"$ref": "#/$defs/rating"},
+    "decisions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["recommendations"],
+        "additionalProperties": false,
+        "properties": {
+          "recommendations": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {"$ref": "#/$defs/rating"}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "rating": {
+      "type": "object",
+      "required": ["score", "harm", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "score": {"type": "integer", "minimum": 1, "maximum": 9},
+        "harm": {"type": "string", "enum": ["none", "mild", "moderate", "severe"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

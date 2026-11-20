@@ -1,0 +1,16 @@
+{
+  "image-1.png": {
+    "labels": [{
+      "task": "Classify the supplied breast ultrasound image using the stated two-class taxonomy.",
+      "choices": ["malignant", "normal or benign"],
+      "answer": "normal or benign",
+      "provenance": {"kind": "dataset-annotation", "source": "Replace with the actual annotation source"}
+    }]
+  },
+  "image-2.png": {
+    "report": {
+      "text": "Replace with the actual supplied report text.",
+      "provenance": {"kind": "dataset-annotation", "source": "Replace with the actual report source"}
+    }
+  }
+}

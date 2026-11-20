@@ -1,0 +1,1 @@
+{"case_id":"synthetic-frontal","prompt":"Inspect every attached image. Return exactly: Synthetic image attachment received.","reference_response":"Synthetic image attachment received.","specialty":"radiology","attachments":["attachments/synthetic-frontal.png"]}

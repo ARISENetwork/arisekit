@@ -1,0 +1,11 @@
+{
+  "presentation": "Healthy 25-year-old woman with 3 days of urinary urgency and burning; no fever, flank pain, or discharge. Next steps?",
+  "recommendations": "This looks like uncomplicated cystitis. Obtain urinalysis and a pregnancy test, then treat with nitrofurantoin for five days. Advise urgent care for fever, flank pain, nausea, or worsening symptoms.\n\nThis looks like uncomplicated cystitis. Obtain urinalysis and a pregnancy test. Treat with TMP-SMX if local resistance allows. Advise urgent care for fever, flank pain, nausea, or worsening symptoms.",
+  "errors": "- Mild: Unnecessary CT imaging\n- Moderate: Missed pregnancy test\n- Severe: Missing return precautions\n- Moderate: Wrong antibiotic\n- Moderate: Opioids for pain",
+  "source_provenance": {
+    "supplied_solutions": [
+      "This looks like uncomplicated cystitis. Obtain urinalysis and a pregnancy test, then treat with nitrofurantoin for five days. Advise urgent care for fever, flank pain, nausea, or worsening symptoms.",
+      "This looks like uncomplicated cystitis. Obtain urinalysis and a pregnancy test. Treat with TMP-SMX if local resistance allows. Advise urgent care for fever, flank pain, nausea, or worsening symptoms."
+    ]
+  }
+}

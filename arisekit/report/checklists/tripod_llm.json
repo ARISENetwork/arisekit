@@ -1,0 +1,100 @@
+[
+  {
+    "id": "title",
+    "text": "State that the system is an LLM/AI prediction model and name the clinical task it addresses.",
+    "section": "title",
+    "auto_source": null,
+    "owning_skill": "release-writeup"
+  },
+  {
+    "id": "abstract",
+    "text": "Provide a structured summary covering objective, data, methods, evaluation, and limitations.",
+    "section": "title",
+    "auto_source": null,
+    "owning_skill": "release-writeup"
+  },
+  {
+    "id": "background",
+    "text": "Explain the clinical background and rationale for developing or applying the model.",
+    "section": "introduction",
+    "auto_source": null,
+    "owning_skill": "study-design"
+  },
+  {
+    "id": "objectives",
+    "text": "State the specific objectives, intended use, and target deployment context.",
+    "section": "introduction",
+    "auto_source": null,
+    "owning_skill": "compliance-intake"
+  },
+  {
+    "id": "data_sources",
+    "text": "Describe the data sources used for development and evaluation, with dates and provenance.",
+    "section": "methods",
+    "auto_source": null,
+    "owning_skill": "data-intake"
+  },
+  {
+    "id": "participants",
+    "text": "Describe eligibility criteria and the population the evaluation data represent.",
+    "section": "methods",
+    "auto_source": null,
+    "owning_skill": "study-design"
+  },
+  {
+    "id": "sample_size",
+    "text": "Justify the number of evaluation items and its adequacy for the claims made.",
+    "section": "methods",
+    "auto_source": null,
+    "owning_skill": "study-design"
+  },
+  {
+    "id": "human_oversight",
+    "text": "Describe the human oversight and clinician-in-the-loop safeguards around model use.",
+    "section": "methods",
+    "auto_source": null,
+    "owning_skill": "governance-spec"
+  },
+  {
+    "id": "discrimination",
+    "text": "Report overall performance and discrimination metrics on the evaluation set.",
+    "section": "results",
+    "auto_source": "metrics",
+    "owning_skill": "needs-analysis"
+  },
+  {
+    "id": "calibration",
+    "text": "Report a calibration measure relating predicted scores to observed outcomes.",
+    "section": "results",
+    "auto_source": "calibration",
+    "owning_skill": "needs-analysis"
+  },
+  {
+    "id": "subgroup",
+    "text": "Report performance across clinically relevant subgroups to surface fairness gaps.",
+    "section": "results",
+    "auto_source": "subgroup",
+    "owning_skill": "needs-analysis"
+  },
+  {
+    "id": "compute_cost",
+    "text": "Report the compute, token usage, or monetary cost of running the evaluation.",
+    "section": "results",
+    "auto_source": "cost",
+    "owning_skill": "release-writeup"
+  },
+  {
+    "id": "limitations",
+    "text": "Discuss limitations, failure modes, and risks that bound safe use.",
+    "section": "discussion",
+    "auto_source": null,
+    "owning_skill": "release-writeup"
+  },
+  {
+    "id": "availability",
+    "text": "State availability of the model, code, prompts, and evaluation data for scrutiny.",
+    "section": "open science",
+    "auto_source": null,
+    "owning_skill": "governance-spec"
+  }
+]

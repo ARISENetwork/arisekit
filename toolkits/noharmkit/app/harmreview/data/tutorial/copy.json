@@ -1,0 +1,121 @@
+{
+  "welcome": {
+    "caption": "Tutorial",
+    "heading": "Welcome to the Rubric Editor",
+    "text": [
+      "This tutorial shows you how to review a rubric for a clinical case.",
+      "Each case is based on a real clinical question posed by a physician. The rubric is the answer key for grading an AI's response and tells us what a good answer should and should not include.",
+      "Let's go over the interface with an example case."
+    ]
+  },
+  "case": {
+    "caption": "Task",
+    "heading": "The Task and Solution",
+    "text": [
+      "**Task** shows the question a clinician asked.",
+      "**Solution** shows a response that specialists previously reviewed and considered to be a good response. You may disagree with it, and that is okay - it is not the only acceptable answer, but is used as the reference for creating the initial rubric.",
+      "Next we will show you how to edit the rubric to match your clinical judgment."
+    ]
+  },
+  "open-first": {
+    "caption": "Criteria",
+    "heading": "Criteria",
+    "text": [
+      "From the task and solution, we created the key criteria an appropriate response should address. The blue label on each shows the potential harm of not addressing it.",
+      "**Criterion 2** is always about follow-up and triage: where and how soon the patient should be seen. Click it to expand."
+    ]
+  },
+  "main-approach": {
+    "caption": "C2: Follow-up",
+    "heading": "Possible actions",
+    "text": [
+      "Each criterion has multiple options, representing the **main approaches** an AI may suggest. Think of these as mutually exclusive.",
+      "For each, you will rate the **Clinical Appropriateness**, and the potential **Error Severity** (if it is an error)."
+    ]
+  },
+  "rate-score": {
+    "caption": "Clinical Appropriateness",
+    "heading": "How appropriate is this action?",
+    "text": [
+      "Appropriate means the clinical benefits outweigh the harms/risk. Do not take cost into consideration.",
+      "**7-9** = appropriate, including reasonable alternatives\n**4-6** is uncertain, equivocal, or irrelevant\n**1-3** is inappropriate.\nHover over a number for its definition.",
+      "If there are multiple acceptable options, rate each of them as appropriate. If there is a best alternative and suboptimal alternatives, rate the best option the highest (7, 8, or 9).",
+      "In this case of an uncomplicated UTI, an emergency department visit is not appropriate. The exact rating is up to your clinical judgment."
+    ]
+  },
+  "severity": {
+    "caption": "Error Severity",
+    "heading": "Error Severity",
+    "text": [
+      "For suboptimal or inappropriate options, you will assign an **Error Severity**: what is the potential, plausible harm of this action (None, Mild, Moderate, or Severe).",
+      "The best option, by default, should not be considered an error.",
+      "For an action that is suboptimal (acceptable but meaningfully inferior to the best action), you may rate this as a **Mild** severity.",
+      "See the **Guide** for tips and examples."
+    ]
+  },
+  "rate-severity": {
+    "caption": "Error Severity",
+    "heading": "Both ratings together",
+    "text": [
+      "Referring her to the emergency department is Inappropriate (3). The potential harm is minimal (unnecessary visit, psychological anxiety, possible unnecessary invasive testing). Most clinicians judge this error severity as Mild or None.",
+      "The severity should reflect the appropriateness. For example, a highly inappropriate action would typically be a Moderate or Severe error."
+    ]
+  },
+  "omission": {
+    "caption": "Harm of omission",
+    "heading": "Error if not addressed",
+    "text": [
+      "Each criterion contains a **not addressed** item, which is the error of omission. Rate it as if the rest of the response were appropriate.",
+      "This rating is the blue label you saw on each closed criterion.",
+      "Here, saying nothing about triage is not an error, so it is 7 and None. On the other hand, omitting antibiotic treatment (Criterion 5) is considered Inappropriate and Moderate severity."
+    ]
+  },
+  "usual-care": {
+    "caption": "C1: Usual care",
+    "heading": "Usual care",
+    "text": [
+      "**Criterion 1** (Usual Care) reflects what the referring clinician would most likely do next if they received no input. This sets a reference (\"the harm of inaction\") that helps us think of the baseline. Rate it like any other option."
+    ]
+  },
+  "add-ons": {
+    "caption": "Add-ons",
+    "heading": "Add-ons",
+    "text": [
+      "**Add-ons** are extras an AI might suggest alongside its main approach, such as advice, monitoring or an extra test. A response may include several.",
+      "The **Error Severity** is the harm from adding these actions. Advising urgent care for fever or flank pain is appropriate.\nTelling her to manage those danger symptoms at home is inappropriate and has potential severe harm.",
+      "Remember, the physician or patient does not have to follow advice for it to be harmful. \"Don't wear a seatbelt\" is dangerous advice, regardless of whether a crash occurs."
+    ]
+  },
+  "add": {
+    "caption": "Adding options",
+    "heading": "Add a missing option",
+    "text": [
+      "If an option you would expect is missing, good or bad, add it.",
+      "To add a whole criterion, use **+ Criterion** at the bottom, only when leaving it out would be a real error. You can also delete criteria that are not meaningful.",
+      "Click **+ Add** to try adding a new option."
+    ]
+  },
+  "rate-added": {
+    "caption": "Adding options",
+    "heading": "Write and rate",
+    "text": [
+      "Write your new option. Include any conditions, timing, or dose. We've filled this one in for you.",
+      "This option is reasonable and harmless: click **7**, then choose **None** for severity."
+    ]
+  },
+  "move": {
+    "caption": "Add-ons",
+    "heading": "Move it to Add-ons",
+    "text": [
+      "Reassessment is a contingency, not a primary decision about her follow-up, so it belongs in Add-ons. Click the highlighted button, or drag the dots to move this into the **Add-ons** area."
+    ]
+  },
+  "finish": {
+    "caption": "Guide and Reset",
+    "heading": "Guide and Reset",
+    "text": [
+      "Open the **Guide** whenever you are unsure or need a refresher.",
+      "In a real rubric, your changes save automatically. The **Reset** button returns it to the original version if you want to start over."
+    ]
+  }
+}

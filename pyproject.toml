@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "arisekit"
+version = "0.13.19"
+description = "Open-source framework for authoring and running MAST-compatible medical AI benchmarks."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "ARISE Network" }]
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    # Newer LiteLLM releases import typing.NotRequired, unavailable on Python 3.10.
+    "litellm>=1.40.0,<=1.93.0; python_version < '3.11'",
+    "litellm>=1.40.0; python_version >= '3.11'",
+    "pyyaml>=6.0",
+    "packaging>=23.2",
+]
+
+[project.optional-dependencies]
+autonomous = ["scipy>=1.11", "google-genai>=1.0,<2", "jsonschema>=4,<5", "Pillow>=10.4,<13", "numpy>=1.26,<3"]
+hf = ["datasets>=2.16.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+]
+
+[project.scripts]
+arisekit = "arisekit.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["arisekit", "benchmarks/noharm_reference"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/arisekit",
+    "/benchmarks/noharm_reference",
+    "/LICENSE",
+    "/README.md",
+    "/VERSION",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra"
+markers = [
+    "study: validates a committed research-study artifact or protocol binding",
+    "slow: unsuitable for the fast pull-request feedback loop",
+    "live: makes an explicitly authorized network or paid model call",
+]

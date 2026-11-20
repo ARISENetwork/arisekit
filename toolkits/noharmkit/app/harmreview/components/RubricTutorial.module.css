@@ -1,0 +1,249 @@
+/* Above the sticky header (40) and below the Guide panel (60); open menus sit at 1000. */
+.blocker {
+  position: fixed;
+  z-index: 45;
+  user-select: none;
+}
+
+.hole {
+  position: fixed;
+  z-index: 45;
+  border-radius: 10px;
+  box-shadow: 0 0 0 200vmax hsl(280 30% 10% / .5), 0 0 0 2px hsl(var(--primary));
+  pointer-events: none;
+}
+
+.hole[data-moving] {
+  transition: top 240ms var(--motion-ease), left 240ms var(--motion-ease), width 240ms var(--motion-ease), height 240ms var(--motion-ease);
+}
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in oklab, hsl(var(--primary)) 18%, transparent), 0 4px 16px -4px color-mix(in oklab, hsl(var(--primary)) 18%, transparent); }
+  50% { box-shadow: 0 0 0 5px color-mix(in oklab, hsl(var(--primary)) 16%, transparent), 0 8px 28px 2px color-mix(in oklab, hsl(var(--primary)) 30%, transparent); }
+}
+
+.cue {
+  position: fixed;
+  z-index: 46;
+  border: 2px solid hsl(var(--primary));
+  border-radius: 6px;
+  pointer-events: none;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.popup {
+  position: fixed;
+  z-index: 55;
+  width: 368px;
+  max-width: calc(100vw - 24px);
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.popup[data-shown] {
+  opacity: 1;
+  transform: none;
+  transition: opacity 260ms ease-out, transform 260ms ease-out;
+}
+
+/* A rotated square in the popup's edge color, half behind the card, so a triangle points at the target. */
+.popup[data-side]::before {
+  position: absolute;
+  z-index: -1;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: color-mix(in oklab, hsl(var(--primary)) 45%, hsl(var(--card)));
+  content: "";
+  transform: rotate(45deg);
+}
+
+.popup[data-side="below"]::before { top: -6px; left: calc(var(--caret) - 7px); }
+.popup[data-side="above"]::before { bottom: -6px; left: calc(var(--caret) - 7px); }
+.popup[data-side="right"]::before { left: -6px; top: calc(var(--caret) - 7px); }
+.popup[data-side="left"]::before { right: -6px; top: calc(var(--caret) - 7px); }
+
+.card {
+  overflow: hidden;
+  border: 2px solid color-mix(in oklab, hsl(var(--primary)) 45%, hsl(var(--card)));
+  border-radius: 12px;
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  animation: breathe 2.8s ease-in-out infinite;
+}
+
+.caption {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .375rem 1rem;
+  background: color-mix(in oklab, hsl(var(--primary)) 10%, hsl(var(--card)));
+  color: hsl(var(--primary));
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.body {
+  padding: .875rem 1rem 1rem;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.body h2 {
+  margin-bottom: .375rem;
+  font-size: .9375rem;
+  font-weight: 700;
+  outline: none;
+}
+
+/* A line break typed in the copy file shows as one, so short lists read as lists. */
+.body p {
+  white-space: pre-line;
+}
+
+.body p + p {
+  margin-top: .5rem;
+}
+
+.hint {
+  color: hsl(var(--primary));
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.hint[data-shown] {
+  margin-top: .5rem;
+  opacity: 1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  margin-top: .875rem;
+}
+
+.actions button,
+.finished button {
+  min-height: 2.25rem;
+  padding: 0 .75rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  background: hsl(var(--card));
+  font-size: .8125rem;
+  font-weight: 600;
+  transition: background-color 150ms ease-out, opacity 150ms ease-out;
+}
+
+.actions button:hover:not(:disabled),
+.finished button:hover {
+  background: hsl(var(--muted));
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
+.actions button:focus-visible,
+.finished button:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+.actions .exit {
+  margin-right: auto;
+  border-color: transparent;
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  font-weight: 500;
+}
+
+.actions .primary {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.actions .primary:hover:not(:disabled) {
+  background: hsl(var(--primary));
+  filter: brightness(.95);
+}
+
+.finished {
+  position: fixed;
+  z-index: 45;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .625rem .75rem .625rem 1rem;
+  border: 2px solid color-mix(in oklab, hsl(var(--primary)) 45%, hsl(var(--card)));
+  border-radius: 12px;
+  background: hsl(var(--card));
+  font-size: .875rem;
+  box-shadow: 0 8px 28px -8px hsl(280 30% 10% / .3);
+  animation: arrive 260ms ease-out;
+}
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hole[data-moving], .popup[data-shown], .hint, .actions button, .finished button { transition: none; }
+  .finished { animation: none; }
+  .cue { animation: none; box-shadow: 0 0 0 3px color-mix(in oklab, hsl(var(--primary)) 30%, transparent); }
+  .card { animation: none; box-shadow: 0 6px 20px -2px color-mix(in oklab, hsl(var(--primary)) 30%, transparent); }
+}
+
+/* /tutorial?edit only: the popup text as plain fields, outlined so they read as editable. */
+.edit,
+.editCaption {
+  border: 1px dashed color-mix(in oklab, hsl(var(--primary)) 40%, transparent);
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.edit {
+  display: block;
+  width: calc(100% + .5rem);
+  margin: 0 -.25rem;
+  padding: .125rem .25rem;
+  overflow: hidden;
+  resize: none;
+}
+
+.body h2 .edit {
+  margin-bottom: .25rem;
+}
+
+.editCaption {
+  min-width: 0;
+  flex: 1;
+  padding: 0 .25rem;
+}
+
+.edit:focus,
+.editCaption:focus {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 0;
+  background: hsl(var(--card));
+}
+
+.editNote {
+  margin-top: .5rem;
+  color: hsl(var(--muted-foreground));
+  font-size: .75rem;
+}

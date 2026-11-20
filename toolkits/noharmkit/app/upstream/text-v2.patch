@@ -1,0 +1,1017 @@
+--- a/tools/score_text_rubric.py
++++ b/tools/noharm_science/score_text_rubric.py
+@@ -12 +12 @@
+-from tools import score_rubric as legacy
++from tools.noharm_science import score_rubric as legacy
+@@ -16,2 +16,2 @@
+-ROOT = Path(__file__).resolve().parents[1]
+-PROFILE_DIR = ROOT / "experiments/profiles" / PROFILE
++ROOT = Path(__file__).resolve().parent
++PROFILE_DIR = ROOT / "profiles" / PROFILE
+--- a/tools/score_text_rubric_v2.py
++++ b/tools/noharm_science/score_text_rubric_v2.py
+@@ -14,2 +14,2 @@
+-from tools import score_rubric as legacy
+-from tools import score_text_rubric as v1
++from tools.noharm_science import score_rubric as legacy
++from tools.noharm_science import score_text_rubric as v1
+@@ -21,2 +21,2 @@
+-ROOT = Path(__file__).resolve().parents[1]
+-PROFILE_DIR = ROOT / "experiments/profiles" / PROFILE
++ROOT = Path(__file__).resolve().parent
++PROFILE_DIR = ROOT / "profiles" / PROFILE
+--- a/harmreview/lib/rubric-text-v2.ts
++++ b/app/lib/rubric-text-v2.ts
+@@ -3 +3 @@
+-import type { NeedSeverity, Score } from "./rubric";
++import type { NeedSeverity, Score } from "./answer-table";
+--- a/harmreview/components/RubricEditor.tsx
++++ b/app/components/TextV2RubricEditor.tsx
+@@ -3,0 +4 @@
++import type { EditorStorage, Loaded as EditorLoaded } from "./AnswerTableEditor";
+@@ -5 +6 @@
+-
++import type { ReactNode } from "react";
+@@ -7,51 +8,5 @@
+-import RubricPanel from "@/components/RubricPanel";
+-import editorStyles from "./RubricEditor.module.css";
+-import type { GuideColorAppearance, GuideSections } from "./QuickAuthoringGuide";
+-import type { ReactNode } from "react";
+-import type { RubricPanelView } from "@/components/RubricPanel";
+-import panelStyles from "./RubricPanel.module.css";
+-import CaseSourcePanel from "@/components/CaseSourcePanel";
+-import Dropdown from "@/components/Dropdown";
+-import type { LogicPreview } from "../lib/logic-preview";
+-import { BASELINE_FEATURES } from "@/lib/authoring-review";
+-import type { AuthoringReviewFeatures } from "@/lib/authoring-review";
+-import { retainAuthoringDraft } from "@/lib/rubric-authoring";
+-import { addTextCounselingDecision, setCounselingRowScore, textFirstProjection } from "@/lib/text-first-rubric";
+-import type { TextFirstProvenance } from "@/lib/text-first-rubric";
+-import {
+-  APPROPRIATENESS_DESCRIPTORS,
+-  addDecision,
+-  bestScore,
+-  derivedHarmIfRecommended,
+-  derivedNeedSeverity,
+-  derivedRelativeHarm,
+-  groupByScore,
+-  groupedRows,
+-  HARM_LEVELS,
+-  harmIfRecommended,
+-  insertInGroup,
+-  needSeverity,
+-  newTiming,
+-  nextRowId,
+-  recordEdit,
+-  recordInteraction,
+-  relativeHarm,
+-  removeDecision,
+-  SCORE_DESCRIPTORS,
+-  setRowScore,
+-  USUAL_CARE_DEFINITION,
+-  USUAL_CARE_QUESTION,
+-  validateRubric,
+-} from "@/lib/rubric";
+-import type {
+-  RubricDecision,
+-  RubricCase,
+-  AuthoringTiming,
+-  GroupOf,
+-  NeedSeverity,
+-  Recommendation,
+-  RowGroup,
+-  RowHarm,
+-  Score,
+-  UsualCare,
+-} from "@/lib/rubric";
++import Dropdown from "./Dropdown";
++import CaseSourcePanel from "./CaseSourcePanel";
++import editorStyles from "./TextV2RubricEditor.module.css";
++import { ReviewTag, Tag } from "./mc/ui";
++import { FailedErrors, FailedTag } from "./runs/VersionFailure";
+@@ -59 +14,4 @@
+-import { animateRecommendationRows, recommendationPositions } from "@/lib/recommendation-motion";
++import { APPROPRIATENESS_DESCRIPTORS, USUAL_CARE_QUESTION, newTiming, recordEdit, recordInteraction } from "@/lib/answer-table";
++import type { AuthoringTiming, NeedSeverity, RowHarm, Score } from "@/lib/answer-table";
++import type { ReviewState } from "@/lib/caseset/reviews";
++import { savedNotice } from "@/lib/caseset/notice";
+@@ -61,5 +18,0 @@
+-import { FailedErrors, FailedTag } from "@/components/runs/VersionFailure";
+-import { savedNotice } from "@/lib/caseset/notice";
+-import type { CommitteeRatings, RatingItem } from "@/lib/caseset/types";
+-import { reconcileCounseling } from "@/lib/standard-counseling";
+-import { flagTagReviews } from "@/lib/tag-review";
+@@ -67,22 +20,3 @@
+-import type { TextV2Case, TextV2Criterion, TextV2Item, TextV2Provenance } from "@/lib/rubric-text-v2";
+-
+-export interface CasesetSource { caseset: string; version: string }
+-
+-type SaveStatus = "clean" | "dirty" | "saving" | "saved" | "error";
+-
+-interface Loaded {
+-  record: RubricCase;
+-  provenance?: TextFirstProvenance;
+-  source: CaseSource;
+-  timing?: AuthoringTiming;
+-  savedAt?: string;
+-  fromCopy: boolean;
+-  notice?: string;
+-  ratings?: CommitteeRatings | null;
+-  status?: "pass" | "failed";
+-  errors?: string[];
+-  canSave?: boolean;
+-  cannotSaveReason?: string;
+-  sourceSha256?: string | null;
+-  replacesSha256?: string | null;
+-}
++import type { TextV2Case, TextV2Criterion, TextV2Item } from "@/lib/rubric-text-v2";
++import { validateTextV2ForProject } from "@/lib/text-v2-eligibility";
++import { useRubricEditorHost } from "@/components/RubricEditorHost";
+@@ -104,14 +37,0 @@
+-
+-function rowText(record: RubricCase, rowId: string): string {
+-  for (const d of record.decisions) {
+-    const row = d.recommendations.find((r) => r.id === rowId);
+-    if (row) return row.text || rowId;
+-  }
+-  return rowId;
+-}
+-
+-function decisionIssues(decision: RubricDecision, errors: string[]): string[] {
+-  const label = `${decision.question.trim() || decision.id}:`;
+-  return errors.filter((e) => e.startsWith(label));
+-}
+-
+@@ -182 +102 @@
+-export function ScoreBar({ label, value, onChange, scores = SCORES, descriptions = SCORE_DESCRIPTORS }: { label: string; value: Score | null; onChange: (score: Score) => void; scores?: readonly Score[]; descriptions?: Readonly<Record<Score, string>> }) {
++export function ScoreBar({ label, value, onChange, scores = SCORES, descriptions = V2_SCORE_DESCRIPTORS }: { label: string; value: Score | null; onChange: (score: Score) => void; scores?: readonly Score[]; descriptions?: Readonly<Record<Score, string>> }) {
+@@ -301,191 +220,0 @@
+-function HarmCell({ label, help, derived, value, suffix, allowUncertain, onChange }: {
+-  label: string;
+-  help: string;
+-  derived: RowHarm | null;
+-  value: RowHarm | null;
+-  suffix: string;
+-  allowUncertain: boolean;
+-  onChange: (override: NeedSeverity | undefined) => void;
+-}) {
+-  if (derived === null) return <span />;
+-  const text = (h: RowHarm): string => h === "uncertain" ? "Uncertain" : `${SEVERITY_LABEL[h]} ${suffix}`.trim();
+-  const shown = value ?? derived;
+-  const tip = [
+-    shown === "none" ? "None: nothing is charged." : "",
+-    help,
+-    shown !== derived ? `Overridden; the default is ${text(derived)}.` : "",
+-  ].filter(Boolean).join(" ");
+-  const options: RowHarm[] = [...(allowUncertain ? ["uncertain" as const] : []), ...HARM_LEVELS];
+-  return (
+-    <HoverTip text={tip}>{(describedBy) => (
+-      <Dropdown
+-        aria-describedby={describedBy}
+-        aria-label={label}
+-        className={`h-7 w-full rounded-md border px-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[hsl(var(--ring))]/40 ${shown !== derived ? "border-violet-400" : "border-[hsl(var(--border))]"} ${harmTone(shown)}`}
+-        value={shown}
+-        onChange={(event) => { const next = event.target.value as RowHarm; onChange(next === derived ? undefined : (next as NeedSeverity)); }}
+-      >
+-        {options.map((h) => <option key={h} value={h}>{text(h)}{h === derived ? " (default)" : ""}</option>)}
+-      </Dropdown>
+-    )}</HoverTip>
+-  );
+-}
+-
+-function AppropriateRow({ row, decision, onChange, onScore, onRemove, autoFocus, onTextFocus }: {
+-  row: Recommendation; decision: RubricDecision; others: RubricDecision[];
+-  onChange: (patch: Partial<Recommendation>) => void; onScore: (score: Score) => void;
+-  onRemove: () => void; autoFocus: boolean; onTextFocus: () => void;
+-}): ReactNode {
+-  const isBest = row.score !== null && row.score === bestScore(decision);
+-  return <div data-row-grid className={`${ROW_GRID} items-start py-1.5 text-[13.5px]`}>
+-    <span className={`pl-3 pt-0.5 text-[11px] leading-5 ${muted}`}>{shortId(row.id)}</span>
+-    <div className="min-w-0"><AutoText autoFocus={autoFocus} onFocus={onTextFocus} aria-label={`Item ${row.id}`} placeholder="Write the complete plan, including any condition and timing" value={row.text} onChange={(text) => onChange({ text })} /></div>
+-    <div><ScoreBar label={`Score for ${row.id}`} value={row.score} onChange={onScore} />{row.score === null && <p className={`mt-1 pl-3 text-xs ${muted}`}>Not rated</p>}</div>
+-    {isBest ? <HoverTip text="Highest appropriateness rating. Read the whole item to identify the required actions; equal ratings alone do not establish interchangeability.">{(describedBy) => <span aria-describedby={describedBy} className={`${lockedPill} bg-blue-50 text-blue-800`} tabIndex={0}>No harm (top rating)</span>}</HoverTip>
+-      : <HarmCell allowUncertain={derivedRelativeHarm(decision, row) === "uncertain"} derived={derivedRelativeHarm(decision, row)} help="The preserved relative-harm rating for choosing this plan instead of the best item. Review what the plan leaves untreated as well as what it does." label={`Relative harm of ${row.id}`} suffix="vs best" value={relativeHarm(decision, row)} onChange={(relativeHarmOverride) => onChange({ relativeHarmOverride })} />}
+-    <div className="flex justify-end pr-2"><button aria-label={`Remove ${row.id}`} data-row-action className={`${iconButton} hover:!bg-red-50 hover:!text-red-600`} title="Remove" type="button" onClick={onRemove}><IconX /></button></div>
+-  </div>;
+-}
+-
+-function NotAppropriateRow({ row, onChange, onScore, onRemove, autoFocus, onTextFocus }: {
+-  row: Recommendation; decision: RubricDecision; appropriate: Recommendation[];
+-  onChange: (patch: Partial<Recommendation>) => void; onScore: (score: Score) => void;
+-  onRemove: () => void; autoFocus: boolean; onTextFocus: () => void;
+-}): ReactNode {
+-  return <div data-row-grid className={`${ROW_GRID} items-start py-1.5 text-[13.5px]`}>
+-    <span className={`pl-3 pt-0.5 text-[11px] leading-5 ${muted}`}>{shortId(row.id)}</span>
+-    <div className="min-w-0"><AutoText autoFocus={autoFocus} onFocus={onTextFocus} aria-label={`Inappropriate item ${row.id}`} placeholder="Describe the alternative plan and any unsafe omission" value={row.text} onChange={(text) => onChange({ text })} /></div>
+-    <div><ScoreBar label={`Score for ${row.id}`} value={row.score} onChange={onScore} />{row.score === null && <p className={`mt-1 pl-3 text-xs ${muted}`}>Not rated</p>}</div>
+-    <HarmCell allowUncertain={derivedHarmIfRecommended(row) === "uncertain"} derived={derivedHarmIfRecommended(row)} help="Harm if this whole plan is followed, including harmful actions, untreated care and delay. Rate these consequences together. This authoring draft does not change historical scores." label={`Harm if ${row.id} is recommended`} suffix="if recommended" value={harmIfRecommended(row)} onChange={(harmIfRecommendedOverride) => onChange({ harmIfRecommendedOverride })} />
+-    <div className="flex justify-end pr-2"><button aria-label={`Remove ${row.id}`} data-row-action className={`${iconButton} hover:!bg-red-50 hover:!text-red-600`} title="Remove" type="button" onClick={onRemove}><IconX /></button></div>
+-  </div>;
+-}
+-
+-// The omission rating for a Decision with no substantive plan.
+-function SpecialRow({ id, role, text, derivedNote, children }: { id?: string; role: string; text: string; derivedNote: string; children: React.ReactNode }) {
+-  return (
+-    <div data-row-grid data-special-row={role} className={`${ROW_GRID} items-start border-t border-[hsl(var(--border))]/60 bg-[hsl(var(--muted))]/30 py-1.5 text-[13.5px]`}>
+-      <span className={`pl-3 pt-0.5 text-[11px] leading-5 ${muted}`}>{id}</span>
+-      <div className="pr-3 leading-5"><span data-scenario-label className="font-bold">{role}: </span><span data-scenario-description>{text}</span></div>
+-      <span data-scenario-note className="pl-3 pt-0.5 text-[11.5px] leading-5">{derivedNote}</span>
+-      {children}
+-      <span />
+-    </div>
+-  );
+-}
+-
+-function DecisionRows({
+-  decision,
+-  record,
+-  rating,
+-  groupOf,
+-  onAdded,
+-  onRequestRemoval,
+-  onChange,
+-}: {
+-  decision: RubricDecision;
+-  record: RubricCase;
+-  rating?: RatingItem;
+-  groupOf: GroupOf;
+-  onAdded: (rowId: string, group: RowGroup) => void;
+-  onRequestRemoval: (request: RemovalRequest) => void;
+-  onChange: (updater: (d: RubricDecision) => RubricDecision) => void;
+-}) {
+-  const [focusRowId, setFocusRowId] = useState<string | null>(null);
+-  const rowsContainer = useRef<HTMLDivElement>(null);
+-  const pendingMove = useRef<{ positions: Map<string, number>; rowId: string; restoreFocus: boolean } | null>(null);
+-  const rowAnimations = useRef<Animation[]>([]);
+-  useLayoutEffect(() => {
+-    const move = pendingMove.current;
+-    if (!move || !rowsContainer.current) return;
+-    pendingMove.current = null;
+-    rowAnimations.current = animateRecommendationRows(rowsContainer.current, move.positions, move.rowId, window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+-    if (move.restoreFocus) {
+-      const row = Array.from(rowsContainer.current.querySelectorAll<HTMLElement>("[data-recommendation-row]")).find((item) => item.dataset.recommendationRow === move.rowId);
+-      row?.querySelector<HTMLButtonElement>("[data-rating-bar] button[aria-pressed='true']")?.focus({ preventScroll: true });
+-    }
+-  }, [decision.recommendations]);
+-  useEffect(() => () => rowAnimations.current.forEach((animation) => animation.cancel()), []);
+-  const others = record.decisions.filter((d) => d.id !== decision.id);
+-  const rows = groupedRows(decision, groupOf);
+-  const appropriate = rows.filter((r) => groupOf(r) === "appropriate");
+-  const setRow = (id: string, patch: Partial<Recommendation>): void =>
+-    onChange((d) => ({ ...d, recommendations: d.recommendations.map((r) => (r.id === id ? { ...r, ...patch } : r)) }));
+-  const setScore = (id: string, score: Score): void => {
+-    if (rowsContainer.current) {
+-      pendingMove.current = { positions: recommendationPositions(rowsContainer.current), rowId: id, restoreFocus: Boolean(document.activeElement?.closest("[data-rating-bar]")) };
+-      rowAnimations.current.forEach((animation) => animation.cancel());
+-    }
+-    onChange((d) => setRowScore(d, id, score, groupOf));
+-  };
+-  const removeRow = (id: string, group: RowGroup): void => {
+-    onRequestRemoval({
+-      title: "Remove item?",
+-      text: rowText(record, id),
+-      focusAfterRemove: `button[aria-label="Add an appropriate item to ${decision.id}"]`,
+-      onConfirm: () => onChange((d) => group === "notAppropriate"
+-        ? { ...d, recommendations: d.recommendations.filter((r) => r.id !== id) }
+-        : { ...d, recommendations: d.recommendations.filter((r) => r.id !== id).map((r) => (r.incompleteVersionOf === id ? { ...r, incompleteVersionOf: undefined } : r)) }),
+-    });
+-  };
+-  const addRow = (group: RowGroup): void => {
+-    const id = nextRowId(decision.id, record);
+-    onAdded(id, group);
+-    setFocusRowId(id);
+-    const row: Recommendation = { id, text: "", score: null };
+-    onChange((d) => ({ ...d, recommendations: insertInGroup(d.recommendations, row, group, groupOf) }));
+-  };
+-  return (
+-    <>
+-      <div data-row-grid data-row-header className={`${ROW_GRID} pb-0.5 pt-2 text-[11px] ${muted}`}>
+-        <span />
+-        <span />
+-        <span className="pl-3">Appropriateness</span>
+-        <span className="pl-3">Harm</span>
+-        <span />
+-      </div>
+-      <div ref={rowsContainer} className="divide-y divide-[hsl(var(--border))]/60">
+-        {rows.map((row) => (
+-          <div key={row.id} data-recommendation-row={row.id}>
+-            {groupOf(row) === "appropriate" ? <>
+-              <AppropriateRow
+-                decision={decision}
+-                others={others}
+-                row={row}
+-                autoFocus={focusRowId === row.id}
+-                onTextFocus={() => setFocusRowId(null)}
+-                onChange={(patch) => setRow(row.id, patch)}
+-                onRemove={() => removeRow(row.id, "appropriate")}
+-                onScore={(score) => setScore(row.id, score)}
+-              />
+-            </> :
+-              <NotAppropriateRow decision={decision} autoFocus={focusRowId === row.id} onTextFocus={() => setFocusRowId(null)} appropriate={appropriate} row={row} onChange={(patch) => setRow(row.id, patch)} onRemove={() => removeRow(row.id, "notAppropriate")} onScore={(score) => setScore(row.id, score)} />
+-            }
+-          </div>
+-        ))}
+-      </div>
+-      {decision.recommendations.length === 0 && <p className={`pl-[48px] pt-1 text-xs ${muted}`}>No items yet.</p>}
+-      <SpecialRow
+-        derivedNote={bestScore(decision) === null ? "Score the best item first" : `Default from best item (${bestScore(decision)})`}
+-        role="Unaddressed"
+-        text="No substantive plan addresses this criterion (the harm of omission)."
+-      >
+-        <HarmCell allowUncertain={false} derived={derivedNeedSeverity(decision)} help="Harm when no substantive plan addresses this criterion. The best score suggests the default: 9 Severe, 8 Moderate, 7 Mild. Choose the plausible harm of leaving this need unmet." label={`Harm if ${decision.id} is not addressed`} suffix="(harm of omission)" value={needSeverity(decision)} onChange={(override) => onChange(({ harmIfNotAddressedOverride: _old, ...d }) => (override === undefined ? d : { ...d, harmIfNotAddressedOverride: override }))} />
+-      </SpecialRow>
+-      <CommitteeNote rating={rating} />
+-      {decision.activation.type === "future" && <p className={`pb-1.5 pl-[48px] pt-1 text-xs ${muted}`}>Grade the harm of not giving this advice today, not the harm of the future event going untreated.</p>}
+-      <div className="mt-1 flex items-center gap-1.5 border-t border-[hsl(var(--border))] bg-[hsl(var(--muted))]/35 py-1 pl-[48px] pr-3">
+-        <span className={`text-[10.5px] ${muted}`}>Add</span>
+-        <button aria-label={`Add an appropriate item to ${decision.id}`} className={chipButton} type="button" onClick={() => addRow("appropriate")}>
+-          <span className="text-blue-800">+</span> Appropriate
+-        </button>
+-        <button aria-label={`Add an inappropriate item to ${decision.id}`} className={chipButton} type="button" onClick={() => addRow("notAppropriate")}>
+-          <span className="text-orange-800">+</span> Inappropriate
+-        </button>
+-      </div>
+-    </>
+-  );
+-}
+-
+-// Every card (D0 usual care, D1 Follow-up, and the rest) shares this shell:
+-// collapse arrow, ID, question, header controls when open, summary when closed.
+@@ -552,20 +281,3 @@
+-// Committee context, display only: the raters' median, their votes on hover, and a disagreement flag.
+-function CommitteeNote({ rating, cap = null }: { rating?: RatingItem | null; cap?: CommitteeRatings["capAdjustment"] }) {
+-  if (!rating && !cap) return null;
+-  const votes = rating?.votes.map((v) => SEVERITY_LABEL[v]).join(", ") || "none";
+-  const generator = rating?.generator ? SEVERITY_LABEL[rating.generator] : "unset";
+-  return (
+-    <div className={`flex flex-wrap items-center gap-2 border-t border-[hsl(var(--border))]/60 py-1.5 pl-[48px] pr-3 text-xs ${muted}`}>
+-      {rating && <HoverTip text={`Votes: ${votes}. Generator's rating: ${generator}.`}>
+-        {(describedBy) => <span aria-describedby={describedBy} className="font-semibold text-[hsl(var(--foreground))]" tabIndex={0}>Committee median: {rating.median ? SEVERITY_LABEL[rating.median] : "no quorum"}</span>}
+-      </HoverTip>}
+-      {rating?.disagreement && <span className={flagClass}>Disagreement</span>}
+-      {cap && <span>Usual care raised from {SEVERITY_LABEL[cap.from]} to {SEVERITY_LABEL[cap.to]} to match {cap.decision}</span>}
+-    </div>
+-  );
+-}
+-
+-function CounselingRows({ decision, record, onChange, onRequestRemoval, counselingClarityPreview = false }: {
+-  decision: RubricDecision; record: RubricCase; counselingClarityPreview?: boolean;
+-  onChange: (updater: (decision: RubricDecision) => RubricDecision) => void;
+-  onRequestRemoval: (request: RemovalRequest) => void;
++function UsualCareCard({ value, issues, open, onToggle, onChange }: {
++  value: NonNullable<TextV2Case["usualCare"]>; issues: string[]; open: boolean;
++  onToggle: () => void; onChange: (value: NonNullable<TextV2Case["usualCare"]>) => void;
+@@ -573,37 +284,0 @@
+-  const patch = (id: string, change: Partial<Recommendation>): void => onChange((current) => ({ ...current, recommendations: current.recommendations.map((row) => row.id === id ? { ...row, ...change } : row) }));
+-  return <div data-standard-counseling>
+-    <p className="border-b border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-3 py-3 text-[12.5px]">{counselingClarityPreview ? "Include the required counseling for each recommended treatment." : "Every applicable item below is required."}</p>
+-    <div data-row-grid data-row-header className={`${ROW_GRID} py-2 text-[11.5px] ${muted}`}><span /><span>Counseling and safety checks</span><span className="pl-3">Appropriateness</span><span>Harm</span><span /></div>
+-    {decision.recommendations.map((row) => <div data-row-grid data-counseling-requirement={row.id} className={`${ROW_GRID} items-start border-b border-[hsl(var(--border))]/60 py-3 text-[13.5px]`} key={row.id}>
+-      <span className={`pl-3 text-[11px] ${muted}`}>{shortId(row.id)}</span>
+-      <div className="min-w-0"><AutoText aria-label={`Counseling item ${row.id}`} placeholder="If [intervention] is recommended, [required counseling and safety checks]" value={row.text} onChange={(text) => patch(row.id, { text })} /></div>
+-      <div><ScoreBar label={`Appropriateness of counseling ${row.id}`} value={row.score} onChange={(score) => onChange((current) => ({ ...current, recommendations: current.recommendations.map((entry) => entry.id === row.id ? setCounselingRowScore(entry, score) : entry) }))} />{row.score === null && <p className={`mt-1 pl-3 text-xs ${muted}`}>Not rated</p>}</div>
+-      {row.score === null || row.score >= 7 ? <div><span className={`mb-1 block text-xs ${muted}`}>If omitted</span><Dropdown aria-label={`Harm if counseling ${row.id} is omitted`} className={`${smallSelect} w-full ${row.counselingHarmIfOmitted == null ? "border-amber-300 bg-amber-50 text-amber-900" : harmTone(row.counselingHarmIfOmitted)}`} value={row.counselingHarmIfOmitted ?? ""} onChange={(event) => patch(row.id, { counselingHarmIfOmitted: event.target.value ? event.target.value as NeedSeverity : null })}><option value="">Not rated</option>{SEVERITIES.map((severity) => <option key={severity} value={severity}>{SEVERITY_LABEL[severity]}</option>)}</Dropdown></div> : <HarmCell allowUncertain={derivedHarmIfRecommended(row) === "uncertain"} derived={derivedHarmIfRecommended(row)} help="Harm if this counseling advice is recommended. It is not a requirement and omitting it does not incur counseling omission harm." label={`Harm if counseling ${row.id} is recommended`} suffix="if recommended" value={harmIfRecommended(row)} onChange={(harmIfRecommendedOverride) => patch(row.id, { harmIfRecommendedOverride })} />}
+-      <div className="flex justify-end pr-2"><button className={iconButton} type="button" aria-label={`Remove ${row.id}`} onClick={() => onRequestRemoval({ title: "Remove counseling item?", text: row.text, detail: "This removes this advice from the counseling criterion.", focusAfterRemove: `[data-add-counseling="${decision.id}"]`, onConfirm: () => onChange((current) => ({ ...current, recommendations: current.recommendations.filter((entry) => entry.id !== row.id) })) })}><IconX /></button></div>
+-    </div>)}
+-    <div className="px-3 py-3"><button className={chipButton} data-add-counseling={decision.id} type="button" onClick={() => onChange((current) => ({ ...current, recommendations: [...current.recommendations, { id: nextRowId(decision.id, record), text: "", score: null, counselingHarmIfOmitted: null, tags: ["counseling"] }] }))}>+ Counseling item</button></div>
+-  </div>;
+-}
+-
+-function DecisionCard({ decision, record, rating, issues, open, groupOf, onAdded, onRequestRemoval, onToggle, onChange, onRemove, counselingClarityPreview = false }: {
+-  decision: RubricDecision; record: RubricCase; rating?: RatingItem; issues: string[]; open: boolean; groupOf: GroupOf; counselingClarityPreview?: boolean;
+-  onAdded: (rowId: string, group: RowGroup) => void; onRequestRemoval: (request: RemovalRequest) => void;
+-  onToggle: () => void; onChange: (updater: (decision: RubricDecision) => RubricDecision) => void; onRemove?: () => void;
+-}): ReactNode {
+-  const counseling = decision.kind === "counseling";
+-  const need = needSeverity(decision);
+-  return <Card
+-    closedPill={counseling ? null : <>{rating?.disagreement && <span className={flagClass}>Disagreement</span>}{need ? <span className={pillClass}>{SEVERITY_LABEL[need]}</span> : <span className={pillClass}>Not rated</span>}</>}
+-    editableQuestion={<AutoText aria-label={`Criterion ${decision.id}`} className="text-[14.5px] font-bold" placeholder="Write what this criterion evaluates and any condition" value={decision.question} onChange={(question) => onChange((current) => ({ ...current, question }))} />}
+-    gateSummary="" id={decision.id} issues={issues} open={open}
+-    openControls={onRemove && <button aria-label={`Remove ${decision.id}`} className={`${iconButton} hover:!bg-red-50 hover:!text-red-600`} title="Remove this criterion" type="button" onClick={onRemove}><IconX /></button>}
+-    question={decision.question} onToggle={onToggle}
+-  >
+-    {counseling ? <CounselingRows decision={decision} record={record} onChange={onChange} onRequestRemoval={onRequestRemoval} counselingClarityPreview={counselingClarityPreview} /> : <DecisionRows onRequestRemoval={onRequestRemoval} decision={decision} groupOf={groupOf} rating={rating} record={record} onAdded={onAdded} onChange={onChange} />}
+-  </Card>;
+-}
+-
+-// Reference only, never scored: the harm specialists expect from usual care without additional input.
+-type ScoredUsualCare = UsualCare & { score?: Score | null };
+-
+-function UsualCareCard({ value, rating, cap, issues, open, onToggle, onChange, label, asRow = false }: { value: ScoredUsualCare; rating: RatingItem | null; cap: CommitteeRatings["capAdjustment"]; issues: string[]; open: boolean; onToggle: () => void; onChange: (value: ScoredUsualCare) => void; label?: string; asRow?: boolean }) {
+@@ -612 +287 @@
+-  if (asRow) return (
++  return (
+@@ -615 +290 @@
+-      id="D0" label={label} issues={issues} open={open} question={USUAL_CARE_QUESTION} onToggle={onToggle}
++      id="D0" label="C1" issues={issues} open={open} question={USUAL_CARE_QUESTION} onToggle={onToggle}
+@@ -639,43 +313,0 @@
+-  return (
+-    <Card
+-      closedPill={<span className={value.harm ? pillClass : `rounded-full bg-[hsl(var(--muted))] px-2 py-0.5 text-[11.5px] font-bold ${muted}`}>{value.harm ? SEVERITY_LABEL[value.harm] : "Not rated"}</span>}
+-      id="D0"
+-      label={label}
+-      issues={issues}
+-      open={open}
+-      question={USUAL_CARE_QUESTION}
+-      onToggle={onToggle}
+-    >
+-      <div className={editorStyles.usualCareReference}>
+-        <div>
+-          <p className={editorStyles.usualCareDescription}>{USUAL_CARE_DEFINITION}</p>
+-        </div>
+-        <div data-usual-care-rating><span className={editorStyles.usualCareLabel}>Harm of usual care</span>
+-        <HoverTip text={`${USUAL_CARE_DEFINITION} ${value.harm ? "Review the existing rating and adjust it if needed." : "Rate the harm you expect."} A reference for reporting and for your harm-of-omission ratings; not scored.`}>{(describedBy) => (
+-          <Dropdown
+-            aria-describedby={describedBy}
+-            aria-label="Harm of usual care without additional input"
+-            className={`h-7 w-full rounded-md border px-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[hsl(var(--ring))]/40 ${value.harm ? `border-[hsl(var(--border))] ${harmTone(value.harm)}` : "border-amber-400 bg-amber-50 text-amber-800"}`}
+-            value={value.harm ?? ""}
+-            onChange={(event) => onChange({ ...value, harm: (event.target.value || null) as NeedSeverity | null })}
+-          >
+-            {!value.harm && <option value="">Rate harm</option>}
+-            {SEVERITIES.map((s) => <option key={s} value={s}>{SEVERITY_LABEL[s]}</option>)}
+-          </Dropdown>
+-        )}</HoverTip>
+-        </div>
+-      </div>
+-      <CommitteeNote cap={cap} rating={rating} />
+-    </Card>
+-  );
+-}
+-
+-// Rubric format text v2 (D123-D130): every item has a harm if followed; followup and plan criteria carry a
+-// reviewed harm if missed; the counseling criterion's is computed from its required items and shown locked.
+-interface LoadedV2 {
+-  record: TextV2Case;
+-  provenance: TextV2Provenance;
+-  source: CaseSource;
+-  timing?: AuthoringTiming;
+-  savedAt?: string;
+-  fromCopy: boolean;
+@@ -914 +546 @@
+-        {warnings.length} draft warning{warnings.length === 1 ? "" : "s"}: unknown ratings and unresolved notes. Saving a draft is allowed; scoring needs them resolved.
++        {warnings.length} rubric warning{warnings.length === 1 ? "" : "s"}. Review the details before scoring.
+@@ -923 +555,53 @@
+-export default function RubricEditor({ caseId, source, initialPanelView, guideAppearance, guideReviewControls, guideSections, reviewControls, courseLogicPreview = false, previewOnly = false, logicPreview, reviewFeatures = BASELINE_FEATURES, reviewOriginal = false, counselingClarityPreview = false, benchmarkRecord }: { caseId: string; source?: CasesetSource; initialPanelView?: RubricPanelView; guideAppearance?: GuideColorAppearance; guideReviewControls?: ReactNode; guideSections?: GuideSections; reviewControls?: ReactNode; courseLogicPreview?: boolean; previewOnly?: boolean; logicPreview?: LogicPreview; reviewFeatures?: AuthoringReviewFeatures; reviewOriginal?: boolean; counselingClarityPreview?: boolean; benchmarkRecord?: TextV2Case }) {
++export function TextV2RubricBody({ record, validation, openIds, onToggle, onOpenAll, onChange, onRequestRemoval }: {
++  record: TextV2Case;
++  validation?: ReturnType<typeof validateTextV2>;
++  openIds: Set<string>;
++  onToggle: (id: string) => void;
++  onOpenAll: (ids: Set<string>) => void;
++  onChange: (scope: string, change: (record: TextV2Case) => TextV2Case) => void;
++  onRequestRemoval: (request: RemovalRequest) => void;
++}): ReactNode {
++  const check = validation ?? validateTextV2(record, "draft");
++  const allOpen = openIds.has("D0") && record.decisions.every((d) => openIds.has(d.id));
++  const unrated = unratedV2Count(record);
++  return <div className="min-w-0 space-y-2" data-rubric-text-v2>
++    {check.errors.length > 0 && <div className="rounded-lg border border-orange-200 bg-orange-50 px-3.5 py-2 text-[12.5px] text-orange-900" role="alert">
++      <strong>{check.errors.length} item{check.errors.length === 1 ? " needs" : "s need"} attention before saving</strong>
++      <ul className="mt-1 list-disc space-y-0.5 pl-5">{check.errors.map((error) => <li key={error}>{error}</li>)}</ul>
++    </div>}
++    {check.warnings.length > 0 && <TextV2Warnings warnings={check.warnings} />}
++    {unrated > 0 && <p className="text-xs text-amber-800" data-unrated-warning>{unrated} item{unrated === 1 ? " needs" : "s need"} ratings. Unrated items remain marked below.</p>}
++    <div className={editorStyles.rubricToolbar} data-rubric-toolbar>
++      <h1 className="text-base font-bold">Criteria</h1>
++      <button className={editorStyles.disclosureButton} type="button" aria-label={allOpen ? "Collapse all rubric sections" : "Expand all rubric sections"} onClick={() => onOpenAll(allOpen ? new Set() : new Set(["D0", ...record.decisions.map((d) => d.id)]))}>
++        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={allOpen ? "m6 3 4 4 4-4M6 17l4-4 4 4" : "m6 7 4-4 4 4M6 13l4 4 4-4"} /></svg>
++        {allOpen ? "Collapse all" : "Expand all"}
++      </button>
++    </div>
++    {record.unresolved && <UnresolvedNote note={record.unresolved} />}
++    <UsualCareCard value={record.usualCare ?? { harm: null }} issues={check.errors.filter((e) => e.startsWith("usualCare") || e.startsWith("case: usualCare"))} open={openIds.has("D0")} onToggle={() => onToggle("D0")} onChange={(usualCare) => onChange("D0", (current) => ({ ...current, usualCare }))} />
++    {record.decisions.map((criterion) => <TextV2CriterionCard
++      criterion={criterion} record={record} issues={v2Issues(criterion, check.errors)} key={`${record.caseId}:${criterion.id}`} open={openIds.has(criterion.id)}
++      onToggle={() => onToggle(criterion.id)} onRequestRemoval={onRequestRemoval}
++      onChange={(change) => onChange(criterion.id, (current) => ({ ...current, decisions: current.decisions.map((d) => d.id === criterion.id ? change(d) : d) }))}
++      onRemove={criterion.kind !== "plan" ? undefined : () => onRequestRemoval({ title: `Remove criterion ${criterion.id}?`, text: criterion.question || "Untitled Criterion", detail: "This also removes all items in this criterion.", focusAfterRemove: "[data-rubric-toolbar] button", onConfirm: () => onChange(criterion.id, (current) => ({ ...current, decisions: current.decisions.filter((d) => d.id !== criterion.id) })) })}
++    />)}
++    <div className="px-0.5"><button className={`${chipButton} px-2.5 py-1 text-xs`} type="button" onClick={() => {
++      const { added } = addV2Criterion(record);
++      onChange(added, (current) => addV2Criterion(current).record);
++      onOpenAll(new Set(openIds).add(added));
++    }}>+ Criterion</button></div>
++  </div>;
++}
++
++type Loaded = EditorLoaded<TextV2Case>;
++
++interface EditorProps {
++  caseId: string;
++  source: { caseset: string; version: string };
++  reviewState?: ReviewState;
++  synthetic?: boolean;
++  validationProvenance?: Record<string, unknown>;
++}
++
++export default function TextV2RubricEditor(props: EditorProps): ReactNode {
+@@ -925,0 +610,36 @@
++  const { caseId, source: { caseset, version } } = props;
++  const storage = useMemo<EditorStorage<TextV2Case>>(() => {
++    const endpoint = "/api/runs/table";
++    const query = `&caseset=${encodeURIComponent(caseset)}&version=${encodeURIComponent(version)}`;
++    return {
++      reviewerId,
++      load: async () => {
++        const response = await fetch(`${endpoint}?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId ?? "")}${query}`, { cache: "no-store" });
++        const body = await response.json();
++        if (!response.ok) throw new Error(body.error ?? "Unable to load rubric.");
++        return body as Loaded;
++      },
++      save: async (request) => {
++        const response = await fetch(endpoint, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
++          caseId, reviewer: reviewerId, caseset, version, ...request,
++        }) });
++        const body = await response.json();
++        if (!response.ok) throw new Error(body.error);
++        return body;
++      },
++      onSaved: () => router.refresh(),
++    };
++  }, [caseId, caseset, version, reviewerId, router]);
++  return <TextV2RubricEditorView {...props} storage={storage} />;
++}
++
++export function TextV2RubricEditorView({ caseId, source, reviewState, synthetic = false, validationProvenance = {}, storage }: EditorProps & { storage: EditorStorage<TextV2Case> }): ReactNode {
++  const { reviewerId } = storage;
++  const [loaded, setLoaded] = useState<Loaded | null>(null);
++  const [status, setStatus] = useState<"clean" | "dirty" | "saving" | "saved" | "error">("clean");
++  const [dirty, setDirty] = useState(false);
++  const [saving, setSaving] = useState(false);
++  const savePending = useRef(false);
++  const editRevision = useRef(0);
++  const [message, setMessage] = useState("Loading...");
++  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+@@ -928,23 +647,0 @@
+-  const requestRemoval = (request: RemovalRequest): void => { setRemovalRequest(request); setRemovalOpen(true); };
+-  const [draft, setLoaded] = useState<Loaded | null>(null);
+-  const [v2, setV2] = useState<LoadedV2 | null>(null);
+-  const accepted = useRef<Loaded | null>(null);
+-  const loaded = reviewOriginal ? accepted.current : draft;
+-  const [status, setStatus] = useState<SaveStatus>("clean");
+-  // Unsaved edits stay guarded after a failed save; only a successful save or a fresh load clears this.
+-  const [dirty, setDirty] = useState(false);
+-  const [message, setMessage] = useState("Loading...");
+-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+-  const [panelOpen, setPanelOpen] = useState(initialPanelView !== undefined);
+-  const [panelView, setPanelView] = useState<RubricPanelView>(initialPanelView ?? "guide");
+-  const panelTrigger = useRef<HTMLButtonElement | null>(null);
+-  const closePanel = useCallback(() => setPanelOpen(false), []);
+-  // Committee ratings are keyed by Decision id; adding or removing a Decision renumbers them, so they are hidden after that.
+-  const [ratingsStale, setRatingsStale] = useState(false);
+-  const committeeRatingsStale = !reviewOriginal && ratingsStale;
+-  const [conditionMemoryEpoch, setConditionMemoryEpoch] = useState(0);
+-  // An unscored row has no tier yet, so it stays in the group it was added to. Editor state
+-  // only: the save route rejects unscored rows, so this is never stored.
+-  const [addedAs, setAddedAs] = useState<Map<string, RowGroup>>(new Map());
+-  const groupOf = useCallback<GroupOf>((row) => (row.score === null ? addedAs.get(row.id) ?? "appropriate" : groupByScore(row)), [addedAs]);
+-  const noteAdded = useCallback((rowId: string, group: RowGroup): void => setAddedAs((current) => new Map(current).set(rowId, group)), []);
+@@ -952,4 +648,0 @@
+-  // A caseset source loads a table version and saves a reviewed copy; without one, the corpus pilot files.
+-  const endpoint = source ? "/api/runs/rubric" : "/api/rubric";
+-  const query = source ? `&caseset=${encodeURIComponent(source.caseset)}&version=${encodeURIComponent(source.version)}` : "";
+-
+@@ -958 +651 @@
+-    accepted.current = null;
++    let current = true;
+@@ -960,6 +653,5 @@
+-    setV2(null);
+-    fetch(`${endpoint}?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId)}${query}`, { cache: "no-store" })
+-      .then(async (response) => {
+-        const body = await response.json();
+-        if (!response.ok) throw new Error(body.error ?? "Unable to load.");
+-        return body as Loaded;
++    setMessage("Loading...");
++    storage.load()
++      .then((data) => {
++        if (!isTextV2(data.record)) throw new Error("This version is not a text-v2 rubric. Reopen it from the Rubrics page.");
++        return data;
+@@ -967,0 +660 @@
++        if (!current) return;
+@@ -969,10 +662 @@
+-        if (isTextV2(data.record)) {
+-          // Preview only: a benchmark rewrite replaces the loaded record; previewOnly never saves it.
+-          const body = benchmarkRecord ? { ...(data as unknown as LoadedV2), record: structuredClone(benchmarkRecord) } : data as unknown as LoadedV2;
+-          setOpenIds(new Set(["D0", ...body.record.decisions.map((d) => d.id)]));
+-          setV2(body);
+-          setStatus("clean");
+-          setDirty(false);
+-          setMessage(body.fromCopy ? `Loaded your saved copy (${reviewerId})` : "Loaded the v2 draft");
+-          return;
+-        }
++        setLoaded(data);
+@@ -980,11 +664,3 @@
+-        const enablingOverrides = !data.record.harmOverrides;
+-        if (enablingOverrides) timing.current = recordEdit(timing.current, "settings", new Date());
+-        const projected = textFirstProjection(data.record);
+-        const ready = { ...data, provenance: data.provenance ?? projected.provenance, record: { ...projected.record, harmOverrides: true } };
+-        accepted.current = structuredClone(ready);
+-        setLoaded({ ...ready, ratings: null });
+-        setAddedAs(new Map());
+-        setRatingsStale(false);
+-        setStatus(enablingOverrides ? "dirty" : "clean");
+-        setDirty(enablingOverrides);
+-        setMessage(enablingOverrides ? "Unsaved changes" : source ? "Loaded" : data.fromCopy ? `Loaded your saved copy (${reviewerId})` : "Loaded the unreviewed draft");
++        setStatus("clean");
++        setDirty(false);
++        setMessage("Loaded");
+@@ -992,2 +668,3 @@
+-      .catch((error: Error) => { setStatus("error"); setMessage(error.message); });
+-  }, [caseId, reviewerId, endpoint, query, logicPreview, benchmarkRecord]);
++      .catch((error: Error) => { if (current) { setStatus("error"); setMessage(error.message); } });
++    return () => { current = false; };
++  }, [caseId, reviewerId, storage]);
+@@ -1003 +679,0 @@
+-    if (previewOnly) return;
+@@ -1007,58 +683,12 @@
+-  }, [dirty, previewOnly]);
+-
+-  useEffect(() => {
+-    if (loaded?.record.caseId && window.location.hash) {
+-      document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ block: "start" });
+-    }
+-  }, [loaded?.record.caseId]);
+-
+-  const markDirty = useCallback((): void => { setStatus("dirty"); setDirty(true); }, []);
+-
+-  const errors = useMemo(() => (loaded ? validateRubric(loaded.record, groupOf) : []), [loaded, groupOf]);
+-  const v2Check = useMemo(() => (v2 ? validateTextV2(v2.record, "draft") : null), [v2]);
+-
+-  const updateDecision = useCallback((decisionId: string, updater: (d: RubricDecision) => RubricDecision) => {
+-    if (reviewOriginal) return;
+-    if (timing.current) timing.current = recordEdit(timing.current, decisionId, new Date());
+-    setLoaded((current) => {
+-      if (!current) return current;
+-      const record = retainAuthoringDraft(current.record, reconcileCounseling({ ...current.record, decisions: current.record.decisions.map((d) => {
+-        if (d.id !== decisionId) return d;
+-        const next = updater(d);
+-        return next.counseling ? { ...next, counseling: { ...next.counseling, question: next.question, decisionId: next.id } } : next;
+-      }) }));
+-      return { ...current, record, provenance: flagTagReviews(current.provenance!, current.record, record) };
+-    });
+-    markDirty();
+-    setMessage("Unsaved changes");
+-  }, [markDirty, reviewOriginal]);
+-
+-  // Removing a Decision renumbers the case; carry timing and open cards across.
+-  const restructure = (change: (record: RubricCase) => { record: RubricCase; ids: Map<string, string> }, focus?: (ids: Map<string, string>) => string): void => {
+-    if (!loaded || reviewOriginal) return;
+-    const { record: changed, ids } = change(loaded.record);
+-    const record = retainAuthoringDraft(loaded.record, changed);
+-    if (timing.current) {
+-      const decisions: AuthoringTiming["decisions"] = {};
+-      for (const [oldId, value] of Object.entries(timing.current.decisions)) {
+-        const newId = ids.get(oldId);
+-        if (newId) decisions[newId] = value;
+-      }
+-      timing.current = { ...timing.current, decisions };
+-      const focused = focus?.(ids);
+-      if (focused) timing.current = recordEdit(timing.current, focused, new Date());
+-    }
+-    const opened = new Set([...openIds].flatMap((id) => (ids.has(id) ? [ids.get(id)!] : [])));
+-    const focused = focus?.(ids);
+-    if (focused) opened.add(focused);
+-    setOpenIds(opened);
+-    // Row ids follow their Decision's new id; rows of a removed Decision are dropped.
+-    setAddedAs((current) => new Map([...current].flatMap(([rowId, group]) => {
+-      const dot = rowId.indexOf(".");
+-      const decisionId = ids.get(rowId.slice(0, dot));
+-      return decisionId ? [[`${decisionId}${rowId.slice(dot)}`, group] as const] : [];
+-    })));
+-    setLoaded({ ...loaded, record, provenance: flagTagReviews(loaded.provenance!, loaded.record, record, ids) });
+-    setConditionMemoryEpoch((epoch) => epoch + 1);
+-    setRatingsStale(true);
+-    markDirty();
++  }, [dirty]);
++
++  useEffect(() => { storage.onDirtyChange?.(dirty); }, [dirty, storage]);
++  useEffect(() => { storage.onSavingChange?.(saving); }, [saving, storage]);
++
++  const check = useMemo(() => loaded ? validateTextV2ForProject(loaded.record, "draft", validationProvenance) : null, [loaded, validationProvenance]);
++  const change = (scope: string, update: (record: TextV2Case) => TextV2Case): void => {
++    editRevision.current += 1;
++    if (timing.current) timing.current = recordEdit(timing.current, scope, new Date());
++    setLoaded((current) => current && { ...current, record: update(current.record) });
++    setStatus("dirty");
++    setDirty(true);
+@@ -1067,19 +696,0 @@
+-
+-  const updateV2 = useCallback((scope: string, change: (record: TextV2Case) => TextV2Case): void => {
+-    if (reviewOriginal) return;
+-    if (timing.current) timing.current = recordEdit(timing.current, scope, new Date());
+-    setV2((current) => current && { ...current, record: change(current.record) });
+-    markDirty();
+-    setMessage("Unsaved changes");
+-  }, [markDirty, reviewOriginal]);
+-  const updateV2Criterion = (criterionId: string, updater: (criterion: TextV2Criterion) => TextV2Criterion): void =>
+-    updateV2(criterionId, (record) => ({ ...record, decisions: record.decisions.map((d) => (d.id === criterionId ? updater(d) : d)) }));
+-
+-  const updateUsualCare = (usualCare: UsualCare): void => {
+-    if (reviewOriginal) return;
+-    if (timing.current) timing.current = recordEdit(timing.current, "D0", new Date());
+-    setLoaded((current) => current && { ...current, record: { ...current.record, usualCare } });
+-    markDirty();
+-    setMessage("Unsaved changes");
+-  };
+-
+@@ -1091,4 +702,6 @@
+-
+-  const save = async (): Promise<void> => {
+-    if (previewOnly) return;
+-    if ((!loaded && !v2) || !reviewerId || !timing.current) return;
++  const canSave = Boolean(loaded && reviewerId && timing.current && !saving && !check?.errors.length && loaded.canSave !== false);
++  const save = async (): Promise<boolean> => {
++    if (!canSave || savePending.current || !loaded || !timing.current) return false;
++    const revision = editRevision.current;
++    savePending.current = true;
++    setSaving(true);
+@@ -1096,22 +709,20 @@
+-    const response = await fetch(endpoint, {
+-      method: "PUT",
+-      headers: { "Content-Type": "application/json" },
+-      body: JSON.stringify(v2 ? { caseId, reviewer: reviewerId, record: v2.record, provenance: v2.provenance, timing: timing.current } : {
+-        caseId, reviewer: reviewerId, record: loaded!.record, provenance: loaded!.provenance, timing: timing.current, ...source,
+-        ...(source ? { sourceSha256: loaded!.sourceSha256 ?? undefined, replacesSha256: loaded!.replacesSha256 ?? null } : {}),
+-      }),
+-    });
+-    const body = await response.json();
+-    if (!response.ok) { setStatus("error"); setMessage(`Save failed: ${body.error}`); return; }
+-    setStatus("saved");
+-    setDirty(false);
+-    setMessage(body.authoringDraft ? "Saved authoring draft" : body.version ? `Saved as ${body.version}` : "Saved");
+-    // Refreshes the server-rendered review status above the editor.
+-    if (source && !body.authoringDraft) router.refresh();
+-    // The next save compares against what this save wrote.
+-    if (source && body.version) {
+-      setLoaded((current) => (current ? {
+-        ...current,
+-        notice: savedNotice(body.version),
+-        ...(source.version === body.version ? { sourceSha256: body.contentSha256 } : { replacesSha256: body.contentSha256 }),
+-      } : current));
++    try {
++      const body = await storage.save({ record: loaded.record, timing: timing.current,
++        sourceSha256: loaded.sourceSha256 ?? undefined, replacesSha256: loaded.replacesSha256 ?? null });
++      const savedLatest = editRevision.current === revision;
++      setStatus(savedLatest ? "saved" : "dirty");
++      setDirty(!savedLatest);
++      setMessage(savedLatest ? body.message ?? (body.version ? `Saved as ${body.version}` : "Saved") : "Earlier changes saved. Newer edits remain unsaved.");
++      if (body.version) {
++        const savedVersion = body.version;
++        setLoaded((current) => current && { ...current, notice: savedNotice(savedVersion), ...(source.version === savedVersion ? { sourceSha256: body.contentSha256 } : { replacesSha256: body.contentSha256 }) });
++      }
++      if (savedLatest) storage.onSaved?.();
++      return savedLatest;
++    } catch (error) {
++      setStatus("error");
++      setMessage(`Save failed: ${(error as Error).message}`);
++      return false;
++    } finally {
++      savePending.current = false;
++      setSaving(false);
+@@ -1120,153 +731,24 @@
+-
+-  const allOpen = v2 ? openIds.has("D0") && v2.record.decisions.every((d) => openIds.has(d.id)) : loaded ? openIds.has("D0") && loaded.record.decisions.every((d) => openIds.has(d.id)) : false;
+-  const unratedCount = v2 ? unratedV2Count(v2.record) : loaded?.record.decisions.reduce((count, decision) => count + decision.recommendations.filter((row) => row.score === null || (decision.kind === "counseling" && row.score >= 7 && row.counselingHarmIfOmitted === null)).length, 0) ?? 0;
+-
+-  const toolButtons = (loaded || v2) && <nav aria-label="Rubric tools" className="flex items-center gap-1">
+-    <button aria-controls="rubric-panel" aria-expanded={panelOpen} aria-haspopup="dialog" className="min-h-9 rounded-md border border-[hsl(var(--border))] px-2.5 text-xs font-semibold transition-colors hover:bg-[hsl(var(--muted))] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--primary))] motion-reduce:transition-none" onClick={(event) => { panelTrigger.current = event.currentTarget; setPanelView("guide"); setPanelOpen(true); }} type="button">Guide</button>
+-  </nav>;
+-
+-  return (
+-    <>
+-    <div className={`${panelStyles.editor} ${editorStyles.root}`} data-rubric data-answer-table inert={panelOpen ? true : undefined}>
+-    <div className="page-transition">
+-      <div className={panelStyles.page}>
+-        <header className="sticky top-0 z-40 -mt-3 mb-4 flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-[hsl(var(--border))]/50 bg-[hsl(var(--background))]/95 py-2.5 backdrop-blur">
+-          <div className="flex min-w-0 flex-wrap items-center gap-3">
+-            <a className="text-[15px] font-bold text-[hsl(var(--foreground))]" href={source ? `/rubrics?case=${encodeURIComponent(caseId)}&version=${encodeURIComponent(source.version)}` : "/"}>NOHARM Rubric Editor</a>
+-            <span className="text-sm font-semibold">{caseId}</span>
+-            {source && <span className={`rounded-md bg-[hsl(var(--muted))] px-2 py-0.5 text-[11px] font-semibold ${muted}`}>{source.version}</span>}
+-            {source && loaded?.status === "failed" && <FailedTag />}
+-            {v2 && <span className={`rounded-md bg-[hsl(var(--muted))] px-2 py-0.5 text-[11px] font-semibold ${muted}`} data-format-tag>Text v2</span>}
+-            <div className="ml-6">{toolButtons}</div>
+-          </div>
+-          <div className="flex flex-wrap items-center gap-3">
+-            <span aria-live="polite" className={`text-xs ${status === "dirty" ? "font-medium text-amber-700" : status === "saved" ? "font-medium text-green-700" : status === "error" ? "font-medium text-red-600" : "text-gray-500"}`}>{previewOnly ? "Design preview: edits are not saved" : reviewerId ? message : ""}</span>
+-            {v2Check ? <button className="rounded-md bg-[hsl(var(--primary))] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition-colors hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50" disabled={previewOnly || status === "saving" || v2Check.errors.length > 0} type="button" onClick={() => { void save(); }}>
+-              {status === "saving" ? "Saving..." : "Save"}
+-            </button> : <button className="rounded-md bg-[hsl(var(--primary))] px-3.5 py-1.5 text-xs font-bold text-white shadow-sm transition-colors hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50" disabled={previewOnly || !loaded || status === "saving" || errors.length > 0 || (source !== undefined && loaded.canSave === false)} type="button" onClick={() => { void save(); }}>
+-              {status === "saving" ? "Saving..." : "Save"}
+-            </button>}
+-          </div>
+-        </header>
+-
+-        {reviewerId && !loaded && !v2 && <p className={status === "error" ? "text-red-600" : `text-sm ${muted}`}>{message}</p>}
+-
+-        {source && loaded?.notice && <p className={`-mt-2 mb-3 text-xs ${muted}`} data-save-target>{loaded.notice}</p>}
+-
+-        {source && loaded?.status === "failed" && <FailedErrors errors={loaded.errors ?? []} reason={loaded.canSave === false ? loaded.cannotSaveReason : undefined} />}
+-
+-        {loaded?.record.textFirstDraft && <p className={`mb-3 text-xs ${muted}`} data-authoring-draft>Authoring draft. Source review notes are in Guide. Saving keeps a separate draft.</p>}
+-        {v2 && <p className={`mb-3 text-xs ${muted}`} data-authoring-draft>Authoring draft in rubric format text v2. Saving keeps a separate reviewer copy; it is not scoreable.</p>}
+-        {unratedCount > 0 && <p className="mb-3 text-xs text-amber-800" data-unrated-warning>{unratedCount} item{unratedCount === 1 ? " needs" : "s need"} ratings. Unrated items remain marked below.</p>}
+-        {loaded && (
+-          <div className={panelStyles.workspace}>
+-            <CaseSourcePanel compact presentation={loaded.source.presentation} recommendations={loaded.source.recommendations} />
+-            <div className="min-w-0 space-y-2">
+-              {errors.length > 0 && (
+-                <div className="rounded-lg border border-orange-200 bg-orange-50 px-3.5 py-2 text-[12.5px] text-orange-900" role="alert">
+-                  <strong>{errors.length} item{errors.length === 1 ? " needs" : "s need"} attention before saving</strong>
+-                  {errors.length === 1
+-                    ? <span className="ml-2">{errors[0]}</span>
+-                    : <ul className="mt-1 list-disc space-y-0.5 pl-5">{errors.map((error) => <li key={error}>{error}</li>)}</ul>}
+-                </div>
+-              )}
+-              <div className={editorStyles.rubricToolbar} data-rubric-toolbar>
+-                <h1 className="text-base font-bold">Criteria</h1>
+-                <button className={editorStyles.disclosureButton} type="button" aria-label={allOpen ? "Collapse all rubric sections" : "Expand all rubric sections"} onClick={() => setOpenIds(allOpen ? new Set() : new Set(["D0", ...loaded.record.decisions.map((d) => d.id)]))}>
+-                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+-                    <path d={allOpen ? "m6 3 4 4 4-4M6 17l4-4 4 4" : "m6 7 4-4 4 4M6 13l4 4 4-4"} />
+-                  </svg>
+-                  {allOpen ? "Collapse all" : "Expand all"}
+-                </button>
+-              </div>
+-              {committeeRatingsStale && loaded.ratings && <p className={`text-xs ${muted}`}>Committee ratings hidden: Criteria changed since load.</p>}
+-              <UsualCareCard issues={errors.filter((e) => e.startsWith("Usual care:"))} open={openIds.has("D0")} cap={committeeRatingsStale ? null : loaded.ratings?.capAdjustment ?? null} rating={committeeRatingsStale ? null : loaded.ratings?.usualCare ?? null} value={loaded.record.usualCare} onChange={updateUsualCare} onToggle={() => toggle("D0")} />
+-              {[...loaded.record.decisions].sort((a, b) => Number(a.kind === "counseling") - Number(b.kind === "counseling")).map((decision) => (
+-                <DecisionCard
+-                  counselingClarityPreview={counselingClarityPreview}
+-                  decision={decision}
+-                  groupOf={groupOf}
+-                  issues={decisionIssues(decision, errors)}
+-                  key={`${caseId}:${conditionMemoryEpoch}:${decision.id}`}
+-                  open={openIds.has(decision.id)}
+-                  onAdded={noteAdded}
+-                  onRequestRemoval={requestRemoval}
+-                  rating={committeeRatingsStale ? undefined : loaded.ratings?.decisions[decision.id]}
+-                  record={loaded.record}
+-                  onChange={(updater) => updateDecision(decision.id, updater)}
+-                  onRemove={decision.kind === "followUp" ? undefined : () => requestRemoval({
+-                    title: `Remove criterion ${decision.id}?`,
+-                    text: decision.question || "Untitled Criterion",
+-                    detail: "This also removes all items in this criterion.",
+-                    focusAfterRemove: "[data-rubric-toolbar] button",
+-                    onConfirm: () => restructure((record) => removeDecision(record, decision.id)),
+-                  })}
+-                  onToggle={() => toggle(decision.id)}
+-                />
+-              ))}
+-              <div className="px-0.5">
+-                <button className={`${chipButton} px-2.5 py-1 text-xs`} type="button" onClick={() => { let added = ""; restructure((record) => { const result = addDecision(record); added = result.added; return result; }, () => added); }}>+ Criterion</button>
+-                {!loaded.record.decisions.some((decision) => decision.kind === "counseling") && <button className={`${chipButton} ml-2 px-2.5 py-1 text-xs`} type="button" onClick={() => { let added = ""; restructure((record) => { const result = addTextCounselingDecision(record); added = result.added; return result; }, () => added); }}>+ Counseling criterion</button>}
+-              </div>
+-            </div>
+-          </div>
+-        )}
+-        {v2 && v2Check && (
+-          <div className={panelStyles.workspace} data-rubric-text-v2>
+-            <CaseSourcePanel compact presentation={v2.source.presentation} recommendations={v2.source.recommendations} />
+-            <div className="min-w-0 space-y-2">
+-              {v2Check.errors.length > 0 && (
+-                <div className="rounded-lg border border-orange-200 bg-orange-50 px-3.5 py-2 text-[12.5px] text-orange-900" role="alert">
+-                  <strong>{v2Check.errors.length} item{v2Check.errors.length === 1 ? " needs" : "s need"} attention before saving</strong>
+-                  {v2Check.errors.length === 1
+-                    ? <span className="ml-2">{v2Check.errors[0]}</span>
+-                    : <ul className="mt-1 list-disc space-y-0.5 pl-5">{v2Check.errors.map((error) => <li key={error}>{error}</li>)}</ul>}
+-                </div>
+-              )}
+-              {v2Check.warnings.length > 0 && <TextV2Warnings warnings={v2Check.warnings} />}
+-              <div className={editorStyles.rubricToolbar} data-rubric-toolbar>
+-                <h1 className="text-base font-bold">Criteria</h1>
+-                <button className={editorStyles.disclosureButton} type="button" aria-label={allOpen ? "Collapse all rubric sections" : "Expand all rubric sections"} onClick={() => setOpenIds(allOpen ? new Set() : new Set(["D0", ...v2.record.decisions.map((d) => d.id)]))}>
+-                  <svg aria-hidden="true" width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+-                    <path d={allOpen ? "m6 3 4 4 4-4M6 17l4-4 4 4" : "m6 7 4-4 4 4M6 13l4 4 4-4"} />
+-                  </svg>
+-                  {allOpen ? "Collapse all" : "Expand all"}
+-                </button>
+-              </div>
+-              {v2.record.unresolved && <UnresolvedNote note={v2.record.unresolved} />}
+-              <UsualCareCard issues={v2Check.errors.filter((e) => e.startsWith("usualCare") || e.startsWith("case: usualCare"))} label="C1" asRow open={openIds.has("D0")} cap={null} rating={null} value={v2.record.usualCare ?? { harm: null }} onChange={(usualCare) => updateV2("D0", (record) => ({ ...record, usualCare }))} onToggle={() => toggle("D0")} />
+-              {v2.record.decisions.map((criterion) => (
+-                <TextV2CriterionCard
+-                  criterion={criterion}
+-                  issues={v2Issues(criterion, v2Check.errors)}
+-                  key={`${caseId}:${criterion.id}`}
+-                  open={openIds.has(criterion.id)}
+-                  record={v2.record}
+-                  onChange={(updater) => updateV2Criterion(criterion.id, updater)}
+-                  onRemove={criterion.kind !== "plan" ? undefined : () => requestRemoval({
+-                    title: `Remove criterion ${criterion.id}?`,
+-                    text: criterion.question || "Untitled Criterion",
+-                    detail: "This also removes all items in this criterion.",
+-                    focusAfterRemove: "[data-rubric-toolbar] button",
+-                    onConfirm: () => updateV2(criterion.id, (record) => ({ ...record, decisions: record.decisions.filter((d) => d.id !== criterion.id) })),
+-                  })}
+-                  onRequestRemoval={requestRemoval}
+-                  onToggle={() => toggle(criterion.id)}
+-                />
+-              ))}
+-              <div className="px-0.5">
+-                <button className={`${chipButton} px-2.5 py-1 text-xs`} type="button" onClick={() => {
+-                  const { added } = addV2Criterion(v2.record);
+-                  updateV2(added, (record) => addV2Criterion(record).record);
+-                  setOpenIds((current) => new Set(current).add(added));
+-                }}>+ Criterion</button>
+-              </div>
+-            </div>
+-          </div>
+-        )}
+-      </div>
+-    </div>
+-      {/* Outside the slide-up wrapper, whose transform would pin this fixed panel to the page. */}
+-      {loaded && <RubricPanel sourceNotes={loaded.provenance?.notes} guideSections={guideSections} reviewControls={panelOpen ? reviewControls : undefined} guideAppearance={guideAppearance} guideReviewControls={guideReviewControls} groupOf={groupOf} open={panelOpen} record={loaded.record} trigger={panelTrigger.current} view={panelView} onClose={closePanel} />}
+-      {v2 && <RubricPanel guideSections={guideSections} reviewControls={panelOpen ? reviewControls : undefined} guideAppearance={guideAppearance} guideReviewControls={guideReviewControls} open={panelOpen} trigger={panelTrigger.current} view="guide" onClose={closePanel} />}
+-    </div>
++  useRubricEditorHost({ dirty, saving, canSave, error: status === "error" ? message : null, save });
++  return <div className={`${editorStyles.editor} ${editorStyles.root}`} data-rubric data-answer-table>
++    <div className="page-transition"><div className={editorStyles.page}>
++      <header className="sticky top-0 z-40 -mt-3 mb-4 flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-[hsl(var(--border))]/50 bg-[hsl(var(--background))]/95 py-2.5 backdrop-blur">
++        <div className="flex min-w-0 flex-wrap items-center gap-3">
++          <span className="text-[15px] font-bold">NOHARM Rubric Editor</span><span className="text-sm font-semibold">{caseId}</span>
++          <span className={`rounded-md bg-[hsl(var(--muted))] px-2 py-0.5 text-[11px] font-semibold ${muted}`}>{source.version}</span>
++          <span className={`rounded-md bg-[hsl(var(--muted))] px-2 py-0.5 text-[11px] font-semibold ${muted}`} data-format-tag>Text v2</span>
++          {reviewState === "draft" ? <Tag tone="plain">Unreviewed</Tag> : reviewState && <ReviewTag state={reviewState} />}{loaded?.status === "failed" && <FailedTag />}
++        </div>
++        <div className="flex flex-wrap items-center gap-3">
++          <span aria-live="polite" className={`text-xs ${status === "dirty" ? "text-amber-800" : status === "error" ? "text-red-700" : muted}`}>{message}</span>
++          <button className="rounded-md bg-[hsl(var(--primary))] px-3.5 py-1.5 text-xs font-bold text-white transition-colors hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50" disabled={!canSave} type="button" onClick={() => { void save(); }}>{saving ? "Saving..." : storage.saveLabel ?? "Save"}</button>
++        </div>
++      </header>
++      {synthetic && <aside aria-label="Synthetic demo" className={`mb-3 rounded-md border border-[hsl(var(--border))] px-3.5 py-2 text-xs ${muted}`}><strong>Synthetic demo</strong>{" "}These inputs and outputs are illustrative, not clinically validated content.</aside>}
++      {loaded?.notice && <p className={`mb-3 text-xs ${muted}`} data-save-target>{loaded.notice}</p>}
++      <p className={`mb-3 text-xs ${muted}`}>Saving keeps a separate reviewer copy. Saving does not establish clinical validation.</p>
++      {loaded?.status === "failed" && <FailedErrors errors={loaded.errors ?? []} reason={loaded.canSave === false ? loaded.cannotSaveReason : undefined} />}
++      {loaded && <div className={editorStyles.workspace}>
++        <CaseSourcePanel compact presentation={loaded.source.presentation} recommendations={loaded.source.recommendations} />
++        <TextV2RubricBody record={loaded.record} validation={check ?? undefined} openIds={openIds} onToggle={toggle} onOpenAll={setOpenIds} onChange={change} onRequestRemoval={(request) => { setRemovalRequest(request); setRemovalOpen(true); }} />
++      </div>}
++    </div></div>
+@@ -1274,4 +756,2 @@
+-    {!panelOpen && reviewControls}
+-    </>
+-  );
+-}
++  </div>;
++}
+--- a/harmreview/components/RubricEditor.module.css
++++ b/app/components/TextV2RubricEditor.module.css
+@@ -85 +85 @@
+-    content: "Appropriateness";
++    content: "Clinical Appropriateness";
+@@ -94 +94 @@
+-    content: "Harm";
++    content: "Error Severity";
+@@ -345,0 +346,51 @@
++
++.editor {
++  min-width: 0;
++}
++
++.editor > div {
++  min-width: 0;
++}
++
++.page {
++  container-type: inline-size;
++  width: 100%;
++  padding: 1.25rem 1.5rem 2rem;
++}
++
++.workspace {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr);
++  gap: 1.25rem;
++}
++
++.workspace > aside {
++  position: static;
++  max-height: none;
++  overflow-y: visible;
++}
++
++@container (min-width: 68rem) {
++  .workspace {
++    grid-template-columns: minmax(15rem, min(28%, 23.75rem)) minmax(0, 1fr);
++  }
++
++  .workspace > aside {
++    position: sticky;
++    align-self: start;
++    max-height: calc(100vh - 6rem);
++    overflow-y: auto;
++  }
++}
++
++
++@container rubric-card (max-width: 51rem) {
++  .root [data-role-zone] [data-row-header] {
++    display: flex;
++    padding: .75rem 1rem .25rem 3rem;
++  }
++
++  .root [data-role-zone] [data-row-header] > :not(:nth-child(2)) {
++    display: none;
++  }
++}

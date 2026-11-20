@@ -1,0 +1,16 @@
+{
+  "algorithm": "sha256",
+  "assets": [
+    {
+      "path": "benchmark.json",
+      "sha256": "018b95445a956d60aa78b27bd3cb4d389a7056f7e5da549c0bfc59d67ca62165",
+      "size": 4079
+    },
+    {
+      "path": "cases.jsonl",
+      "sha256": "92071a79860b781c2fb6005367588bce5a2ba1c3a03af434b2ed2aa140d2b040",
+      "size": 751
+    }
+  ],
+  "schema_version": "1"
+}

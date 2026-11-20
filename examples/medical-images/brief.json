@@ -1,0 +1,14 @@
+{
+  "field": "breast imaging",
+  "criteria": "Create concise breast ultrasound classification questions using the released malignant versus normal-or-benign classes. Do not infer additional findings or separate the combined normal/benign label.",
+  "profiles": ["classification", "closed-vqa"],
+  "case_count": 4,
+  "seed": "medical-images-v2",
+  "evaluation_fraction": 1,
+  "generator_model": "openrouter/openai/gpt-4o-mini",
+  "critic_model": "openrouter/openai/gpt-4.1",
+  "models": ["openrouter/openai/gpt-4o-mini"],
+  "max_calls": 32,
+  "max_cost": 1,
+  "max_cost_per_call": 0.1
+}

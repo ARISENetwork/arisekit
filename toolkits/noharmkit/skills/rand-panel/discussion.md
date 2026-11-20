@@ -1,0 +1,1 @@
+Discuss the first-round ratings after reviewing your own submission and the panel distribution and reasons. Address disagreements, ambiguity in the scenario or options, missing evidence, and reasons to retain or change a rating. Do not vote again here, rewrite the rubric, invent citations, or pressure other participants to agree. Return {"comment": "your substantive discussion"}.

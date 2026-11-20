@@ -1,0 +1,8 @@
+.dialog { width: min(64rem, calc(100vw - 3rem)); max-height: calc(100dvh - 3rem); margin: auto; overflow: auto; overscroll-behavior: contain; padding: 28px; border: 1px solid var(--mc-line); border-radius: 14px; background: var(--mc-bg); color: var(--mc-ink); box-shadow: 0 24px 64px var(--mc-shadow); opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open] { opacity: 1; transform: none; }
+.dialog::backdrop { background: rgb(0 0 0 / .28); opacity: 0; transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.dialog[open]::backdrop { opacity: 1; }
+@starting-style { .dialog[open] { opacity: 0; transform: translateY(8px); } .dialog[open]::backdrop { opacity: 0; } }
+.waiting { display: flex; flex-direction: column; gap: 16px; }
+.waiting > p[role="status"] { margin: 0; color: var(--mc-muted); font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .dialog, .dialog::backdrop { transition: none; } }

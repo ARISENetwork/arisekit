@@ -1,0 +1,14 @@
+.previewNote { margin-bottom: 10px; color: var(--mc-muted); font-size: 12px; }
+.disclosure { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 200ms ease-out, opacity 200ms ease-out; }
+.disclosure[data-open="true"] { grid-template-rows: 1fr; opacity: 1; }
+.inner { min-height: 0; overflow: hidden; }
+.inspection { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--mc-line); }
+.inspection h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.inspection ul { margin: 10px 0; padding-left: 20px; color: var(--mc-muted); }
+.inspection button { margin-top: 12px; }
+.scenarios { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -8px 0 20px; color: var(--mc-muted); font-size: 12px; }
+.scenarios button { border: 1px solid var(--mc-line); border-radius: 6px; padding: 6px 10px; background: var(--mc-surface); color: var(--mc-ink); cursor: pointer; transition: background-color 180ms, border-color 180ms; }
+.scenarios button[aria-pressed="true"] { border-color: var(--mc-accent); color: var(--mc-accent); }
+.scenarios button:hover { background: var(--mc-surface-2); }
+.scenarios button:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .disclosure, .scenarios button { transition: none; } }

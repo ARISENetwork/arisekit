@@ -1,0 +1,48 @@
+{
+  "schema": "noharm-science-vendor-v1",
+  "repository": "https://github.com/davidwumdphd/noharm-science",
+  "commit": "c4c8091c486bd18fb83e76860c49f8d4b1666993",
+  "source_commit_date": "2026-11-04T12:36:30-05:00",
+  "imported_at": "2026-11-04",
+  "judge": "J2.3",
+  "scorer": "S2",
+  "freeze": "pipeline-v2",
+  "status": "draft",
+  "physician_review": "pending",
+  "notice": "Draft judge/scorer snapshot. Physician review is pending; the rubric system may be recalibrated. No case rubrics are included.",
+  "read_only": true,
+  "dependencies": [
+    "jsonschema"
+  ],
+  "import_method": "git archive of explicit paths from the pinned commit; no source working-tree files",
+  "paths": [
+    "experiments/freeze/pipeline-v1/config.json",
+    "experiments/freeze/pipeline-v1/judge/prompt.md",
+    "experiments/freeze/pipeline-v1/judge/rules.md",
+    "experiments/freeze/pipeline-v1/manifest.json",
+    "experiments/freeze/pipeline-v1/review/second.md",
+    "experiments/freeze/pipeline-v1/review/severe3.md",
+    "experiments/freeze/pipeline-v2/manifest.json",
+    "experiments/profiles/text-rubric-v2/judge/schema.json",
+    "tools/score_rubric.py",
+    "tools/score_text_rubric.py",
+    "tools/score_text_rubric_f1.py",
+    "tools/score_text_rubric_v2.py"
+  ],
+  "sha256": {
+    "experiments/freeze/pipeline-v1/config.json": "b72a4bc9e1b3256c5c438ff956affdc51121587e104e9c481f12922edea9ab89",
+    "experiments/freeze/pipeline-v1/judge/prompt.md": "d91bf5793da60064ec21e2ebcf27ab7571f0cef548a1f1f1b87b8420270b398e",
+    "experiments/freeze/pipeline-v1/judge/rules.md": "64e39a6f97cdb1ec5aaec480173342c3dfe61f197b2d6a7763e3a0fb97e1c199",
+    "experiments/freeze/pipeline-v1/manifest.json": "e7f1c0f08c4b21dad831eef327b879ac67a2834d6e218e5d8342c797a151fa56",
+    "experiments/freeze/pipeline-v1/review/second.md": "61e6ce81ab2ab9e9ecd3a4c8b0ecfeb8ae69e7feeab35c47dce6e4b78b15b9c1",
+    "experiments/freeze/pipeline-v1/review/severe3.md": "f9778176fa93e602ea179e638a72153e8ebd512a18f4438fcca6a44d4c63e96d",
+    "experiments/freeze/pipeline-v2/manifest.json": "35983c41e1ab7d493675429555dccfdbcdbadf121eef8eb71db4d8da2cc00306",
+    "experiments/profiles/text-rubric-v2/judge/schema.json": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d",
+    "tools/score_rubric.py": "94154f652f808978f04b05a32fa3323c8b031e2541e6f2134bdf1af4ae7c469e",
+    "tools/score_text_rubric.py": "c61d2eb3faae9d1a5c79fea9e51c4daf83993ac1264c4b5622ef5a27c7475488",
+    "tools/score_text_rubric_f1.py": "6593471ea9c38d9eda077044ed03c7f7e103e45f40fe70a244fb9caa1a31ea64",
+    "tools/score_text_rubric_v2.py": "476a8beb16e0bce834312af1729760bb208a405b144c606efd5d7893cd4e5fee"
+  },
+  "rubric_format": "noharm-rubric-text-v2",
+  "import_scope": "judge-and-scorer-only; no case rubrics, audits, or rubric manifests"
+}

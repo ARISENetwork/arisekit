@@ -1,0 +1,1593 @@
+[
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 65",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        []
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 66",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ]
+      },
+      "D5": {
+        "recommended": [
+          {
+            "rowId": "D5.1",
+            "partsPresent": [
+              "Synthetic action 9",
+              "Synthetic action 10",
+              "Synthetic action 11"
+            ]
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        []
+      ],
+      "D5": [
+        "met",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 67",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ]
+      },
+      "D5": {
+        "recommended": [
+          {
+            "rowId": "D5.1",
+            "partsPresent": [
+              "Synthetic action 9",
+              "Synthetic action 10"
+            ]
+          },
+          {
+            "rowId": "D5.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        []
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "commission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 68",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ]
+      },
+      "D5": {
+        "recommended": [
+          {
+            "rowId": "D5.1",
+            "partsPresent": [
+              "Synthetic action 11"
+            ]
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        []
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 69",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 70",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1",
+            "role": "alternative"
+          },
+          {
+            "rowId": "D4.2",
+            "role": "alternative"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 71",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          },
+          {
+            "rowId": "D4.2",
+            "role": "fallback"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        []
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 72",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.2"
+          },
+          {
+            "rowId": "D4.1",
+            "role": "fallback"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 73",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.4"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "notMet",
+        [
+          [
+            "commission",
+            "mild"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 74",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.4"
+          },
+          {
+            "rowId": "D4.1",
+            "role": "fallback"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "partly",
+        [
+          [
+            "commission",
+            "mild"
+          ],
+          [
+            "delay",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 75",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          },
+          {
+            "rowId": "D4.5",
+            "role": "addOn"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        [
+          [
+            "commission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 76",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          },
+          {
+            "rowId": "D4.4",
+            "role": "addOn"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        [
+          [
+            "commission",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 77",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 78",
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "commission",
+                "severity": "moderate"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "commission",
+            "moderate"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 79",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ],
+        "contradiction": true
+      }
+    },
+    "expected": {
+      "D4": [
+        "notMet",
+        [
+          [
+            "contradiction",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 80",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "partsPresent": [
+              "Synthetic action 16",
+              "Synthetic action 17"
+            ]
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 81",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "partsPresent": [
+              "Synthetic action 17"
+            ]
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "partly",
+        [
+          [
+            "residualOmission",
+            "mild"
+          ]
+        ]
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 82",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "uncertain",
+            "uncertain"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 83",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.3"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "commission",
+            "severe"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 84",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.4"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "commission",
+            "moderate"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 85",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "partsPresent": [
+              "Synthetic action 16",
+              "Synthetic action 17"
+            ]
+          }
+        ]
+      },
+      "D6": {
+        "recommended": [
+          {
+            "rowId": "D6.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ],
+      "D6": [
+        "notMet",
+        [
+          [
+            "commission",
+            "severe"
+          ],
+          [
+            "omission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn002-5",
+    "label": "Synthetic action 86",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "partsPresent": [
+              "Synthetic action 16",
+              "Synthetic action 17"
+            ]
+          }
+        ]
+      },
+      "D6": {
+        "recommended": [
+          {
+            "rowId": "D6.1"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ],
+      "D6": [
+        "met",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 28",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "via": "Meropenem"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 87",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "uncertain",
+            "uncertain"
+          ],
+          [
+            "omission",
+            "severe"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 88",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1",
+            "via": "Meropenem"
+          },
+          {
+            "rowId": "D2.3",
+            "role": "addOn"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        [
+          [
+            "commission",
+            "severe"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 89",
+    "judge": {
+      "D2": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 90",
+            "provisional": {
+              "outcome": "partly"
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "provisional",
+        [
+          [
+            "residualOmission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 91",
+    "judge": {
+      "D2": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 92",
+            "provisional": {
+              "outcome": "met"
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "provisional",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn003",
+    "label": "Synthetic action 93",
+    "judge": {},
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "omission",
+            "severe"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn004",
+    "label": "Synthetic action 94",
+    "judge": {
+      "D3": {
+        "recommended": [
+          {
+            "rowId": "D3.1"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "inactive",
+        []
+      ],
+      "D3": [
+        "met",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn004",
+    "label": "Synthetic action 95",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.1"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ],
+      "D3": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn004",
+    "label": "Synthetic action 96",
+    "judge": {
+      "D3": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 97",
+            "provisional": {
+              "outcome": "partly"
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D3": [
+        "provisional",
+        [
+          [
+            "residualOmission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn005",
+    "label": "Synthetic action 98",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O1"
+          },
+          {
+            "rowId": "D2.O2",
+            "role": "addOn"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "met",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn005",
+    "label": "Synthetic action 99",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn005",
+    "label": "Synthetic action 100",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O1",
+            "role": "alternative"
+          },
+          {
+            "rowId": "D2.O2",
+            "role": "alternative"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "partly",
+        [
+          [
+            "delay",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn005",
+    "label": "Synthetic action 101",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O3"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 102",
+    "judge": {
+      "D5": {
+        "recommended": [
+          {
+            "rowId": "D5.2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D5": [
+        "inactive",
+        [
+          [
+            "commission",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 103",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.O1"
+          },
+          {
+            "rowId": "D4.O2",
+            "role": "addOn"
+          }
+        ],
+        "contradiction": true
+      }
+    },
+    "expected": {
+      "D4": [
+        "notMet",
+        [
+          [
+            "commission",
+            "severe"
+          ],
+          [
+            "contradiction",
+            "none"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 104",
+    "judge": {
+      "D3": {
+        "unmatched": [
+          {
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "commission",
+                "severity": "severe"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D3": [
+        "inactive",
+        [
+          [
+            "commission",
+            "severe"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 105",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O1",
+            "role": "alternative"
+          },
+          {
+            "rowId": "D2.O2",
+            "role": "alternative",
+            "partsPresent": [
+              "Synthetic action 45",
+              "Synthetic action 46"
+            ]
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D3": [
+        "notMet",
+        [
+          [
+            "omission",
+            "severe"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 106",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O3"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "notMet",
+        [
+          [
+            "commission",
+            "mild"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 107",
+    "judge": {
+      "D5": {
+        "recommended": [
+          {
+            "rowId": "D5.O2"
+          },
+          {
+            "rowId": "D5.O1",
+            "role": "fallback"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D6": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn006",
+    "label": "Synthetic action 108",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.O3"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "partly",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn007",
+    "label": "Synthetic action 109",
+    "judge": {
+      "D2": {
+        "recommended": [
+          {
+            "rowId": "D2.O2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D2": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "mild"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn007",
+    "label": "Synthetic action 110",
+    "judge": {
+      "D3": {
+        "recommended": [
+          {
+            "rowId": "D3.O2"
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D3": [
+        "partly",
+        [
+          [
+            "relativeHarm",
+            "uncertain"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 111",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ],
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "commission",
+                "severity": "severe"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "met",
+        [
+          [
+            "commission",
+            "severe"
+          ]
+        ]
+      ],
+      "D5": [
+        "notMet",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 113",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 114",
+            "provisional": {
+              "outcome": "met"
+            }
+          },
+          {
+            "evidence": "Synthetic action 115",
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "commission",
+                "severity": "severe"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "commission",
+            "severe"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 116",
+    "judge": {
+      "D4": {
+        "recommended": [
+          {
+            "rowId": "D4.1"
+          }
+        ],
+        "contradiction": true,
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "commission",
+                "severity": "severe"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "notMet",
+        [
+          [
+            "commission",
+            "severe"
+          ],
+          [
+            "contradiction",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 117",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "notMet",
+              "harm": {
+                "kind": "uncertain",
+                "severity": "uncertain"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "uncertain",
+            "uncertain"
+          ],
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 118",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "partly",
+              "harm": {
+                "kind": "uncertain",
+                "severity": "uncertain"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "uncertain",
+            "uncertain"
+          ],
+          [
+            "residualOmission",
+            "mild"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 119",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "met",
+              "harm": {
+                "kind": "uncertain",
+                "severity": "uncertain"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "uncertain",
+            "uncertain"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  },
+  {
+    "case": "Syn001",
+    "label": "Synthetic action 120",
+    "judge": {
+      "D4": {
+        "unmatched": [
+          {
+            "evidence": "Synthetic action 112",
+            "provisional": {
+              "outcome": "notMet"
+            }
+          }
+        ]
+      }
+    },
+    "expected": {
+      "D4": [
+        "provisional",
+        [
+          [
+            "omission",
+            "moderate"
+          ]
+        ]
+      ],
+      "D5": [
+        "inactive",
+        []
+      ]
+    }
+  }
+]

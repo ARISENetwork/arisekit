@@ -1,0 +1,153 @@
+.table thead {
+  background: var(--mc-surface-2);
+  color: var(--mc-muted);
+}
+
+.table thead .scoreHeading {
+  color: var(--mc-accent);
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 140ms ease;
+}
+
+.sortButton:hover,
+.table thead .sorted {
+  color: var(--mc-accent);
+}
+
+.sortButton:focus-visible {
+  outline: 2px solid var(--mc-accent);
+  outline-offset: 4px;
+}
+
+.sortIcon {
+  flex-shrink: 0;
+  color: var(--mc-muted);
+}
+
+.sorted .sortIcon {
+  color: var(--mc-accent);
+}
+
+.table tbody tr:nth-child(even) {
+  background: var(--mc-bg);
+}
+
+.table tbody tr:hover {
+  background: var(--mc-surface-2);
+}
+
+.table tbody tr,
+.model {
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.model {
+  color: var(--mc-ink);
+  font-size: 14px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+.model:hover {
+  color: var(--mc-accent);
+  text-decoration: underline;
+}
+
+.model:focus-visible {
+  outline: 2px solid var(--mc-accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.rank,
+.unranked {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rank {
+  border-radius: 6px;
+  background: var(--mc-surface-2);
+  color: var(--mc-ink);
+}
+
+.table .score {
+  min-width: 128px;
+  color: var(--mc-accent);
+}
+
+.scoreValue {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.scoreTrack {
+  display: block;
+  height: 3px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--mc-line-strong);
+}
+
+.scoreTrack > span {
+  display: block;
+  height: 100%;
+  background: var(--mc-accent);
+  transform-origin: left;
+}
+
+.table .severe {
+  color: var(--mc-bad);
+  font-weight: 600;
+}
+
+.coverage {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.coverage > span {
+  color: var(--mc-muted);
+  font-weight: 400;
+}
+
+.coverage.incomplete {
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--mc-llm-bg);
+  color: var(--mc-llm);
+}
+
+.coverage.incomplete > span {
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table tbody tr,
+  .model,
+  .sortButton {
+    transition: none;
+  }
+}

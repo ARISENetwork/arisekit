@@ -1,0 +1,486 @@
+{
+  "Syn001": {
+    "caseId": "Syn001",
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 1",
+            "timing": "routine",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D4",
+        "question": "Synthetic action 2",
+        "recommendations": [
+          {
+            "id": "D4.1",
+            "text": "Synthetic action 3",
+            "score": 8
+          },
+          {
+            "id": "D4.2",
+            "text": "Synthetic action 4",
+            "score": 7
+          },
+          {
+            "id": "D4.4",
+            "text": "Synthetic action 5",
+            "score": 3
+          },
+          {
+            "id": "D4.5",
+            "text": "Synthetic action 6",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "D5",
+        "question": "Synthetic action 7",
+        "activation": {
+          "type": "onlyIf",
+          "rows": [
+            "D4.1",
+            "D4.4"
+          ]
+        },
+        "recommendations": [
+          {
+            "id": "D5.1",
+            "text": "Synthetic action 8",
+            "parts": [
+              "Synthetic action 9",
+              "Synthetic action 10",
+              "Synthetic action 11"
+            ],
+            "score": 8
+          },
+          {
+            "id": "D5.2",
+            "text": "Synthetic action 12",
+            "score": 3,
+            "incompleteVersionOf": "D5.1"
+          }
+        ]
+      }
+    ]
+  },
+  "Syn002-5": {
+    "caseId": "Syn002-5",
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 13",
+            "timing": "routine",
+            "score": 7
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 14",
+        "recommendations": [
+          {
+            "id": "D2.1",
+            "text": "Synthetic action 15",
+            "parts": [
+              "Synthetic action 16",
+              "Synthetic action 17"
+            ],
+            "score": 8
+          },
+          {
+            "id": "D2.2",
+            "text": "Synthetic action 18",
+            "score": 6
+          },
+          {
+            "id": "D2.3",
+            "text": "Synthetic action 19",
+            "score": 1
+          },
+          {
+            "id": "D2.4",
+            "text": "Synthetic action 20",
+            "score": 2
+          }
+        ]
+      },
+      {
+        "id": "D6",
+        "question": "Synthetic action 21",
+        "activation": {
+          "type": "future",
+          "trigger": "Synthetic action 22",
+          "scoredNow": true
+        },
+        "recommendations": [
+          {
+            "id": "D6.1",
+            "text": "Synthetic action 23",
+            "score": 7
+          },
+          {
+            "id": "D6.2",
+            "text": "Synthetic action 24",
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  "Syn003": {
+    "caseId": "Syn003",
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 25",
+            "timing": "emergency",
+            "score": 9
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 26",
+        "recommendations": [
+          {
+            "id": "D2.1",
+            "text": "Synthetic action 27",
+            "equivalents": [
+              "Synthetic action 28",
+              "Synthetic action 29"
+            ],
+            "score": 9
+          },
+          {
+            "id": "D2.2",
+            "text": "Synthetic action 30",
+            "score": 6
+          },
+          {
+            "id": "D2.3",
+            "text": "Synthetic action 31",
+            "score": 1
+          }
+        ]
+      }
+    ]
+  },
+  "Syn004": {
+    "caseId": "Syn004",
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 32",
+            "timing": "urgent",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 33",
+        "recommendations": [
+          {
+            "id": "D2.1",
+            "text": "Synthetic action 34",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "question": "Synthetic action 35",
+        "recommendations": [
+          {
+            "id": "D3.1",
+            "text": "Synthetic action 36",
+            "alsoTakesCareOf": [
+              "D2"
+            ],
+            "score": 8
+          }
+        ]
+      }
+    ]
+  },
+  "Syn005": {
+    "caseId": "Syn005",
+    "harmOverrides": true,
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 37",
+            "timing": "routine",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 38",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D2.O1",
+            "text": "Synthetic action 39",
+            "score": 8
+          },
+          {
+            "id": "D2.O2",
+            "text": "Synthetic action 40",
+            "score": 7,
+            "relativeHarmOverride": "moderate"
+          },
+          {
+            "id": "D2.O3",
+            "text": "Synthetic action 41",
+            "score": 7
+          }
+        ]
+      }
+    ]
+  },
+  "Syn006": {
+    "caseId": "Syn006",
+    "harmOverrides": true,
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 37",
+            "timing": "routine",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 42",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D2.O1",
+            "text": "Synthetic action 43",
+            "score": 8
+          },
+          {
+            "id": "D2.O2",
+            "text": "Synthetic action 44",
+            "score": 7,
+            "relativeHarmOverride": "moderate",
+            "parts": [
+              "Synthetic action 45",
+              "Synthetic action 46"
+            ]
+          },
+          {
+            "id": "D2.O3",
+            "text": "Synthetic action 47",
+            "score": 3,
+            "incompleteVersionOf": "D2.O2"
+          },
+          {
+            "id": "D2.O4",
+            "text": "Synthetic action 48",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "question": "Synthetic action 49",
+        "activation": {
+          "type": "onlyIf",
+          "rows": [
+            "D2.O1"
+          ]
+        },
+        "recommendations": [
+          {
+            "id": "D3.O1",
+            "text": "Synthetic action 50",
+            "score": 9
+          }
+        ]
+      },
+      {
+        "id": "D4",
+        "question": "What additional testing is needed?",
+        "harmIfNotAddressedOverride": "none",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D4.O1",
+            "text": "No additional testing is needed.",
+            "score": 8
+          },
+          {
+            "id": "D4.O3",
+            "text": "Synthetic action 51",
+            "score": 7
+          },
+          {
+            "id": "D4.O2",
+            "text": "Synthetic action 52",
+            "score": 1
+          }
+        ]
+      },
+      {
+        "id": "D5",
+        "question": "Synthetic action 53",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D5.O1",
+            "text": "Synthetic action 54",
+            "score": 8,
+            "alsoTakesCareOf": [
+              "D6"
+            ]
+          },
+          {
+            "id": "D5.O2",
+            "text": "Synthetic action 55",
+            "score": 7
+          }
+        ]
+      },
+      {
+        "id": "D6",
+        "question": "Synthetic action 56",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D6.O1",
+            "text": "Synthetic action 57",
+            "score": 8
+          }
+        ]
+      }
+    ]
+  },
+  "Syn007": {
+    "caseId": "Syn007",
+    "harmOverrides": true,
+    "decisions": [
+      {
+        "id": "D1",
+        "kind": "followUp",
+        "question": "What follow-up or triage is appropriate?",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D1.O1",
+            "text": "Synthetic action 58",
+            "timing": "routine",
+            "score": 8
+          }
+        ]
+      },
+      {
+        "id": "D2",
+        "question": "Synthetic action 59",
+        "harmIfNotAddressedOverride": "moderate",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D2.O1",
+            "text": "Synthetic action 60",
+            "score": 9
+          },
+          {
+            "id": "D2.O2",
+            "text": "Synthetic action 61",
+            "score": 7
+          }
+        ]
+      },
+      {
+        "id": "D3",
+        "question": "Synthetic action 62",
+        "harmIfNotAddressedOverride": "mild",
+        "activation": {
+          "type": "always"
+        },
+        "recommendations": [
+          {
+            "id": "D3.O1",
+            "text": "Synthetic action 63",
+            "score": 8
+          },
+          {
+            "id": "D3.O2",
+            "text": "Synthetic action 64",
+            "score": 7
+          }
+        ]
+      }
+    ]
+  }
+}

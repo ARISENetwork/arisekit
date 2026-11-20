@@ -1,0 +1,137 @@
+{
+  "agentic": {
+    "allowed_tools": [
+      "get_patient"
+    ],
+    "environment": {
+      "fhir_version": "R4",
+      "isolation": "per-item-trial",
+      "kind": "fhir-r4-in-memory",
+      "primitive": "arisekit.env.fhir.FHIREnvironment"
+    },
+    "max_turns": 3,
+    "tool_catalog": "arisekit.fhir-tools.v1"
+  },
+  "artifacts": [
+    {
+      "path": "need-statement.md",
+      "role": "need-statement",
+      "sha256": "d4fb770f80e6c757e2a374883a9f3a5f393292fd7f38c84ae4a8ab52b1fca438"
+    },
+    {
+      "path": "existing-coverage.md",
+      "role": "existing-coverage",
+      "sha256": "0c1993343b134942ef34df31f7d5a382633caa96480c8b137686aa5760dd1a9f"
+    },
+    {
+      "path": "compliance-scope.md",
+      "role": "compliance-scope",
+      "sha256": "f9e653ddceba46f8b14643cf425a7c413783d1b5601c12ffe97967b385a08860"
+    },
+    {
+      "path": "data-profile.md",
+      "role": "data-profile",
+      "sha256": "4f133972666d531b082ceca6b52e66b8a709ad90f4899e3f15debd7c7818b370"
+    },
+    {
+      "path": "rubric.md",
+      "role": "rubric",
+      "sha256": "731e62dd4a160bb2c997b26975ed4058907effc031dd8cc61e9e6b9ec88ae488"
+    },
+    {
+      "path": "study-plan.md",
+      "role": "study-plan",
+      "sha256": "a1561a613c4963407f081542bd6ebdf873026dc6c120da923d7186292d03acc8"
+    },
+    {
+      "path": "implementation-plan.md",
+      "role": "implementation-plan",
+      "sha256": "6cc45e23d0145c71d6c25c398628e57a4b973c3bb6ca616494b110d092ffcc1b"
+    }
+  ],
+  "benchmark": {
+    "description": "A portable synthetic Agentic/FHIR authoring fixture.",
+    "mast_category": "agentic",
+    "mast_compatible": true,
+    "modality": "agentic-fhir",
+    "name": "Agentic FHIR golden path",
+    "slug": "agentic-fhir-golden-path",
+    "version": "0.1.0"
+  },
+  "data_governance": {
+    "classification": "synthetic",
+    "materialization_authorization": {
+      "actor": "ARISEKit fixture steward",
+      "authorized": true,
+      "confirmed_at": "2026-09-02T12:01:00Z",
+      "text": "I authorize this synthetic fixture to be materialized in a public benchmark package."
+    },
+    "release_posture": "public"
+  },
+  "first_sweep": [
+    {
+      "model": "stub/reference",
+      "provider": "stub",
+      "trials": 1
+    }
+  ],
+  "readiness": {
+    "allowed_model_routes": [
+      "stub/reference"
+    ],
+    "data_profile": "materialized",
+    "library_gaps": [],
+    "open_questions": [],
+    "status": "ready",
+    "user_confirmation": {
+      "actor": "ARISEKit fixture author",
+      "confirmed_at": "2026-09-02T12:00:00Z",
+      "text": "This is the intended synthetic Agentic/FHIR benchmark."
+    }
+  },
+  "runner": {
+    "max_calls": null,
+    "max_cost": null,
+    "max_cost_per_call": null,
+    "max_retries": 1,
+    "max_tokens": 256,
+    "require_known_cost": true,
+    "retry_backoff": 0.0,
+    "temperature": 0.0,
+    "threads": 2,
+    "trials": 1
+  },
+  "schema_version": "arisekit.benchmark-build-spec.v2",
+  "scorer": {
+    "kind": "pass-at-one",
+    "options": {
+      "condition_schema": "arisekit.agentic-pass-condition.v1",
+      "name": "pass_at_1"
+    },
+    "primitive": "arisekit.agentic.PassAtOneScorer"
+  },
+  "smoke_test": {
+    "limit": 2,
+    "model": "stub/reference",
+    "trials": 1
+  },
+  "source": {
+    "field_map": {
+      "attachments": null,
+      "fhir_bundle": "fhir_bundle",
+      "ground_truth": "pass_condition",
+      "id": "case_id",
+      "metadata": {
+        "specialty": "service"
+      },
+      "prompt": "prompt"
+    },
+    "kind": "jsonl",
+    "path": "cases.synthetic.jsonl",
+    "sha256": "f7ed9fdb68b131c7a22223bfbad62c62b0a986230d53a40798f7dd3d94aa51fe",
+    "system_prompt": {
+      "sha256": "18207a2c438e05bbfc80a3c75a2d828774cacf3ada3557b9843bf7ed8622b908",
+      "text": "Use only the allowed FHIR tools before answering."
+    }
+  }
+}

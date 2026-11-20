@@ -1,0 +1,281 @@
+--- a/harmreview/components/CaseSourcePanel.tsx
++++ b/harmreview/components/CaseSourcePanel.tsx
+@@ -13,11 +13,11 @@ export default function CaseSourcePanel({ presentation, recommendations, respons
+   return (
+     <aside className={`rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] ${compact ? "p-4 xl:top-20 xl:max-h-[calc(100vh-6rem)]" : "p-6 xl:top-24 xl:max-h-[calc(100vh-8rem)]"} xl:sticky xl:overflow-y-auto`}>
+       <section className={gap}>
+-        <h2 className={heading}>Case</h2>
++        <h2 className={heading}>Task</h2>
+         <p className={body}>{presentation}</p>
+       </section>
+       <section className={response || children ? gap : undefined}>
+-        <h2 className={heading}>Expert Recommendations</h2>
++        <h2 className={heading}>Solution</h2>
+         <p className={body}>{recommendations}</p>
+       </section>
+       {response && (
+--- a/harmreview/components/Dropdown.tsx
++++ b/harmreview/components/Dropdown.tsx
+@@ -168,12 +168,12 @@ export default function Dropdown({ children, className = "", id, autoFocus, titl
+               {index === selected && <svg aria-hidden="true" className={styles.check} fill="none" stroke="currentColor" viewBox="0 0 16 16"><path d="m3 8 3 3 7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.7" /></svg>}
+             </div>
+           ))}
+-        </div>, document.body,
++        </div>, trigger.current?.closest("dialog") ?? document.body,
+       )}
+       {mounted && tip && createPortal(
+         <div aria-hidden="true" className="pointer-events-none fixed z-[60] w-64 rounded-md bg-[hsl(var(--tip))] px-2.5 py-1.5 text-[11.5px] leading-snug text-[hsl(var(--tip-foreground))] shadow-lg" style={{ left: tip.left, top: tip.top }}>
+           {tip.text.split("\n").map((line, index) => <p className={index ? "mt-1 text-[hsl(var(--tip-foreground))]/75" : ""} key={line}>{line}</p>)}
+-        </div>, document.body,
++        </div>, trigger.current?.closest("dialog") ?? document.body,
+       )}
+     </>
+   );
+--- a/harmreview/components/RubricEditor.tsx
++++ b/harmreview/components/RubricEditor.tsx
+@@ -15,6 +15,7 @@ import { useReviewerId } from "@/harmreview/lib/reviewer-id";
+ import type { CaseSource } from "@/harmreview/lib/types";
+ import { addV2Criterion, criterionOmissionHarm, isOmissionItem, newV2Item, omissionItem, ratingTooltip, setV2Score, unratedV2Count, V2_OMISSION_TEXT, V2_SCORE_HELP, V2_SEVERITY_HELP, v2Issues, validateTextV2 } from "@/harmreview/lib/rubric-text-v2";
+ import type { TextV2Case, TextV2Criterion, TextV2Item, TextV2Provenance } from "@/harmreview/lib/rubric-text-v2";
++import { useRubricEditorHost, type TextV2EditorHost } from "@/components/RubricEditorHost";
+ 
+ // What the guided tutorial (D190) reads and changes in the editor it runs on.
+ export interface TutorialControls {
+@@ -317,7 +318,7 @@ function UsualCareCard({ value, issues, open, onToggle, onChange }: { value: Usu
+ 
+ // Rubric format text v2 (D123-D130): every item has a harm if followed; followup and plan criteria carry a
+ // reviewed harm if missed; the counseling criterion's is computed from its required items and shown locked.
+-interface LoadedV2 {
++export interface LoadedV2 {
+   record: TextV2Case;
+   provenance: TextV2Provenance;
+   source: CaseSource;
+@@ -584,13 +585,14 @@ function TextV2Warnings({ warnings }: { warnings: string[] }) {
+   );
+ }
+ 
+-export default function RubricEditor({ caseId, previewOnly = false, benchmarkRecord, tutorial }: { caseId: string; previewOnly?: boolean; benchmarkRecord?: TextV2Case; tutorial?: EditorTutorial }) {
+-  const { reviewerId } = useReviewerId();
++export default function RubricEditor({ caseId, previewOnly = false, benchmarkRecord, tutorial, host }: { caseId: string; previewOnly?: boolean; benchmarkRecord?: TextV2Case; tutorial?: EditorTutorial; host?: TextV2EditorHost<LoadedV2> }) {
++  const { reviewerId: storedReviewerId } = useReviewerId();
++  const reviewerId = host ? host.reviewerId : storedReviewerId;
+   const [removalRequest, setRemovalRequest] = useState<RemovalRequest | null>(null);
+   const [removalOpen, setRemovalOpen] = useState(false);
+   const requestRemoval = (request: RemovalRequest): void => { setRemovalRequest(request); setRemovalOpen(true); };
+   // The tutorial brings its own record and never reads or writes a reviewer copy.
+-  const [v2, setV2] = useState<LoadedV2 | null>(() => tutorial ? { record: structuredClone(tutorial.record), source: tutorial.source, provenance: { source: tutorial.record, sourceFile: "", sourceRubricSha256: "" }, fromCopy: false } : null);
++  const [v2, setV2] = useState<LoadedV2 | null>(() => tutorial ? { record: structuredClone(tutorial.record), source: tutorial.source, provenance: { source: tutorial.record, sourceFile: "", sourceRubricSha256: "" }, fromCopy: false } : host?.initial ?? null);
+   const inTutorial = tutorial !== undefined;
+   const [status, setStatus] = useState<SaveStatus>("clean");
+   // Unsaved edits stay guarded after a failed save; only a successful save or a fresh load clears this.
+@@ -598,23 +600,25 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+   // Separate from status: an edit during a save marks the draft dirty, and the next autosave waits for this one.
+   const [saving, setSaving] = useState(false);
+   const [message, setMessage] = useState("Loading...");
+-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
++  const [openIds, setOpenIds] = useState<Set<string>>(() => new Set(host?.initial ? ["D0", ...host.initial.record.decisions.map((d) => d.id)] : []));
+   const [panelOpen, setPanelOpen] = useState(false);
+   const panelTrigger = useRef<HTMLButtonElement | null>(null);
+   const closePanel = useCallback(() => setPanelOpen(false), []);
+   const timing = useRef<AuthoringTiming | null>(null);
+   // Counts edits so a save only clears the unsaved flag when nothing changed while it was in flight.
+   const revision = useRef(0);
++  // A host can call save directly (save and continue), so a save in flight refuses another rather than overlapping.
++  const savePending = useRef(false);
+ 
+   useEffect(() => {
+     if (!reviewerId || inTutorial) return;
+     setV2(null);
+-    fetch(`/api/rubric?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId)}`, { cache: "no-store" })
++    (host ? host.load() : fetch(`/api/rubric?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId)}`, { cache: "no-store" })
+       .then(async (response) => {
+         const body = await response.json();
+         if (!response.ok) throw new Error(body.error ?? "Unable to load.");
+         return body as LoadedV2;
+-      })
++      }))
+       .then((data) => {
+         timing.current = data.timing ? { ...data.timing, lastInteractionAt: new Date().toISOString() } : newTiming(new Date());
+         // Preview only: a benchmark rewrite replaces the loaded record; previewOnly never saves it.
+@@ -626,7 +630,9 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+         setMessage(body.fromCopy ? `Loaded your saved copy (${reviewerId})` : "Loaded the rubric");
+       })
+       .catch((error: Error) => { setStatus("error"); setMessage(error.message); });
+-  }, [caseId, reviewerId, benchmarkRecord, inTutorial]);
++  }, [caseId, reviewerId, benchmarkRecord, inTutorial, host]);
++  useEffect(() => { host?.onDirtyChange?.(dirty); }, [dirty, host]);
++  useEffect(() => { host?.onSavingChange?.(saving); }, [saving, host]);
+ 
+   useEffect(() => {
+     const touch = (): void => { if (timing.current) timing.current = recordInteraction(timing.current, new Date()); };
+@@ -642,7 +648,7 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+     return () => window.removeEventListener("beforeunload", warn);
+   }, [dirty, previewOnly]);
+ 
+-  const v2Check = useMemo(() => (v2 ? validateTextV2(v2.record, "draft") : null), [v2]);
++  const v2Check = useMemo(() => (v2 ? host ? host.validate(v2.record) : validateTextV2(v2.record, "draft") : null), [v2, host]);
+ 
+   const updateV2 = useCallback((scope: string, change: (record: TextV2Case) => TextV2Case): void => {
+     if (timing.current) timing.current = recordEdit(timing.current, scope, new Date());
+@@ -664,47 +670,68 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+     return next;
+   });
+ 
+-  const save = async (): Promise<void> => {
+-    if (previewOnly) return;
+-    if (!v2 || !reviewerId || !timing.current) return;
++  const save = async (): Promise<boolean> => {
++    if (previewOnly || savePending.current) return false;
++    if (!v2 || !reviewerId || !timing.current) return false;
++    savePending.current = true;
+     setSaving(true);
+     const submitted = revision.current;
+     try {
++      if (host) {
++        let saved: Awaited<ReturnType<typeof host.save>>;
++        try { saved = await host.save(v2, timing.current); } catch (error) { setStatus("error"); setMessage(`Save failed: ${(error as Error).message}`); return false; }
++        if (saved.update) setV2((current) => current && { ...current, ...saved.update });
++        if (revision.current !== submitted) { setStatus("dirty"); setMessage("Unsaved changes"); return false; }
++        setStatus("saved");
++        setDirty(false);
++        setMessage(saved.message);
++        host.onSaved?.();
++        return true;
++      }
+       const response = await fetch("/api/rubric", {
+         method: "PUT",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify({ caseId, reviewer: reviewerId, record: v2.record, provenance: v2.provenance, timing: timing.current }),
+       });
+       const body = await response.json();
+-      if (!response.ok) { setStatus("error"); setMessage(`Save failed: ${body.error}`); return; }
+-      if (revision.current !== submitted) { setStatus("dirty"); setMessage("Unsaved changes"); return; }
++      if (!response.ok) { setStatus("error"); setMessage(`Save failed: ${body.error}`); return false; }
++      if (revision.current !== submitted) { setStatus("dirty"); setMessage("Unsaved changes"); return false; }
+       setStatus("saved");
+       setDirty(false);
+       setMessage("All changes saved");
++      return true;
+     } finally {
++      savePending.current = false;
+       setSaving(false);
+     }
+   };
++  const canSave = !(previewOnly || saving || !v2Check || v2Check.errors.length > 0 || (v2 !== null && host?.canSave?.(v2) === false));
++  useRubricEditorHost({ dirty, saving, canSave, error: status === "error" ? message : null, save });
+ 
+   // Saves once edits pause. A failed save waits for the next edit rather than retrying in a loop, and a draft with
+   // errors waits until they are fixed, as the server would refuse it.
+   const blocked = dirty && !!v2Check && v2Check.errors.length > 0;
+   useEffect(() => {
+-    if (previewOnly || !reviewerId || !dirty || saving || status === "error" || blocked) return;
++    if (previewOnly || !reviewerId || !dirty || saving || status === "error" || blocked || !canSave || host?.saveLabel) return;
+     const timer = setTimeout(() => { void save(); }, AUTOSAVE_MS);
+     return () => clearTimeout(timer);
+     // save reads the current record; v2Check changes with every edit, which restarts the wait.
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+-  }, [blocked, dirty, previewOnly, reviewerId, saving, status, v2Check]);
++  }, [blocked, canSave, dirty, previewOnly, reviewerId, saving, status, v2Check]);
+ 
+   // Reset brings back the current original rubric, and autosave then replaces the reviewer's copy with it.
+   const reset = async (): Promise<void> => {
+     if (tutorial) { setV2((current) => current && { ...current, record: structuredClone(tutorial.record) }); return; }
+     if (!reviewerId) return;
+-    const response = await fetch(`/api/rubric?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId)}&original=1`, { cache: "no-store" });
+-    const body = await response.json();
+-    if (!response.ok) { setStatus("error"); setMessage(`Reset failed: ${body.error}`); return; }
+-    const original = body as LoadedV2;
++    let original: LoadedV2;
++    if (host) {
++      try { original = await host.loadOriginal(); } catch (error) { setStatus("error"); setMessage(`Reset failed: ${(error as Error).message}`); return; }
++    } else {
++      const response = await fetch(`/api/rubric?caseId=${encodeURIComponent(caseId)}&reviewer=${encodeURIComponent(reviewerId)}&original=1`, { cache: "no-store" });
++      const body = await response.json();
++      if (!response.ok) { setStatus("error"); setMessage(`Reset failed: ${body.error}`); return; }
++      original = body as LoadedV2;
++    }
+     if (timing.current) timing.current = recordEdit(timing.current, "reset", new Date());
+     revision.current += 1;
+     setOpenIds(new Set(["D0", ...original.record.decisions.map((d) => d.id)]));
+@@ -729,7 +756,7 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+       detail: "It opens in a new tab, so this rubric and any unsaved changes stay as they are. Nothing in the tutorial is saved.",
+       confirmLabel: "Open tutorial",
+       focusAfterRemove: "[data-open-tutorial]",
+-      onConfirm: () => window.open("/tutorial", "_blank", "noopener"),
++      onConfirm: () => window.open(host?.tutorialHref ?? "/tutorial", "_blank", "noopener"),
+     })}>Tutorial</button>}
+   </nav>;
+ 
+@@ -740,12 +767,16 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+       <div className={panelStyles.page}>
+         <header className="sticky top-0 z-40 -mt-3 mb-4 flex min-h-13 flex-wrap items-center justify-between gap-3 border-b border-[hsl(var(--border))]/50 bg-[hsl(var(--background))]/95 py-2.5 backdrop-blur">
+           <div className="flex min-w-0 flex-wrap items-center gap-3">
+-            <a className="text-[15px] font-bold text-[hsl(var(--foreground))]" href="/">NOHARM Rubric Editor</a>
++            {host ? <span className="text-[15px] font-bold">NOHARM Rubric Editor</span> : <a className="text-[15px] font-bold text-[hsl(var(--foreground))]" href="/">NOHARM Rubric Editor</a>}
+             <span className="text-sm font-semibold">{caseId}</span>
++            {host?.headerTags?.(v2)}
+             <div className="ml-6">{toolButtons}</div>
+           </div>
+           <div className="flex flex-wrap items-center gap-3">
+             <span aria-live="polite" className={`text-xs ${status === "dirty" ? "font-medium text-amber-700 dark:text-amber-300" : status === "saved" ? "font-medium text-green-700 dark:text-green-400" : status === "error" ? "font-medium text-red-600 dark:text-red-400" : "text-gray-500 dark:text-gray-400"}`}>{inTutorial ? "Tutorial: edits are not saved" : previewOnly ? "Design preview: edits are not saved" : reviewerId ? (saving ? "Saving..." : blocked && status !== "error" ? "Not saved: some items need attention" : message) : ""}</span>
++            {host?.saveLabel && <button className="rounded-md bg-[hsl(var(--primary))] px-3.5 py-1.5 text-xs font-bold text-[hsl(var(--primary-foreground))] shadow-sm transition-colors hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50" disabled={!canSave} type="button" onClick={() => { void save(); }}>
++              {saving ? "Saving..." : host.saveLabel}
++            </button>}
+             {v2 && <button aria-haspopup="dialog" className={headerButton} data-reset-rubric type="button" onClick={() => requestRemoval({
+               title: "Reset",
+               text: inTutorial ? "Return the example to how it started?" : "Discard your changes and return to the original rubric?",
+@@ -759,6 +790,7 @@ export default function RubricEditor({ caseId, previewOnly = false, benchmarkRec
+ 
+         {reviewerId && !v2 && <p className={status === "error" ? "text-red-600 dark:text-red-400" : `text-sm ${muted}`}>{message}</p>}
+ 
++        {v2 && host?.banner?.(v2)}
+         {v2?.sourceChanged && <p className={`mb-3 rounded-lg ${warnPanel}`} data-source-changed role="status">Your saved copy started from an earlier version of this rubric. It keeps your edits but not the changes made since.</p>}
+         {/* The tutorial's amber outlines already mark the rows it leaves unrated on purpose. */}
+         {!inTutorial && unratedCount > 0 && <p className="mb-3 text-xs text-amber-800 dark:text-amber-300" data-unrated-warning>{unratedCount} item{unratedCount === 1 ? " needs" : "s need"} ratings. Unrated items remain marked below.</p>}
+--- a/harmreview/components/RubricPanel.tsx
++++ b/harmreview/components/RubricPanel.tsx
+@@ -71,6 +71,6 @@ export default function RubricPanel({ open, trigger, onClose }: {
+           </div>
+         </div>
+       </div>
+-    </div>, document.body,
++    </div>, trigger?.closest("dialog") ?? document.body,
+   );
+ }
+--- a/harmreview/data/tutorial/copy.json
++++ b/harmreview/data/tutorial/copy.json
+@@ -1,19 +1,19 @@
+ {
+   "welcome": {
+     "caption": "Tutorial",
+-    "heading": "Welcome to Stage 2",
++    "heading": "Welcome to the Rubric Editor",
+     "text": [
+-      "In this stage, you will review rubrics for clinical cases.",
++      "This tutorial shows you how to review a rubric for a clinical case.",
+       "Each case is based on a real clinical question posed by a physician. The rubric is the answer key for grading an AI's response and tells us what a good answer should and should not include.",
+       "Let's go over the interface with an example case."
+     ]
+   },
+   "case": {
+-    "caption": "Case",
+-    "heading": "The Case and Recommendations",
++    "caption": "Task",
++    "heading": "The Task and Solution",
+     "text": [
+-      "**Case** shows the question a clinician asked.",
+-      "**Expert Recommendations** show a response that specialists previously reviewed and considered to be a good response. You may disagree with it, and that is okay - it is not the only acceptable answer, but is used as the reference for creating the initial rubric.",
++      "**Task** shows the question a clinician asked.",
++      "**Solution** shows a response that specialists previously reviewed and considered to be a good response. You may disagree with it, and that is okay - it is not the only acceptable answer, but is used as the reference for creating the initial rubric.",
+       "Next we will show you how to edit the rubric to match your clinical judgment."
+     ]
+   },
+@@ -21,7 +21,7 @@
+     "caption": "Criteria",
+     "heading": "Criteria",
+     "text": [
+-      "From the case and recommendations, we created the key criteria an appropriate response should address. The blue label on each shows the potential harm of not addressing it.",
++      "From the task and solution, we created the key criteria an appropriate response should address. The blue label on each shows the potential harm of not addressing it.",
+       "**Criterion 2** is always about follow-up and triage: where and how soon the patient should be seen. Click it to expand."
+     ]
+   },

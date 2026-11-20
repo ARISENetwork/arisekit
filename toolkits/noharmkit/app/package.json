@@ -1,0 +1,40 @@
+{
+  "name": "arisekit-app",
+  "version": "0.13.19",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 5190 --hostname 127.0.0.1",
+    "build": "next build",
+    "check": "tsc --noEmit && npm run check:upstream",
+    "check:upstream": "python3 ../tools/sync_harmreview.py check",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "start": "next start --port 5190 --hostname 127.0.0.1",
+    "build:portable": "node scripts/build-portable-editor.mjs",
+    "predev": "npm run build:portable",
+    "prebuild": "npm run build:portable",
+    "pretest": "npm run build:portable"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "next": "^16.3.8",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  },
+  "overrides": {
+    "postcss": "8.5.25",
+    "sharp": "0.35.5",
+    "nanoid": "3.3.18"
+  }
+}

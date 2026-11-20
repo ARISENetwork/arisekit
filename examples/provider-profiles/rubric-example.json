@@ -1,0 +1,61 @@
+{
+  "kind": "rubric-judge",
+  "primitive": "arisekit.judges.rubric.RubricJudge",
+  "options": {
+    "rubric": {
+      "schema_version": "arisekit.rubric-judge.v1",
+      "criteria": [
+        {
+          "id": "accuracy",
+          "description": "The response gives the correct result for the arithmetic problem.",
+          "weight": 1,
+          "anchors": {
+            "0": "Incorrect result or no answer.",
+            "1": "Correct result."
+          }
+        }
+      ],
+      "judges": [
+        {
+          "name": "development-openrouter",
+          "provider": "openrouter",
+          "model": "openrouter/openai/gpt-4o-mini",
+          "parameters": {
+            "temperature": 0,
+            "max_tokens": 256
+          },
+          "supported_parameters": [
+            "max_tokens",
+            "temperature",
+            "tools",
+            "tool_choice"
+          ],
+          "api_key_env": "OPENROUTER_API_KEY",
+          "api_base_env": null,
+          "api_version_env": null,
+          "token_env": null,
+          "timeout": 45.0,
+          "development_only": true,
+          "schema_version": "arisekit.provider-profile.v1"
+        }
+      ],
+      "examples": [
+        {
+          "case": "What is 2 + 2?",
+          "response": "4",
+          "judgments": {
+            "accuracy": {
+              "score": 1,
+              "rationale": "The answer matches the reference result."
+            }
+          }
+        }
+      ],
+      "budget": {
+        "max_calls": 10,
+        "max_cost": 0.1,
+        "max_cost_per_call": 0.01
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.panel { position: fixed; z-index: 1000; width: 300px; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto; border: 1px solid var(--mc-line-strong); border-radius: 14px; background: var(--mc-surface); color: var(--mc-ink); font: 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; color-scheme: var(--mc-scheme); }
+.panel, .panel * { box-sizing: border-box; }
+.panel button { display: inline-flex; justify-content: center; align-items: center; min-height: 32px; padding: 6px 10px; border: 1px solid var(--mc-line); border-radius: 6px; background: var(--mc-surface); color: var(--mc-ink); font: inherit; cursor: pointer; transition: background-color 180ms, border-color 180ms; }
+.panel button:hover { background: var(--mc-surface-2); }
+.panel button:focus-visible, .panel textarea:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+.panelHeader { display: flex; align-items: center; gap: 8px; padding: 12px; }
+.panelHeader > strong { flex: 1; font-size: 14px; font-weight: 600; }
+.panel .move { min-width: 28px; padding: 4px; border-color: transparent; background: transparent; color: var(--mc-muted); cursor: move; touch-action: none; }
+.body { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows 180ms ease-out, opacity 180ms ease-out; }
+.body[data-collapsed="true"] { grid-template-rows: 0fr; opacity: 0; }
+.inner { min-height: 0; overflow: hidden; }
+.inner > :not(.status) { margin-right: 16px; margin-left: 16px; }
+.choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding-top: 4px; }
+.panel .choices button[aria-pressed="true"] { border-color: var(--mc-accent); background: var(--mc-accent-bg); color: var(--mc-accent); }
+.inner p { margin-top: 12px; margin-bottom: 12px; color: var(--mc-muted); }
+.panel .compare { display: flex; width: calc(100% - 32px); margin-top: 16px; margin-bottom: 12px; }
+.tools { display: flex; justify-content: space-between; gap: 8px; }
+.panel .tools button { font-size: 12px; }
+.inner .note { margin-bottom: 16px; font-size: 12px; }
+.status { display: block; margin: 0 16px 12px; color: var(--mc-muted); font-size: 12px; }
+.status:empty { display: none; }
+.inner textarea { width: calc(100% - 32px); margin-bottom: 16px; min-height: 96px; border: 1px solid var(--mc-line); border-radius: 6px; background: var(--mc-bg); color: var(--mc-ink); font: inherit; }
+@media (prefers-reduced-motion: reduce) { .body, .panel button { transition: none; } }

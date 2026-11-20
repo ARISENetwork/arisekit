@@ -1,0 +1,20 @@
+{
+  "caseset_name": "demo",
+  "cases": [
+    "Case001"
+  ],
+  "trials": 1,
+  "synthetic": true,
+  "models": [
+    "Model-A",
+    "Model-B",
+    "Model-C"
+  ],
+  "model_labels": {
+    "Model-A": "Model A",
+    "Model-B": "Model B",
+    "Model-C": "Model C"
+  },
+  "case_source": "projects/demo/cases/Case001.json",
+  "description": "Canonical UTI fixture shared with the walkthrough. Generated draft rubric run2 with rated usual-care harm and tagged options. Model A, B, and C responses and mappings are authored teaching examples, not actual model performance or clinician validation."
+}

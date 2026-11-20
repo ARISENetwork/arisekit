@@ -1,0 +1,14 @@
+{
+  "id": "sample-text-exact",
+  "name": "Sample text exact-match benchmark",
+  "version": "0.1.0",
+  "modality": "text",
+  "scorer": {
+    "kind": "exact-match"
+  },
+  "mast_compatible": true,
+  "provenance": {
+    "source": "arisekit test fixture",
+    "license": "CC0-1.0"
+  }
+}

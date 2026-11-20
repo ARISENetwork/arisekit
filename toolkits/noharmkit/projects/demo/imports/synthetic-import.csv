@@ -1,0 +1,7 @@
+Task,Solution,Errors
+Summarize this fictional meeting note in one sentence: Maya will send the draft on Friday. Omar will review it on Monday. The team will meet on Tuesday.,"Maya will send the draft Friday, Omar will review it Monday, and the team will meet Tuesday. SOLUTION: The plan is to send the draft on Friday, review it on Monday, and meet on Tuesday.","Mild: Omit the Tuesday meeting
+Moderate: Assign the draft to Omar instead of Maya"
+"A fictional supply order contains notebooks costing 12 dollars, pens costing 8 dollars, and folders costing 5 dollars. What is the total cost? Give only the amount.",25 dollars SOLUTION: $25,"Mild: Add an explanation despite the requested format
+Moderate: Give an incorrect total"
+Extract the contact name and email address from this fictional note: Please send the schedule to Alex Rivera at alex.rivera@example.com.,Name: Alex Rivera; Email: alex.rivera@example.com SOLUTION: Alex Rivera <alex.rivera@example.com>,"Mild: Omit the contact name
+Moderate: Invent a different email address"

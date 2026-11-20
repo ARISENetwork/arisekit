@@ -1,0 +1,17 @@
+{
+  "schema_version": "arisekit.fhir-environment-brief.v1",
+  "id": "outpatient-record-workflows",
+  "clinical_scope": "Synthetic adult outpatient chart review and care coordination",
+  "workflow": "Generate distinct tasks to retrieve recorded lab values and manage follow-up Tasks. Use the supplied operational rules and this exact starting chart.",
+  "evidence": {"operational-rule": "Synthetic operational protocol: A task may request a recorded result, creation of exactly one routine requested follow-up Task, completion of an existing Task, or removal of an explicitly identified duplicate Task. A requested follow-up Task has intent=order, status=requested, priority=routine, for=Patient/p1, code.text=Review recorded laboratory result. Do not recommend treatment."},
+  "resources": {"Patient": ["read", "search"], "Observation": ["read", "search"], "Task": ["read", "search", "create", "update", "delete"]},
+  "seed_bundle": {"resourceType": "Bundle", "type": "collection", "entry": [
+    {"resource": {"resourceType": "Patient", "id": "p1", "name": [{"family": "Example", "given": ["Alex"]}], "birthDate": "1980-03-12"}},
+    {"resource": {"resourceType": "Observation", "id": "lab1", "status": "final", "code": {"coding": [{"system": "http://loinc.org", "code": "2823-3", "display": "Potassium"}]}, "subject": {"reference": "Patient/p1"}, "effectiveDateTime": "2026-10-20T09:00:00Z", "valueQuantity": {"value": 4.2, "unit": "mmol/L", "system": "http://unitsofmeasure.org", "code": "mmol/L"}}},
+    {"resource": {"resourceType": "Task", "id": "existing-task", "status": "requested", "intent": "order", "priority": "routine", "for": {"reference": "Patient/p1"}, "code": {"text": "Confirm appointment"}}}
+  ]},
+  "evaluation_criteria": "Read tasks must return exactly the requested JSON value from the chart. Write tasks must meet terminal-state and delta constraints, preserve unrelated resources, and fail null or wrong-patient controls. Use exact Task coding and status from the operational rule. No human or clinical reliability claim.",
+  "case_count": 2,
+  "limits": {"max_turns": 8, "max_tool_calls": 12, "attempt_seconds": 120, "max_calls": 32, "max_cost": 3, "max_cost_per_call": 0.5},
+  "data_classification": "synthetic"
+}

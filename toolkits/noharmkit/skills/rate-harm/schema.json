@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["usualCare", "decisions"],
+  "properties": {
+    "usualCare": {"$ref": "#/$defs/rating"},
+    "decisions": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/rating"}}
+  },
+  "$defs": {
+    "rating": {
+      "type": "object",
+      "required": ["harm", "reason"],
+      "properties": {
+        "harm": {"enum": ["none", "mild", "moderate", "severe"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

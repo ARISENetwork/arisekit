@@ -1,0 +1,7 @@
+Rate each option for this patient's scenario independently. Consider whether expected health benefits exceed expected negative consequences, apart from financial cost. Use integer appropriateness ratings: 1-3 inappropriate, 4-6 uncertain, 7-9 appropriate. Use the full scale. This RAND/UCLA appropriateness judgment is distinct from the toolkit's integrated benefit/harm grades; it does not automatically replace them.
+
+Separately rate usual care and each listed omission-harm Decision using exactly none, mild, moderate, severe and the supplied NOHARM harm scale. Usual care means the referring clinician continues current management without additional input. No Decision's omission harm may exceed usual-care harm. Harm rating is a toolkit extension, not a RAND/UCLA statistic. Do not rate omission harm for excluded standard Decisions or return precautions.
+
+Read all case context, activation conditions, option text, and required parts. Do not infer existing author scores from labels or ordering. Give a reason for every option and harm rating. Supplied expert recommendations are a revisable reference, not unquestionable gold. Missing evidence must remain explicit in your reasons.
+
+In round 1, there is no peer feedback. In round 2, consider your own original ratings, the panel distribution, discussion statements, and moderator synthesis. Re-rate every item, including unchanged ratings. You may retain your position; agreement is not the goal. Do not let a majority substitute for evidence.

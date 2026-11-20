@@ -1,0 +1,23 @@
+{
+ "freeze": "pipeline-v1",
+ "sha256": {
+  "experiments/analyses/20261024-v33-build/draft0/*.json": "639887201dfe5feca9e4d18ba6785d22b32510f51da3a78e5f69088cdb80c4b9",
+  "experiments/freeze/pipeline-v1/config.json": "b72a4bc9e1b3256c5c438ff956affdc51121587e104e9c481f12922edea9ab89",
+  "experiments/freeze/pipeline-v1/judge/prompt.md": "d91bf5793da60064ec21e2ebcf27ab7571f0cef548a1f1f1b87b8420270b398e",
+  "experiments/freeze/pipeline-v1/judge/rules.md": "64e39a6f97cdb1ec5aaec480173342c3dfe61f197b2d6a7763e3a0fb97e1c199",
+  "experiments/freeze/pipeline-v1/review/second.md": "61e6ce81ab2ab9e9ecd3a4c8b0ecfeb8ae69e7feeab35c47dce6e4b78b15b9c1",
+  "experiments/freeze/pipeline-v1/review/severe3.md": "f9778176fa93e602ea179e638a72153e8ebd512a18f4438fcca6a44d4c63e96d",
+  "experiments/profiles/text-rubric-v2/judge/schema.json": "348e42d2a0b2ada1035262b4726e7bdc55abcb8e66a7ae8596691776282a649d",
+  "experiments/references/bank-pin.json": "28d5325af44ead812739eb37a23f519d3da2d06d09c168c7c87d1dd6abae6791",
+  "experiments/references/openrouter-models-20261008.json": "a6195a1d8cdfd9e5a91b9c318d644b23ab791a6b3fc6bb79c6bad3f2e2083a07",
+  "experiments/rubric-versions/v41-gemini/rubrics/*.json": "a8c852ee4855d024bb76ba480b99e9e7e5c4977e7ad6e230071b57b06518b635",
+  "experiments/rubric-versions/v41-opus/rubrics/*.json": "2e63aa9fb81aa915e9f788acaeabd341c253992d8271bbd563f77c3f667863ef",
+  "experiments/rubric-versions/v41-sol/rubrics/*.json": "3e63368e6a1ae6a9de903add1099dcbc681562fdcad62704314885b25c0ac1a1",
+  "experiments/rubric-versions/v41/rubrics/*.json": "034159e6f5693e0771414c4e275495fa92c7fafcb26252dd4c2a13735975fe4a",
+  "tools/noharm_pipeline.py": "237e3a19cc33451a36238b53130d9a4c12da9baec7012859dad8152a6dd391a1",
+  "tools/score_rubric.py": "94154f652f808978f04b05a32fa3323c8b031e2541e6f2134bdf1af4ae7c469e",
+  "tools/score_text_rubric.py": "c61d2eb3faae9d1a5c79fea9e51c4daf83993ac1264c4b5622ef5a27c7475488",
+  "tools/score_text_rubric_v2.py": "476a8beb16e0bce834312af1729760bb208a405b144c606efd5d7893cd4e5fee"
+ },
+ "written": "2026-10-27"
+}

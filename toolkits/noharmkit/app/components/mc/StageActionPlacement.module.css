@@ -1,0 +1,4 @@
+.original { display: contents; }
+.anchor { display: contents; }
+.heading > div { margin-top: 0; padding-top: 0; }
+.heading button,.heading a { min-width: auto; }

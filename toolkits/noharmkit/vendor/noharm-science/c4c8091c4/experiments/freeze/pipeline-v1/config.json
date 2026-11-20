@@ -1,0 +1,12 @@
+{
+ "freeze": "pipeline-v1",
+ "rubric": "v41",
+ "families": ["opus", "sol", "gemini"],
+ "context": "experiments/analyses/20261024-v33-build/draft0",
+ "judge": {"name": "J2.3", "model": "openai/gpt-6.1-sol", "effort": "high", "max_output": 32768, "route": "openai",
+           "purpose": "harm_audit", "timeout": 1800},
+ "review": {"name": "D182 severe review", "arm": "severe3-opus", "model": "anthropic/claude-opus-5.5", "effort": "high",
+            "max_output": 32768, "route": "openrouter", "purpose": "harm_audit", "timeout": 1800,
+            "price_evidence": "experiments/references/openrouter-models-20261008.json"},
+ "score": "worst error: lower bound of the three-rubric median (D171), S2 with D170, D179 and D185"
+}

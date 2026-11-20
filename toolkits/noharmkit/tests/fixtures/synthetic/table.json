@@ -1,0 +1,216 @@
+{
+  "caseId": "Syn002",
+  "harmOverrides": true,
+  "usualCare": {
+    "harm": "mild"
+  },
+  "decisions": [
+    {
+      "id": "D1",
+      "question": "What follow-up or triage is appropriate?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D1.O1",
+          "text": "Perform synthetic action 1.",
+          "score": 7,
+          "timing": "routine"
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild",
+      "kind": "followUp"
+    },
+    {
+      "id": "D2",
+      "question": "Which synthetic action is appropriate for task 2?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D2.O1",
+          "text": "Synthetic option 1 for task two.",
+          "score": 7,
+          "parts": [
+            "Check A",
+            "Check B"
+          ]
+        },
+        {
+          "id": "D2.O2",
+          "text": "Synthetic option 2 for task two.",
+          "score": 7
+        },
+        {
+          "id": "D2.O3",
+          "text": "Synthetic option 3 for task two.",
+          "score": 6
+        },
+        {
+          "id": "D2.O4",
+          "text": "Synthetic option 4 for task two.",
+          "score": 4
+        },
+        {
+          "id": "D2.O5",
+          "text": "Synthetic option 5 for task two.",
+          "score": 1
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D3",
+      "question": "Which synthetic action is appropriate for task 3?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D3.O1",
+          "text": "Perform synthetic action 3.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D4",
+      "question": "Which synthetic action is appropriate for task 4?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D4.O1",
+          "text": "Perform synthetic action 4.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D5",
+      "question": "Which synthetic action is appropriate for task 5?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D5.O1",
+          "text": "Perform synthetic action 5.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D6",
+      "question": "Which synthetic action is appropriate for task 6?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D6.O1",
+          "text": "Perform synthetic action 6.",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "D7",
+      "question": "Which synthetic action is appropriate for task 7?",
+      "activation": {
+        "type": "future",
+        "trigger": "Synthetic event occurs",
+        "scoredNow": true
+      },
+      "recommendations": [
+        {
+          "id": "D7.O1",
+          "text": "Perform synthetic action 7.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D8",
+      "question": "Which synthetic action is appropriate for task 8?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D8.O1",
+          "text": "Perform synthetic action 8.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D9",
+      "question": "Which synthetic action is appropriate for task 9?",
+      "activation": {
+        "type": "always"
+      },
+      "recommendations": [
+        {
+          "id": "D9.O1",
+          "text": "Perform synthetic action 9.",
+          "score": 7
+        }
+      ],
+      "harmIfNotAddressedOverride": "mild"
+    },
+    {
+      "id": "D10",
+      "question": "What specific return precautions are needed, if any?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D10.O1",
+          "text": "Return if the synthetic warning appears.",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "D11",
+      "question": "What additional testing is needed?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D11.O1",
+          "text": "No additional testing is needed.",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "D12",
+      "question": "What additional treatment is needed now?",
+      "activation": {
+        "type": "always"
+      },
+      "harmIfNotAddressedOverride": "none",
+      "recommendations": [
+        {
+          "id": "D12.O1",
+          "text": "No additional treatment is needed now.",
+          "score": 7
+        }
+      ]
+    }
+  ]
+}

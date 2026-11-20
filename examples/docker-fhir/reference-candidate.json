@@ -1,0 +1,16 @@
+{
+  "name": "Outpatient FHIR workflow software checks",
+  "task": "Retrieve a recorded lab and create a care-coordination Task",
+  "cases": [
+    {"id": "lab-query", "instruction": "For Patient/p1, find the recorded potassium result (LOINC 2823-3). Return its numeric value as a JSON number.", "source_ids": ["operational-rule"], "predicates": [], "answer_json": 4.2,
+      "reference_actions": [{"name": "fhir_search", "arguments": {"resource_type": "Observation", "params": {"patient": "p1", "code": "2823-3"}}}], "reference_answer": "4.2"},
+    {"id": "follow-up", "instruction": "For Patient/p1, create exactly one routine requested follow-up Task to review the recorded laboratory result. Use intent order and code text Review recorded laboratory result. Preserve the existing appointment Task.", "source_ids": ["operational-rule"],
+      "predicates": [
+        {"phase": "delta", "resource_type": "Task", "where": {"code.text": "Review recorded laboratory result", "for.reference": "Patient/p1", "status": "requested", "intent": "order", "priority": "routine"}, "path": ".", "operator": "count-equals", "expected": 1},
+        {"phase": "terminal", "resource_type": "Task", "where": {"id": "existing-task"}, "path": "status", "operator": "equals", "expected": "requested"},
+        {"phase": "terminal", "resource_type": "Task", "where": {}, "path": ".", "operator": "count-equals", "expected": 2}
+      ], "answer_json": null,
+      "reference_actions": [{"name": "fhir_create", "arguments": {"resource": {"resourceType": "Task", "status": "requested", "intent": "order", "priority": "routine", "for": {"reference": "Patient/p1"}, "code": {"text": "Review recorded laboratory result"}}}}], "reference_answer": "Created the requested follow-up Task."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+.preview {
+  min-height: 9rem;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.openEditor {
+  display: inline-flex;
+  width: 100%;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border: 1px solid var(--mc-accent);
+  border-radius: 0.5rem;
+  background: var(--mc-accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 220ms var(--motion-ease), background-color 150ms ease-out;
+}
+
+.preview:hover .openEditor,
+.preview:focus-within .openEditor {
+  transform: translateY(-0.125rem);
+  background: color-mix(in srgb, var(--mc-accent) 88%, #000);
+}
+
+.openEditor:focus-visible {
+  outline: 2px solid var(--mc-accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .openEditor,
+  .preview:hover .openEditor,
+  .preview:focus-within .openEditor {
+    transition: none;
+    transform: none;
+  }
+}

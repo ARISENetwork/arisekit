@@ -1,0 +1,23 @@
+/* Worst-error severity colors for score views. Kept out of globals.css, which is pinned to the noharm-kit archive. */
+:root {
+  --mc-sev-none: #2F9E5F;
+  --mc-sev-mild: #D4A21C;
+  --mc-sev-moderate: #E07526;
+  --mc-sev-severe: #D2443B;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) {
+    --mc-sev-none: #3DD68C;
+    --mc-sev-mild: #F2CC5B;
+    --mc-sev-moderate: #FF9A4D;
+    --mc-sev-severe: #FF6166;
+  }
+}
+
+:root[data-mode="dark"] {
+  --mc-sev-none: #3DD68C;
+  --mc-sev-mild: #F2CC5B;
+  --mc-sev-moderate: #FF9A4D;
+  --mc-sev-severe: #FF6166;
+}

@@ -1,0 +1,12 @@
+{
+  "field": "diagnostic radiology",
+  "modality": "mixed radiology images",
+  "criteria": "Create distinct clinical visual yes/no questions grounded in the supplied labels or report and visible image evidence. Keep each decision within the supplied image; do not require patient history or other views. Put proposed answers and uncertainty outside the solver question.",
+  "tasks_per_image": 1,
+  "generator_model": "openrouter/openai/gpt-4.1-mini",
+  "critic_model": "openrouter/anthropic/claude-haiku-4.5",
+  "models": ["openrouter/mistralai/mistral-small-3.2-24b-instruct"],
+  "max_calls": 100,
+  "max_cost": 1,
+  "max_cost_per_call": 0.025
+}

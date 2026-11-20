@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["decisions", "offRubric"],
+  "properties": {
+    "decisions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "recommended": {"type": "array", "items": {
+            "type": "object", "required": ["rowId", "evidence"],
+            "properties": {
+              "rowId": {"type": "string"},
+              "role": {"enum": ["first", "addOn", "alternative", "fallback"]},
+              "evidence": {"type": "string", "minLength": 1},
+              "partsPresent": {"type": "array", "items": {"type": "string"}},
+              "via": {"type": "string"}}}},
+          "contradiction": {"type": "boolean"},
+          "unmatched": {"type": "array", "items": {
+            "type": "object", "required": ["evidence", "provisional"],
+            "properties": {
+              "evidence": {"type": "string", "minLength": 1},
+              "provisional": {"type": "object", "required": ["outcome"], "properties": {
+                "outcome": {"enum": ["met", "partly", "notMet"]},
+                "harm": {"type": "object", "required": ["kind", "severity"], "properties": {
+                  "kind": {"enum": ["commission", "uncertain"]},
+                  "severity": {"enum": ["uncertain", "mild", "moderate", "severe"]}}}}}}}}
+        }
+      }
+    },
+    "offRubric": {"type": "array", "items": {
+      "type": "object", "required": ["evidence", "actionable", "harm"],
+      "properties": {
+        "evidence": {"type": "string", "minLength": 1},
+        "actionable": {"type": "boolean"},
+        "harm": {"enum": ["none", "uncertain", "mild", "moderate", "severe"]}}}}
+  }
+}

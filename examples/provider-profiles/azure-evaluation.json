@@ -1,0 +1,22 @@
+{
+  "name": "azure-evaluation",
+  "provider": "azure",
+  "model": "azure/replace-with-your-deployment",
+  "parameters": {
+    "max_completion_tokens": 512,
+    "reasoning_effort": "low"
+  },
+  "supported_parameters": [
+    "max_completion_tokens",
+    "reasoning_effort",
+    "tools",
+    "tool_choice"
+  ],
+  "api_key_env": "AZURE_API_KEY",
+  "api_base_env": "AZURE_API_BASE",
+  "api_version_env": "AZURE_API_VERSION",
+  "token_env": "AZURE_AD_TOKEN",
+  "timeout": 45.0,
+  "development_only": false,
+  "schema_version": "arisekit.provider-profile.v1"
+}

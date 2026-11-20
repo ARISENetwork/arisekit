@@ -1,0 +1,16 @@
+.confirm { width: min(32rem, calc(100vw - 3rem)); margin: auto; padding: 1.5rem; border: 1px solid var(--mc-line); border-radius: 1rem; background: var(--mc-surface); color: var(--mc-ink); opacity: 0; transform: translateY(.5rem); transition: opacity .2s, transform .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.confirm[open] { opacity: 1; transform: none; }
+.confirm::backdrop { background: rgb(0 0 0 / .28); opacity: 0; transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; }
+.confirm[open]::backdrop { opacity: 1; }
+.confirm h2 { margin: 0 0 .75rem; font-size: 1.125rem; font-weight: 650; }
+.confirm p { margin: 0 0 1rem; font-size: .875rem; line-height: 1.5; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.actions button { border: 1px solid var(--mc-line); border-radius: .5rem; padding: .5rem .75rem; background: var(--mc-surface); color: var(--mc-ink); font-size: .875rem; font-weight: 600; transition: background .2s; }
+.actions button:hover { background: var(--mc-surface-2); }
+.actions button:focus-visible { outline: 2px solid var(--mc-accent); outline-offset: 3px; }
+.actions button:disabled { opacity: .5; cursor: not-allowed; }
+.actions .save { background: var(--mc-accent); border-color: var(--mc-accent); color: var(--mc-surface); }
+.actions .save:hover { background: color-mix(in srgb, var(--mc-accent) 85%, var(--mc-ink)); }
+.error { color: var(--mc-bad); }
+@starting-style { .confirm[open] { opacity: 0; transform: translateY(.5rem); } .confirm[open]::backdrop { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .confirm, .confirm::backdrop, .actions button { transition: none; } }

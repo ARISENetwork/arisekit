@@ -1,0 +1,2 @@
+{"id": "c1", "prompt": "What is the capital of France?", "metadata": {"specialty": "geography"}, "ground_truth": "Paris", "attachments": []}
+{"id": "c2", "prompt": "What is 2 + 2?", "metadata": {}, "ground_truth": "4", "attachments": []}

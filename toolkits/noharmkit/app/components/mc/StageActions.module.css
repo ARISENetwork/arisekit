@@ -1,0 +1,7 @@
+.bar { margin-top: auto; padding-top: 20px; }
+.actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.actions button,.actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; min-width: 136px; padding: 7px 12px; border: 1px solid var(--mc-line); border-radius: 7px; background: var(--mc-surface); color: var(--mc-ink); font: inherit; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; transition: background 180ms,border-color 180ms; }
+.actions .primary { background: var(--mc-accent-bg); border-color: var(--mc-accent); color: var(--mc-accent); }
+.actions button:disabled { opacity: .5; cursor: default; }
+.note { margin: 6px 0 0; text-align: right; color: var(--mc-muted); font-size: 12px; }
+@media(prefers-reduced-motion:reduce) { .actions button,.actions a { transition: none; } }

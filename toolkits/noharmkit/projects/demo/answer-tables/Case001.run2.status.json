@@ -1,0 +1,25 @@
+{
+  "status": "pass",
+  "errors": [],
+  "provenance": {
+    "skill": "generate-answer-table",
+    "backend": "codex",
+    "model": "gpt-6-astra",
+    "prompt_sha256": "12a078a80318d61a5c0e6b0cfc397ede1dbee10981c81bb245b05ea10b1ee2db",
+    "started_at": "2026-10-10T20:35:21.945899+00:00",
+    "runtime_s": 32.31,
+    "usage": {
+      "input_tokens": 26349,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1671,
+      "reasoning_output_tokens": 324
+    },
+    "cost_usd": null,
+    "cli_version": "codex-cli 0.161.0",
+    "attempts": 1,
+    "retried_errors": []
+  },
+  "generation_sha256": "db0f71e2b2fc7c9ea598d18d3a5e61891203d163361440c22173572f9a541cf7",
+  "table_sha256": "269d223bbe13d89183c681f081c69dac9b647a646efce59bf717379a89d21198"
+}

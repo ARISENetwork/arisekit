@@ -1,0 +1,124 @@
+{
+  "schema_version": "arisekit.benchmark-build-spec.v1",
+  "benchmark": {
+    "name": "P0 golden-path synthetic routing",
+    "slug": "p0-golden-path",
+    "version": "0.1.0",
+    "description": "Two synthetic clinical routing labels that prove the reviewed authoring-to-run contract.",
+    "mast_category": "clinical-reasoning",
+    "mast_compatible": true,
+    "modality": "text"
+  },
+  "source": {
+    "kind": "jsonl",
+    "path": "cases.synthetic.jsonl",
+    "sha256": "d5ebf0dadd7c0b1f3974ff804862e006614529fa159ab92e1d3bda804c03ebff",
+    "field_map": {
+      "id": "case_id",
+      "prompt": "prompt",
+      "ground_truth": "reference_answer",
+      "metadata": {
+        "setting": "setting"
+      },
+      "attachments": null
+    },
+    "system_prompt": {
+      "text": "Return only the single reference label: A, B, or C.",
+      "sha256": "52ef9a93f91d79dbe05948f094fd463a18cb83eba86092a33f7b0948166fbdf1"
+    }
+  },
+  "scorer": {
+    "kind": "exact-match",
+    "primitive": "arisekit.scorer.exact_match",
+    "options": {
+      "case_sensitive": true,
+      "strip": true,
+      "name": "accuracy"
+    }
+  },
+  "runner": {
+    "trials": 1,
+    "threads": 1,
+    "max_retries": 1,
+    "retry_backoff": 0.0,
+    "temperature": 0.0,
+    "max_tokens": 8,
+    "max_cost": 1.0,
+    "max_cost_per_call": 0.01,
+    "require_known_cost": true,
+    "max_calls": 2
+  },
+  "smoke_test": {
+    "model": "stub/reference",
+    "limit": 2,
+    "trials": 1
+  },
+  "first_sweep": [
+    {
+      "model": "stub/reference",
+      "provider": "stub",
+      "trials": 1
+    }
+  ],
+  "artifacts": [
+    {
+      "role": "need-statement",
+      "path": "need-statement.md",
+      "sha256": "c1b26f4a481744c9e4c37262057c8958e9b9b9095748e2d16d48fa1e0bed17d7"
+    },
+    {
+      "role": "existing-coverage",
+      "path": "existing-coverage.md",
+      "sha256": "f961a61f9fdb72b5cf169019f721a3338577b97436fbb41cded5ae176cefbfd1"
+    },
+    {
+      "role": "compliance-scope",
+      "path": "compliance-scope.md",
+      "sha256": "b1b8ca4265ee76b54dde9dfc9129f85b909f2dd1278abb3a6f3c289067cf1079"
+    },
+    {
+      "role": "data-profile",
+      "path": "data-profile.md",
+      "sha256": "dd3357a65b7c24f33a2db5b8291e6964f05b5e0d018f4640c8162bd6c2971fae"
+    },
+    {
+      "role": "rubric",
+      "path": "rubric.md",
+      "sha256": "d225dbef0335867b0ce13fbf0c5826c90834875d31d93f29ae5a9eaf018f45d0"
+    },
+    {
+      "role": "study-plan",
+      "path": "study-plan.md",
+      "sha256": "7ddaf94d3e4835617e1b365c54d6d977b1348894cb46969fa465077a63fce0a0"
+    },
+    {
+      "role": "implementation-plan",
+      "path": "implementation-plan.md",
+      "sha256": "ae07ddb900003ae3e42195c99e5463b1a4b6da9dddabedc883ba4b974d62a944"
+    }
+  ],
+  "readiness": {
+    "status": "ready",
+    "data_profile": "materialized",
+    "allowed_model_routes": [
+      "stub/reference"
+    ],
+    "library_gaps": [],
+    "open_questions": [],
+    "user_confirmation": {
+      "actor": "P0 golden-path fixture owner",
+      "confirmed_at": "2026-09-02T12:00:00Z",
+      "text": "I confirm that these accepted artifacts describe the synthetic contract benchmark I want to build."
+    }
+  },
+  "data_governance": {
+    "classification": "synthetic",
+    "release_posture": "public",
+    "materialization_authorization": {
+      "authorized": true,
+      "actor": "P0 golden-path fixture owner",
+      "confirmed_at": "2026-09-02T12:05:00Z",
+      "text": "I confirm that the two source rows are wholly synthetic, approved for public repository release, and authorized for materialization into the generated benchmark package."
+    }
+  }
+}

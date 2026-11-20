@@ -1,0 +1,7 @@
+[
+  {"backend": "subscription", "model": "opus"},
+  {"backend": "codex", "model": "gpt-6-astra", "reasoning_effort": "medium"},
+  {"backend": "openrouter", "model": "x-ai/grok-4.7"},
+  {"backend": "openrouter", "model": "deepseek/deepseek-v4-pro-0813"},
+  {"backend": "openrouter", "model": "z-ai/glm-5.3"}
+]
