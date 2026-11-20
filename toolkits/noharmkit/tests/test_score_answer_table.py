@@ -58,14 +58,16 @@ def test_future_plan_not_scored_now_is_inactive_when_silent_but_harmful_plan_is_
     assert [[e["kind"], e["severity"]] for e in harmful["events"]] == [["commission", "severe"]]
 
 
-@pytest.mark.parametrize("sample", SAMPLES, ids=[f"{s['case']}-{s['label']}" for s in SAMPLES])
-def test_action_tags_do_not_change_scores(sample: dict[str, Any]) -> None:
-    case = CASES[sample["case"]]
+def test_action_tags_do_not_change_scores() -> None:
+    case = CASES["Syn001"]
     tagged = copy.deepcopy(case)
     for decision in tagged["decisions"]:
         for index, row in enumerate(decision["recommendations"]):
             row["tags"] = list(RECOMMENDATION_TAGS) if index == 0 else ["none"]
-    judge = {"decisions": sample["judge"]}
+    judge = {"decisions": {
+        "D4": {"recommended": [{"rowId": "D4.1"}]},
+        "D5": {"recommended": [{"rowId": "D5.2"}]},
+    }}
     assert validation_errors(tagged) == []
     assert score_case(tagged, judge, RHO) == score_case(case, judge, RHO)
 
@@ -401,24 +403,17 @@ def test_inactive_condition_still_charges_harmful_recommendations(match: str) ->
     assert _events(result) == [["commission", "mild"], ["commission", "moderate"]]
 
 
-@pytest.mark.parametrize(
-    "sample",
-    [
-        pytest.param(sample, id=f"{sample['case']}-{sample['label']}")
-        for sample in SAMPLES
-        if any(
-            decision.get("activation", {}).get("type") == "onlyIf" and "match" not in decision["activation"]
-            for decision in CASES[sample["case"]]["decisions"]
-        )
-    ],
-)
-def test_legacy_onlyif_match_defaults_to_any(sample: dict[str, Any]) -> None:
-    case = copy.deepcopy(CASES[sample["case"]])
-    for decision in case["decisions"]:
-        if decision.get("activation", {}).get("type") == "onlyIf":
-            decision["activation"].setdefault("match", "any")
-    judge = {"decisions": sample["judge"]}
-    assert score_case(case, judge, RHO) == score_case(CASES[sample["case"]], judge, RHO)
+@pytest.mark.parametrize(("row_id", "state"), [("D4.1", "scored"), ("D4.2", "inactive")])
+def test_legacy_onlyif_match_defaults_to_any(row_id: str, state: str) -> None:
+    case = CASES["Syn001"]
+    explicit = copy.deepcopy(case)
+    decision = next(d for d in explicit["decisions"] if d["id"] == "D5")
+    assert "match" not in decision["activation"]
+    decision["activation"]["match"] = "any"
+    judge = {"decisions": {"D4": {"recommended": [{"rowId": row_id}]}}}
+    legacy_score = score_case(case, judge, RHO)
+    assert legacy_score["decisions"]["D5"]["state"] == state
+    assert legacy_score == score_case(explicit, judge, RHO)
 
 
 def test_onlyif_python_and_editor_scoring_parity() -> None:

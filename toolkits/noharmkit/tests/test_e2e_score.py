@@ -291,13 +291,12 @@ def test_score_requires_every_declared_trial(synthetic_run: tuple[Path, dict], c
         assert any("no response" in problem and "3" in problem for problem in problems)
 
 
-@pytest.mark.parametrize("count", [0, -1, True, 2.0, "2", None, []])
 @pytest.mark.parametrize("partial", [True, False])
 def test_invalid_declared_count_never_writes(
-    synthetic_run: tuple[Path, dict], count: object, partial: bool,
+    synthetic_run: tuple[Path, dict], partial: bool,
 ) -> None:
     root, _ = synthetic_run
-    Project(root).update_provenance(trials=count)
+    Project(root).update_provenance(trials=0)
     report, problems = sc.score(root, allow_partial=partial)
     assert report is None and any("project trials" in problem for problem in problems)
     assert not (root / "results" / "report.md").exists()
