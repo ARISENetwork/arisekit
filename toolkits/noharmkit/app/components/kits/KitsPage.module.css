@@ -36,6 +36,11 @@ body:has(.page) :global(.kit-version) { display: none; }
 .tags { display: flex; flex-wrap: wrap; gap: 4px; }
 .tag { padding: 2px 7px; color: var(--mc-muted); background: var(--mc-surface-2); font: 400 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
 
+.status { color: var(--mc-faint); font-size: 13px; }
+.row[data-soon] .name, .row[data-soon] .description { color: var(--mc-faint); }
+.row[data-soon] .tag { color: var(--mc-faint); }
+.row[data-soon] .media { opacity: .55; filter: saturate(.7); }
+
 @media (max-width: 860px) {
   .feature { grid-template-columns: minmax(0, 1fr); }
   .featureActions { margin-top: 0; }

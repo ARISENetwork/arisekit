@@ -7,10 +7,10 @@ Open this checkout in your coding agent. Pick a workflow below and give the agen
 | [NOHARMKit](../toolkits/noharmkit/README.md) | Open the local browser workflow to build and grade open-ended tasks. Its walkthrough uses a prepared case. |
 | SCTKit | Script concordance. A local scoring adapter supports concordance. Provide an authorized distribution and identify whether it comes from experts or a synthetic reference. |
 | CPCKit | Diagnostic reasoning. The staged differential adapter accepts diagnosis aliases and uses reciprocal rank. Other variants need their own case and scoring contracts. |
-| RCQKit | Open clinical questions. The library includes RCQ item and rating contracts. Identify the reference source and the origin of each judgment. |
 | MedAgentKit | Electronic health record tasks. The local FHIR example builds and runs synthetic chart tasks. The original MedAgentBench has its own runtime and access requirements. |
 | RadiologyKit | Chest X-ray reporting. The skills support report-task planning. Implement or supply the report scorer before execution. |
-| Medical images | Image-based tasks. The multimodal example exercises a local image attachment. Classification and closed-answer questions use task-specific answer profiles. |
+| MultiturnKit | Coming soon. |
+| PhysicianBenchKit | Coming soon. |
 | Guided assistant | Custom benchmark. The implementation plan records which data loader and scorer are available and any additional code needed. |
 
 ## Start an authoring session
@@ -25,7 +25,7 @@ through skills/README.md until I have a benchmark plan or choose an
 existing benchmark. Tell me which parts of the plan I can run locally.
 ```
 
-The local kit chooser also provides a starter prompt for each family. The [stage guide](../skills/README.md) lists the artifacts the agent will write. For an existing benchmark, use the [public source catalog](../skills/existing-benchmark-search/catalog/public-benchmarks.md) to check data access and execution requirements.
+The local kit chooser also provides a starter prompt for each available guided workflow. The [stage guide](../skills/README.md) lists the artifacts the agent will write. For an existing benchmark, use the [public source catalog](../skills/existing-benchmark-search/catalog/public-benchmarks.md) to check data access and execution requirements.
 
 ## Local examples
 

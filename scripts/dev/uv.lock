@@ -214,7 +214,7 @@ wheels = [
 
 [[package]]
 name = "arisekit"
-version = "0.13.21"
+version = "0.13.22"
 source = { editable = "../../" }
 dependencies = [
     { name = "certifi" },

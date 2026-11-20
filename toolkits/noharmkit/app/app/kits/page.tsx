@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { KitName, KitRow } from "@/components/kits/KitRow";
 import styles from "@/components/kits/KitsPage.module.css";
 import { NoharmLoop } from "@/components/kits/NoharmLoop";
-import kits from "../../../../../docs/kits-data.json";
+import { ESTABLISHED_KITS, GUIDED_ASSISTANT } from "@/lib/kits";
 
 export const metadata: Metadata = { title: "Kits | ARISEKit" };
 
@@ -30,13 +30,13 @@ export default function KitsPage() {
         <section aria-labelledby="established-kits">
           <h2 id="established-kits" className={styles.heading}>Established Kits</h2>
           <ul className={styles.list}>
-            {kits.filter(kit => kit.id !== "custom").map((kit) => <KitRow key={kit.id} kit={kit} />)}
+            {ESTABLISHED_KITS.map((kit) => <KitRow key={kit.id} kit={kit} />)}
           </ul>
         </section>
         <section className={styles.buildOwn} aria-labelledby="build-your-own">
           <h2 id="build-your-own" className={styles.heading}>Build Your Own</h2>
           <ul className={styles.list}>
-            {kits.filter(kit => kit.id === "custom").map(kit => <KitRow key={kit.id} kit={kit} />)}
+            <KitRow kit={GUIDED_ASSISTANT} />
           </ul>
         </section>
       </div>
