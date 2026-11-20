@@ -1,0 +1,279 @@
+.root {
+  --spread: clamp(0.86px, 0.1cqw, 1.12px);
+  --ink: #0c1526;
+  --ink-soft: #2f3c57;
+  --muted: #4d5a74;
+  --accent: #2f6fe0;
+  --red-ink: #a3172a;
+  --safe-ink: #1e40af;
+  --page: #f3f7fd;
+  --hairline: rgba(22, 44, 92, .16);
+  --rule: rgba(22, 44, 92, .09);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--page);
+  color: var(--ink);
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  perspective: 1300px;
+  perspective-origin: 50% 46%;
+  pointer-events: none;
+}
+
+.world {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* Plain white sheets: hairline edge, 4px corners, at most a 1px shadow */
+.card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: #ffffff;
+  box-shadow: 0 1px 0 rgba(22, 44, 92, .05);
+  will-change: transform, opacity;
+}
+
+/* Sheets keep their shared card look; these name them for layout only */
+.caseCard, .rubricPanel, .chip { background: #ffffff; }
+
+/* Annotation strokes */
+.marked { position: relative; }
+.markLine { position: absolute; left: 0; width: 100%; height: 2px; overflow: visible; pointer-events: none; }
+.mark { position: absolute; overflow: visible; pointer-events: none; }
+
+/* Prompt composer */
+.composer { padding: 26px 30px 20px; }
+.composerLine1 { margin: 0; min-height: 1.2em; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
+.composerLine2 { margin: 10px 0 0; min-height: 1.3em; white-space: nowrap; line-height: 1.3; font-weight: 500; letter-spacing: -.01em; color: var(--ink-soft); }
+.caret { display: inline-block; width: 2px; height: 1.05em; margin-left: 3px; vertical-align: -.16em; background: var(--accent); }
+.composerBar { display: flex; align-items: center; justify-content: flex-end; margin-top: 14px; height: 40px; }
+.send { width: 40px; height: 40px; border-radius: 4px; display: grid; place-items: center; background: var(--accent); }
+.send svg { display: block; }
+
+/* Premise lifted from the composer */
+.premise { position: absolute; left: 0; top: 0; margin: 0; white-space: nowrap; line-height: 1.3; font-size: 23px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); }
+
+/* One case */
+.caseBody { box-sizing: border-box; padding: 18px 22px 16px; }
+.caseTitle { margin: 4px 0 0; min-height: 24px; font-size: 19px; line-height: 24px; font-weight: 600; }
+.caseDivider { height: 1px; margin: 12px 0; background: var(--rule); }
+.label { display: block; margin-bottom: 3px; color: var(--muted); font-size: 12px; line-height: 16px; font-weight: 500; }
+.caseInput { margin: 0 0 10px; font-size: 15px; line-height: 20px; font-weight: 400; }
+.caseRef { margin: 0 0 10px; font-size: 14px; line-height: 19px; font-weight: 500; color: #1d4fb8; }
+.errorList { margin: 0; padding: 0; list-style: none; display: grid; gap: 1px; }
+.errorItem { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 2px 0; border-bottom: 1px solid var(--rule); }
+.errorItem:last-child { border-bottom: 0; }
+.errorText { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; line-height: 19px; font-weight: 400; }
+.caseFooter { box-sizing: border-box; overflow: hidden; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--rule); }
+.generate { position: relative; display: inline-block; box-sizing: border-box; width: 250px; height: 48px; border-radius: 4px; color: #ffffff; white-space: nowrap; }
+.generateFace { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: 500; }
+.generate svg { flex-shrink: 0; display: block; }
+
+/* Generated rubric panel, modeled on the rubric editor */
+.panelHead { position: relative; box-sizing: border-box; height: 44px; padding: 0 14px 0 16px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.panelTitle { font-size: 15px; font-weight: 600; }
+.panelView { position: relative; overflow: hidden; }
+.panelContent { position: absolute; left: 0; right: 0; top: 0; }
+.decision { overflow: hidden; }
+.decisionHead { box-sizing: border-box; height: 36px; padding: 0 14px 0 12px; display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: #f7f9fd; white-space: nowrap; }
+.decisionQ { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 14px; font-weight: 600; }
+.omitTag { flex-shrink: 0; margin-right: 14px; padding: 0 7px; border-radius: 3px; border: 1px solid rgba(214, 40, 57, .6); background: #ffffff; color: var(--red-ink); font-size: 12px; line-height: 18px; font-weight: 500; white-space: nowrap; }
+.d1Grid { box-sizing: border-box; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; column-gap: 12px; padding: 0 14px; }
+.d1Text { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding: 4px 0; font-size: 14px; font-weight: 400; }
+.rubricLine { overflow: hidden; align-items: center; border-bottom: 1px solid var(--rule); }
+.scoreBadge { display: grid; place-items: center; width: 22px; height: 20px; border-radius: 3px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tierGood, .tierUncertain, .tierBad { font-size: 12px; font-weight: 500; }
+.tierGood { color: #1e40af; }
+.tierUncertain { color: #57534e; }
+.tierBad { color: #9a3412; }
+.harmChip { position: relative; padding: 1px 7px; border-radius: 3px; font-size: 12px; line-height: 16px; font-weight: 500; white-space: nowrap; }
+.harmSafe { background: rgba(37, 99, 235, .08); color: #1e40af; }
+.harmSevere { background: rgba(214, 40, 57, .08); color: var(--red-ink); }
+.harmModerate { background: #fff1e6; color: #9a3412; }
+.harmMild { background: #fffbeb; color: #92400e; }
+.harmNeutral { background: #f1f4f9; color: var(--muted); }
+.skeleton { position: relative; overflow: hidden; align-items: center; }
+.skelBar { display: block; height: 12px; border-radius: 2px; background: rgba(22, 44, 92, .08); }
+.wordmarkBold { font-weight: 700; }
+.wordmarkLight { font-weight: 400; }
+
+/* Abstract rubric rows: shapes that read as a dense answer table, not legible items */
+.absGrid { box-sizing: border-box; display: grid; grid-template-columns: 30px 18px minmax(0, 1fr) 110px; column-gap: 10px; padding: 0 14px 0 12px; }
+.absColHead { height: 18px; align-items: center; }
+.absRow { overflow: hidden; align-items: center; border-bottom: 1px solid var(--rule); }
+.absBar { display: block; height: 10px; border-radius: 2px; background: rgba(22, 44, 92, .14); }
+.absScore { display: block; width: 18px; height: 18px; border-radius: 3px; }
+.absText { display: flex; flex-direction: column; gap: 6px; }
+.absMeta { display: flex; flex-direction: column; gap: 6px; }
+.absLine { display: flex; gap: 5px; }
+.absPill { display: block; height: 11px; border-radius: 2px; }
+
+/* Model response */
+.respLayer { position: absolute; inset: 0; box-sizing: border-box; padding: 12px 14px; }
+.respHead { display: flex; align-items: center; justify-content: space-between; height: 22px; }
+.respName { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-soft); font-size: 13px; font-weight: 600; }
+.thinking { display: inline-flex; align-items: center; gap: 4px; padding: 3px 2px; }
+.thinkingDot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+.respText { margin: 6px 0 0; font-size: 15px; line-height: 19px; font-weight: 400; }
+
+/* Grid cell */
+.cell { height: 142px; padding: 12px 13px; display: flex; flex-direction: column; align-items: stretch; }
+.cellText { position: relative; flex-shrink: 0; height: 64px; margin: 0 0 4px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; font-size: 12px; line-height: 16px; font-weight: 400; color: var(--ink); }
+.cellStrip { position: relative; flex-shrink: 0; display: flex; align-items: center; gap: 6px; height: 14px; margin-top: 4px; }
+.stripLabel { margin-right: 4px; color: var(--muted); font-size: 12px; font-weight: 500; }
+.chipLevel { width: 22px; height: 6px; border-radius: 1px; }
+.levelNone { background: rgba(37, 99, 235, .85); }
+.levelMid { background: rgba(214, 40, 57, .38); }
+.levelSevere { background: rgba(214, 40, 57, .92); }
+.cellMarks { position: relative; flex-shrink: 0; display: flex; align-items: center; gap: 4px; height: 22px; margin-top: 8px; }
+.markDot { width: 13px; height: 13px; box-sizing: border-box; border-radius: 2px; border: 1px solid rgba(47, 111, 224, .35); }
+
+/* Model chips and leaderboard rows */
+.chipLayer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 7px; font-size: 13px; font-weight: 500; white-space: nowrap; }
+.chipDot { width: 6px; height: 6px; border-radius: 1px; background: var(--accent); }
+.boardRow { position: absolute; inset: 0; display: flex; align-items: center; gap: 14px; padding: 0 14px 0 18px; box-sizing: border-box; }
+.boardRank { width: 14px; color: var(--muted); font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; text-align: center; }
+.boardModel { width: 92px; flex-shrink: 0; font-size: 18px; font-weight: 500; white-space: nowrap; }
+.boardTrack { flex: 1; min-width: 40px; height: 6px; border-radius: 1px; background: rgba(22, 44, 92, .07); overflow: hidden; }
+.boardBar { display: block; height: 100%; }
+.rowLayer { position: absolute; inset: 0; display: flex; align-items: center; gap: 22px; padding: 0 22px 0 28px; box-sizing: border-box; }
+.rank { width: 18px; color: var(--muted); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.rowModel { width: 140px; flex-shrink: 0; font-size: 27px; font-weight: 500; white-space: nowrap; }
+.boardTitle { position: absolute; left: 0; top: 0; margin: 0; white-space: nowrap; font-size: 30px; font-weight: 500; letter-spacing: -.01em; color: var(--ink); }
+
+.pill {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.pillSevere { color: var(--red-ink); }
+.pillNone { color: var(--safe-ink); }
+.pillSmall { padding: 1px 2px; font-size: 12px; line-height: 16px; }
+
+.streams { position: absolute; left: 0; top: 0; height: 620px; overflow: visible; pointer-events: none; }
+
+/* Act 2 grading pass: a thin reading rule sweeping across the grid */
+.scan {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.25px;
+  height: 420px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+/* Margin notes: small text on white with a hairline edge and a leader to the target */
+.callout {
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: max-content;
+  padding: 7px 11px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: #ffffff;
+  white-space: normal;
+  pointer-events: none;
+}
+.calloutText { display: block; text-align: center; font-size: 17px; line-height: 23px; font-weight: 500; color: var(--ink); }
+.leader { position: absolute; display: block; overflow: visible; }
+.leader_left .leader { left: -19px; top: calc(50% - 5px); }
+.leader_up .leader { top: -19px; left: calc(50% - 5px); }
+.leader_upStart .leader { top: -19px; left: 9px; }
+.leader_down .leader { bottom: -19px; left: calc(50% - 5px); }
+
+/* Physician review interaction */
+.reviewStatus { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; }
+.markReviewed { margin-left: auto; padding: 5px 12px; border-radius: 4px; border: 1px solid rgba(47, 111, 224, .45); color: #1d4fb8; font-size: 13px; font-weight: 500; }
+.harmPicker { position: absolute; right: 8px; top: 34px; z-index: 3; display: flex; gap: 8px; padding: 6px 8px; border-radius: 4px; border: 1px solid var(--hairline); background: #ffffff; }
+.harmOff { background: #f1f4f9; color: #8a95aa; }
+.pointer { position: absolute; z-index: 5; width: 20px; height: 22px; pointer-events: none; }
+.pointer svg { display: block; }
+.pointerRing { position: absolute; left: 3px; top: 3px; width: 28px; height: 28px; box-sizing: border-box; border-radius: 50%; border: 1.25px solid var(--accent); }
+
+.endCard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+  pointer-events: none;
+}
+.wordmarkWrap { position: relative; }
+.wordmark {
+  margin: 0;
+  font-size: clamp(76px, 8.4cqw, 112px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  color: var(--ink);
+}
+.sweepLine {
+  position: relative;
+  width: 420px;
+  height: 2px;
+  margin: 30px 0 26px;
+}
+
+/* Stage rail: the one anchor that stays on screen all film */
+.rail {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 10px 0 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: #ffffff;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.railStep { display: inline-flex; align-items: center; gap: 6px; }
+.railDot { position: relative; width: 20px; height: 20px; box-sizing: border-box; border-radius: 50%; border: 1.25px solid; display: grid; place-items: center; }
+.railNum { position: absolute; font-size: 12px; line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums; }
+.railCheck { position: absolute; display: block; }
+.railLabel { position: relative; font-size: 13px; font-weight: 500; }
+.railLink { position: relative; width: 16px; height: 1px; margin: 0 7px; background: rgba(22, 44, 92, .18); overflow: hidden; }
+.railLinkFill { position: absolute; inset: 0; background: var(--accent); transform-origin: left center; }
+.slot { position: relative; display: inline-block; vertical-align: bottom; overflow: hidden; height: 1.3em; white-space: pre; }
+.slotWord { position: relative; display: inline-block; }
+
+/* The start screen blurs a film frame behind its title; margin notes would read as smudges there. */
+:global([data-poster="true"]) .callout { display: none; }
+
+.kitCard { display: flex; align-items: center; gap: 14px; box-sizing: border-box; padding: 0 18px; }
+.kitIcon { display: grid; flex-shrink: 0; place-items: center; }
+.kitText { display: grid; gap: 3px; min-width: 0; }
+.kitText strong { font-size: 17px; font-weight: 400; color: var(--ink); white-space: nowrap; }
+.kitText span { font-size: 13px; color: var(--muted); white-space: nowrap; }

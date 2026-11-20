@@ -1,30 +1,45 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+
+import { KitName, KitRow } from "@/components/kits/KitRow";
+import styles from "@/components/kits/KitsPage.module.css";
+import { NoharmLoop } from "@/components/kits/NoharmLoop";
 import kits from "../../../../../docs/kits-data.json";
 
-export const metadata = { title: "Local kits | ARISEKit" };
+export const metadata: Metadata = { title: "Kits | ARISEKit" };
 
-export default function KitsPage(): React.ReactElement {
+export default function KitsPage() {
   return (
-    <main className="mx-auto w-full max-w-4xl px-6 py-12">
-      <h1 className="mb-8 text-3xl font-semibold">Local benchmark kits</h1>
-      <section className="mb-8 rounded-lg border p-5">
-        <h2 className="text-xl font-semibold">NOHARMKit</h2>
-        <p className="my-3">Build and score open-ended clinical management benchmarks in the local workspace.</p>
-        <Link className="underline" href="/noharm/welcome">Open NOHARMKit</Link>
-      </section>
-      <h2 className="text-xl font-semibold">Guided authoring</h2>
-      <p className="my-3">Open this checkout in your coding agent and use the prompt for your task.</p>
-      <ul className="divide-y rounded-lg border px-5">
-        {kits.map(kit => (
-          <li key={kit.id} className="py-4">
-            <details>
-              <summary className="cursor-pointer font-semibold">{kit.name} · {kit.task}</summary>
-              <p className="my-3">{kit.capability}</p>
-              <p className="mb-2 select-all rounded-md border p-3">{kit.prompt}</p>
-            </details>
-          </li>
-        ))}
-      </ul>
+    <main className={styles.page}>
+      <div className={styles.content}>
+        <h1 className={styles.title}><KitName name="ARISEKit" /></h1>
+        <p className={styles.lede}>Start from an established benchmark format or build your own.</p>
+        <section className={styles.feature} aria-labelledby="noharmkit-title">
+          <div className={styles.featureCopy}>
+            <p className={styles.label}>Recommended toolkit</p>
+            <h2 id="noharmkit-title" className={styles.featureTitle}><KitName name="NOHARMKit" /></h2>
+            <p className={styles.featureBody}>Score clinical recommendations by their potential to harm patients. Move from your own cases and clinician-reviewed rubrics to autograded responses and a model leaderboard.</p>
+            <div className={styles.featureActions}>
+              <a className={styles.primary} href="/noharm/welcome">Open NOHARMKit</a>
+              <a className={styles.link} href="https://arxiv.org/abs/2512.01241" target="_blank" rel="noopener noreferrer">
+                Paper ↗
+              </a>
+            </div>
+          </div>
+          <div className={styles.featureArt}><NoharmLoop /></div>
+        </section>
+        <section aria-labelledby="established-kits">
+          <h2 id="established-kits" className={styles.heading}>Established Kits</h2>
+          <ul className={styles.list}>
+            {kits.filter(kit => kit.id !== "custom").map((kit) => <KitRow key={kit.id} kit={kit} />)}
+          </ul>
+        </section>
+        <section className={styles.buildOwn} aria-labelledby="build-your-own">
+          <h2 id="build-your-own" className={styles.heading}>Build Your Own</h2>
+          <ul className={styles.list}>
+            {kits.filter(kit => kit.id === "custom").map(kit => <KitRow key={kit.id} kit={kit} />)}
+          </ul>
+        </section>
+      </div>
     </main>
   );
 }

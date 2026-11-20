@@ -4,48 +4,95 @@
     "name": "SCTKit",
     "task": "Script concordance",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a SCTKit benchmark. Start from a clinical scenario, hypothesis and new information. Specify the response scale and source of the reference distribution. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "A local scoring adapter supports concordance. Provide an authorized distribution and identify whether it comes from experts or a synthetic reference."
+    "capability": "A local scoring adapter supports concordance. Provide an authorized distribution and identify whether it comes from experts or a synthetic reference.",
+    "description": "Measure how judgments shift with new, uncertain information, compared with an expert panel.",
+    "formats": [
+      "MCQ"
+    ],
+    "image": "/kits/sctbench-poster.jpg",
+    "clip": "/kits/sctbench.mp4",
+    "link": {
+      "label": "Paper",
+      "href": "https://ai.nejm.org/doi/full/10.1056/AIdbp2500120"
+    }
   },
   {
     "id": "cpc",
     "name": "CPCKit",
     "task": "Diagnostic reasoning",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a CPCKit benchmark. Select the CPC variant first: differential diagnosis, management, text questions or image questions. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The staged differential adapter accepts diagnosis aliases and uses reciprocal rank. Other variants need their own case and scoring contracts."
+    "capability": "The staged differential adapter accepts diagnosis aliases and uses reciprocal rank. Other variants need their own case and scoring contracts.",
+    "description": "Build diagnostic reasoning benchmarks from complex cases, starting with staged differentials.",
+    "formats": [
+      "MCQ",
+      "Open-ended"
+    ],
+    "image": "/kits/cpcbench.jpg",
+    "link": {
+      "label": "Paper",
+      "href": "https://arxiv.org/abs/2509.12194"
+    }
   },
   {
     "id": "rcq",
     "name": "RCQKit",
     "task": "Open clinical questions",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a RCQKit benchmark. Describe the setting for open clinical questions and the source of the reference expectations. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The library includes RCQ item and rating contracts. Identify the reference source and the origin of each judgment."
+    "capability": "The library includes RCQ item and rating contracts. Identify the reference source and the origin of each judgment.",
+    "image": "/kits/guided.jpg",
+    "formats": []
   },
   {
     "id": "medagentbench",
     "name": "MedAgentKit",
     "task": "Electronic health record tasks",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a MedAgentKit benchmark. Describe the clinical workflow, permitted FHIR tools and the chart state used to judge completion. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The local FHIR example builds and runs synthetic chart tasks. The original MedAgentBench has its own runtime and access requirements."
+    "capability": "The local FHIR example builds and runs synthetic chart tasks. The original MedAgentBench has its own runtime and access requirements.",
+    "description": "Test AI agents on multi-step tasks in a simulated electronic health record.",
+    "formats": [
+      "Agentic"
+    ],
+    "image": "/kits/medagentbench-poster.jpg",
+    "clip": "/kits/medagentbench.mp4",
+    "link": {
+      "label": "Paper",
+      "href": "https://psb.stanford.edu/psb-online/proceedings/psb26/chen_eric.pdf"
+    }
   },
   {
     "id": "rexrank",
     "name": "RadiologyKit",
     "task": "Chest X-ray reporting",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a RadiologyKit benchmark. Define the intended report task and specify the authorized images, reference reports and report-quality judge. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The skills support report-task planning. Implement or supply the report scorer before execution."
+    "capability": "The skills support report-task planning. Implement or supply the report scorer before execution.",
+    "description": "Evaluate AI-generated chest X-ray reports against reference reports.",
+    "formats": [
+      "Open-ended"
+    ],
+    "image": "/kits/rexrank-mini-poster.jpg",
+    "clip": "/kits/rexrank-mini.mp4",
+    "link": {
+      "label": "Website",
+      "href": "https://rexrank.ai/"
+    }
   },
   {
     "id": "images",
     "name": "Medical images",
     "task": "Image-based tasks",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a Medical images benchmark. Specify the modality, input images and expected answer. Identify the authorized source of the images and labels. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The multimodal example exercises a local image attachment. Classification and closed-answer questions use task-specific answer profiles."
+    "capability": "The multimodal example exercises a local image attachment. Classification and closed-answer questions use task-specific answer profiles.",
+    "image": "/kits/guided.jpg",
+    "formats": []
   },
   {
     "id": "custom",
     "name": "Guided assistant",
     "task": "Custom benchmark",
     "prompt": "Use skills/needs-analysis/SKILL.md in this checkout to start a custom benchmark. Start with my clinical task and intended use. Help me specify the inputs, expected output, reference material and scoring contract. Ask me one question at a time and save the agreed decisions in my benchmark workspace.",
-    "capability": "The implementation plan records which data loader and scorer are available and any additional code needed."
+    "capability": "The implementation plan records which data loader and scorer are available and any additional code needed.",
+    "description": "Describe your idea and get guided to the right custom design.",
+    "formats": [],
+    "image": "/kits/guided.jpg"
   }
 ]
