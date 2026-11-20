@@ -7,7 +7,7 @@ is required. See [First launch](../README.md#first-launch).
 
 ## Manual setup
 
-From `toolkits/noharmkit` on macOS or Linux, check Python 3.10 or newer, uv,
+From `toolkits/noharmkit` on macOS or Linux, check Python 3.11 or newer, uv,
 Node.js 22 or newer, and npm. Reuse an existing environment. After approving installation:
 
 ```bash

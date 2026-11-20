@@ -4,23 +4,24 @@ build-backend = "hatchling.build"
 
 [project]
 name = "arisekit"
-version = "0.13.19"
+version = "0.13.20"
 description = "Open-source framework for authoring and running MAST-compatible medical AI benchmarks."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "ARISE Network" }]
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
-    # Newer LiteLLM releases import typing.NotRequired, unavailable on Python 3.10.
-    "litellm>=1.40.0,<=1.93.0; python_version < '3.11'",
-    "litellm>=1.40.0; python_version >= '3.11'",
+    "litellm>=1.104.2,<2",
+    # Security floors for existing LiteLLM dependencies also apply to unlocked installs.
+    "certifi>=2026.10.18",
+    "filelock>=4.2.1",
     "pyyaml>=6.0",
     "packaging>=23.2",
 ]
 
 [project.optional-dependencies]
-autonomous = ["scipy>=1.11", "google-genai>=1.0,<2", "jsonschema>=4,<5", "Pillow>=10.4,<13", "numpy>=1.26,<3"]
+autonomous = ["scipy>=1.11", "google-genai>=1.0,<2", "pyasn1>=0.6.5", "jsonschema>=4,<5", "Pillow>=13,<14", "numpy>=1.26,<3"]
 hf = ["datasets>=2.16.0"]
 dev = [
     "pytest>=8.0",

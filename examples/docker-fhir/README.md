@@ -1,6 +1,6 @@
 # Configurable FHIR evaluation environment
 
-Use Python 3.10+ with ARISEKit and Docker Desktop (or a compatible local Docker
+Use Python 3.11+ with ARISEKit and Docker Desktop (or a compatible local Docker
 engine). The server is HAPI v8.8.0-1, FHIR R4 4.0.1. The registry digest fixes the
 multi-platform image; each attempt also records the actual platform image ID.
 The [upstream HAPI starter](https://github.com/hapifhir/hapi-fhir-jpaserver-starter)

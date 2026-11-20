@@ -318,7 +318,7 @@ def export_benchmark(
     *,
     description: str | None = None,
     dependencies: Iterable[str] = (),
-    python_requires: str = ">=3.10",
+    python_requires: str = ">=3.11",
 ) -> Path:
     """Create a deterministic ZIP release without changing the source package.
 

@@ -819,7 +819,7 @@ __all__ = [
     "Scorecard",
 ]
 
-__version__ = "0.13.19"
+__version__ = "0.13.20"
 
 from arisekit.providers import ProviderProfile, check_connection, development_profile, load_profile
 from arisekit.judges.rubric import RubricJudge

@@ -1,5 +1,7 @@
 jsonschema>=4.0,<5
-litellm>=1.50,<2
+litellm>=1.104.2,<2
+filelock>=4.2.1
+certifi>=2026.10.18
 python-dotenv>=1
 pyyaml>=6
 pytest>=8

@@ -457,7 +457,7 @@ def default_environment() -> Mapping[str, str]:
         version = importlib.metadata.version("arisekit")
     except importlib.metadata.PackageNotFoundError:
         version = "source-tree"
-    return {"python": ">=3.10", "arisekit": version}
+    return {"python": ">=3.11", "arisekit": version}
 
 
 def _inventory(root: Path, *, exclude: set[str]) -> tuple[RunnableAsset, ...]:

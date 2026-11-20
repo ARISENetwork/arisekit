@@ -8,7 +8,7 @@ ARISEKit is a local toolkit for designing, building, and evaluating medical AI b
 
 ## Run locally
 
-From the repository root, with Node.js 22+, Python 3.10+ and uv installed:
+From the repository root, with Node.js 22+, Python 3.11+ and uv installed:
 
 ```sh
 uv sync --project scripts/dev --locked

@@ -6,7 +6,7 @@ changes. Preserve projects and existing environments.
 
 ## Environment
 
-Run the following from `toolkits/noharmkit`. Check Python 3.10 or newer, uv, Node.js 22 or newer, and npm. Explain missing prerequisites.
+Run the following from `toolkits/noharmkit`. Check Python 3.11 or newer, uv, Node.js 22 or newer, and npm. Explain missing prerequisites.
 Reuse installed dependencies; ask before installing. For a fresh environment:
 
 ```sh

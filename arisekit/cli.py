@@ -1068,7 +1068,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_export.add_argument("--output", required=True, help="new archive path outside the source directory")
     p_export.add_argument("--description", help="benchmark purpose (defaults to scaffold description)")
     p_export.add_argument("--dependency", action="append", default=[], help="declared Python requirement; repeatable")
-    p_export.add_argument("--python-requires", default=">=3.10")
+    p_export.add_argument("--python-requires", default=">=3.11")
     p_export.set_defaults(func=cmd_distribution)
 
     p_import = sub.add_parser("import-benchmark", help="verify and extract a benchmark without executing code")
