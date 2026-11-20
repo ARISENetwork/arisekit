@@ -11,14 +11,6 @@ from arisekit.common import llm
 from pipeline import backends
 from pipeline.e2e import committee
 
-CONFIG = {
-    "version": 1,
-    "generationModel": "test/generator",
-    "ratingModels": [],
-    "responseModels": ["test/response-a", "test/response-b"],
-    "judgeModel": "test/judge",
-}
-
 
 def provider_output(value: Any, schema: dict[str, Any] | None) -> Any:
     if schema is None or value is None:
