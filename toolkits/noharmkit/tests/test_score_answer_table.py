@@ -401,12 +401,22 @@ def test_inactive_condition_still_charges_harmful_recommendations(match: str) ->
     assert _events(result) == [["commission", "mild"], ["commission", "moderate"]]
 
 
-@pytest.mark.parametrize("sample", SAMPLES, ids=[f"{s['case']}-{s['label']}" for s in SAMPLES])
+@pytest.mark.parametrize(
+    "sample",
+    [
+        pytest.param(sample, id=f"{sample['case']}-{sample['label']}")
+        for sample in SAMPLES
+        if any(
+            decision.get("activation", {}).get("type") == "onlyIf" and "match" not in decision["activation"]
+            for decision in CASES[sample["case"]]["decisions"]
+        )
+    ],
+)
 def test_legacy_onlyif_match_defaults_to_any(sample: dict[str, Any]) -> None:
     case = copy.deepcopy(CASES[sample["case"]])
     for decision in case["decisions"]:
         if decision.get("activation", {}).get("type") == "onlyIf":
-            decision["activation"]["match"] = "any"
+            decision["activation"].setdefault("match", "any")
     judge = {"decisions": sample["judge"]}
     assert score_case(case, judge, RHO) == score_case(CASES[sample["case"]], judge, RHO)
 
