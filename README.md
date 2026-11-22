@@ -1,6 +1,6 @@
 # ARISEKit
 
-ARISEKit is a local toolkit for designing, building, and evaluating medical AI benchmarks. Start with the [kit guide](docs/kits.md) to choose a workflow.
+ARISEKit is a toolkit for designing and building medical AI benchmarks grounded in clinical frameworks and principles. Start with the [kit guide](docs/kits.md) to choose a workflow.
 
 - **NOHARMKit** includes a browser walkthrough with a prepared case, a project editor, and a grading pipeline.
 - **Guided authoring** uses the [repository skills](skills/README.md) in your coding agent. The guide identifies the starting point and available evaluation support for each benchmark family.
