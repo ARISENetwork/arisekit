@@ -340,6 +340,20 @@ class ChoiceScorer(BaseScorer):
         }
 
 
+# A minus is often typed as U+2212 or as a dash, which neither `-?` nor float()
+# accepts, so U+2212 followed by 2 would score as 2. Minus signs and hyphens
+# (U+2212, U+FE63, U+FF0D, U+2010, U+2011) are read as "-" everywhere, like the
+# ASCII hyphen. Figure, en and em dashes (U+2012-U+2014) are read as "-" only
+# when they start a number, not after a letter, digit or underscore, so "T",
+# en dash, "2" still reads as 2.
+_MINUS_SIGNS = str.maketrans(dict.fromkeys("\u2212\ufe63\uff0d\u2010\u2011", "-"))
+_DASH_BEFORE_NUMBER = re.compile(r"(?<!\w)[\u2012\u2013\u2014](?=\d)")
+
+
+def _ascii_minus(text: str) -> str:
+    return _DASH_BEFORE_NUMBER.sub("-", text.translate(_MINUS_SIGNS))
+
+
 class NumericScorer(BaseScorer):
     """Score numeric answers with absolute or relative tolerance."""
 
@@ -361,6 +375,8 @@ class NumericScorer(BaseScorer):
         gt = item.ground_truth
         if gt is None:
             return [Metric(self.name, 0.0, n=0)]
+        if isinstance(gt, str):
+            gt = _ascii_minus(gt)
         try:
             gt_val = float(gt)
         except (TypeError, ValueError):
@@ -371,7 +387,7 @@ class NumericScorer(BaseScorer):
             if r.error is not None:
                 per_trial.append(0.0)
                 continue
-            text = _response_text(r)
+            text = _ascii_minus(_response_text(r))
             match = self._num_re.search(text)
             if not match:
                 per_trial.append(0.0)
